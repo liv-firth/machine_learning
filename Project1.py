@@ -3,6 +3,7 @@
 
 import numpy as np 
 import csv 
+import pandas
 
 filename = #current test set - should be a file name 
 
@@ -43,7 +44,7 @@ class Test_Set:
     def getTotalSamples(test_set):
         return total_samples
     
-# CREATE THE TEST SET OBJECT 
+# CREATE THE TEST SET OBJECT METHOD
 def create_test_set(filename):
     #read the file into a 2DArray 
     reader = csv.reader(open(file, "rb"), delimiter=",", skiprows=1)
@@ -91,13 +92,13 @@ def create_test_set(filename):
 # ----------------------------------------------------------------------
 # PRE PROCESS DATA 
 # ----------------------------------------------------------------------
-  TODO?  
+  #TODO CLAIRE  
 
 # ----------------------------------------------------------------------
 # ALGORITHM IMPLEMENTATION
 # ----------------------------------------------------------------------
 
-# STEP 1 ###############################################################
+# STEP 1 METHOD ###############################################################
 def Q(test_set): 
     # make an array to hold values of Q from each class 
     Q_list = np.zeroes(len(classes)) 
@@ -113,7 +114,7 @@ return Q_list
 
  
 
-# STEP 2 ###############################################################
+# STEP 2 METHOD ###############################################################
 # d is the number of attributes andNci= #fx2cig. In other words, for each attribute value,divide the number of examples 
 # that match that attribute value (plus one) by the number of examples in the class (plusd)
 # for each attribute in a given class
@@ -130,7 +131,7 @@ def F(attribute_total, classes):
             # populate F_attribute with the value 
 
 
-# STEP 3 ###############################################################
+# STEP 3 METHOD ###############################################################
 # To classify an example from the test set, do the following for each class. Calculate only for the attribute values that exist in the example.
 
 # this method could apply to all classes or just one depending on how we want to do this
@@ -138,6 +139,16 @@ def C(class):
     # calculate C 
     C = Q_list[#index for class]* the F value for each attribute
 
+
+########################################################################
+# ----------------------------------------------------------------------
+# MAIN
+# ----------------------------------------------------------------------
+########################################################################
+def main(): 
+# ----------------------------------------------------------------------
+# IMPORTANT AND PRE PROCESS 
+# ----------------------------------------------------------------------
 
 # ----------------------------------------------------------------------
 # TEST THE ALGORITHM ON TWO DIFFERENT VERSIONS OF THE DATA
@@ -149,13 +160,8 @@ def C(class):
 
 # ----------------------------------------------------------------------
 # EXECUTE EXPERIMENTS USING 10 FOLD CROSS VALIDATION
-# ----------------------------------------------------------------------
+# ----------------------------------------------------------------------   
 
-# ----------------------------------------------------------------------
-# MAIN
-# ----------------------------------------------------------------------
-def main(): 
-    create_array()
 
 main()
     

@@ -2,24 +2,103 @@
 ############################ PROJECT 1 #################################
 
 import numpy as np 
+import csv 
 
-test_set = #current test set 
-attribute_total = # number of attributes of imported class (should be close to number of columns)
+filename = #current test set - should be a file name 
+
+# ----------------------------------------------------------------------
+# TEST SET OBJECT 
+# ----------------------------------------------------------------------
+
+class Test_Set:
+    #initialize our class variables
+    def __init__ (test_set, name, attributes_total, classes_holder, classes_total, 2DArray, classes_array, total_samples):
+        test_set.name = name
+        test_set.attributes_total = attributes_total
+        test_set.classes_holder = classes_holder
+        test_set.classes_total
+        test_set.2DArray = 2DArray
+        test_set.classes_array = classes_array
+        test_set.total_samples = total_samples
+       
+    #get methods
+    def getName(test_set):
+        return test_set.name
+
+    def getAttributes(test_set):
+        return test_set.attributes_total
+
+    def getClassesHolder(test_set):
+        return classes_holder
+
+    def getClassesTotal(test_set):
+        return test_set.classes_total
+
+    def get2DArray(test_set):
+        return 2DArray
+    
+    def getClassesArray(test_set):
+        return classes_array
+    
+    def getTotalSamples(test_set):
+        return total_samples
+    
+# CREATE THE TEST SET OBJECT 
+def create_test_set(filename):
+    #read the file into a 2DArray 
+    reader = csv.reader(open(file, "rb"), delimiter=",", skiprows=1)
+    x = list(reader)
+    2DArray = numpy.array(x).astype("int")
+
+    #set number of columns and rows so that they can be called   
+    num_rows, num_columns = 2DArray.shape
+
+    #set the name of the set 
+    name =  str(filename)   
+
+    #get the number of attributes from the numer of columns minus the sample id and class       
+    attributes_total = num_columns - 2   
+
+    #create an array of unique possible class values 
+    classes_holder = np.array([0])                    
+    for row in range(0, num_rows -1): 
+        #set a temporary class value that doesnt exist in any of the data sets
+        temp_class = 0
+        #make an array to hold each different class
+        if 2DArray[row][num_columns -1] != temp_class:
+            numpy.append(classes_holder,2DArray[row][num_columns -1])
+            temp_class = 2DArray[row][num_columns -1]
+
+    #set total number of classes 
+    classes_total = len(classes_array)
+
+    #set up classes array 
+        #first sort the array by the last column 
+        classes_array = 2DArray[2DArray[:, -1].argsort()]
+        k = 0
+        temp_class = classes_holder[k]
+        #split the array everytime the class changes 
+        for row in range(0, num_rows -1):
+            if classes_array[row][num_columns -1] != temp_class:
+                classes_array = np.vsplit(classes_array, row)
+                k = k + 1
+
+    #set the total number of samples based on how many rows you have      
+    total_samples = num_rows 
+    
+    return test_set 
+
 # ----------------------------------------------------------------------
 # PRE PROCESS DATA 
 # ----------------------------------------------------------------------
-# I am assuming we will turn a given set into a 2d numpy array and then separate it into classes
-def process(test_set):
-    classes = #array of 2d arrays containing each class?
-    return classes 
-    
+  TODO?  
 
 # ----------------------------------------------------------------------
 # ALGORITHM IMPLEMENTATION
 # ----------------------------------------------------------------------
 
 # STEP 1 ###############################################################
-def Q(classes): 
+def Q(test_set): 
     # make an array to hold values of Q from each class 
     Q_list = np.zeroes(len(classes)) 
     # get the total number of examples in the test set 
@@ -73,7 +152,10 @@ def C(class):
 # ----------------------------------------------------------------------
 
 # ----------------------------------------------------------------------
-# MAIN 
+# MAIN
 # ----------------------------------------------------------------------
-def main():
-    process()
+def main(): 
+    create_array()
+
+main()
+    

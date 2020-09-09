@@ -11,9 +11,10 @@ import pandas as pd
 
 class Test_Set:
     #initialize our class variables
-    def __init__ (self, name, attributes_total, classes_holder, classes_total, twoDArray, classes_array, total_samples):
+    def __init__ (self, name, attributes_total,  classes_holder, classes_total, twoDArray, classes_array, total_samples):
         self.name = name
         self.attributes_total = attributes_total
+        #self.attributes_array = attributes_array
         self.classes_holder = classes_holder
         self.classes_total = classes_total
         self.twoDArray = twoDArray
@@ -41,6 +42,63 @@ class Test_Set:
     
     def getTotalSamples(self):
         return self.total_samples
+
+    # ----------------------------------------------------------------------
+    # ALGORITHM IMPLEMENTATION
+    # ----------------------------------------------------------------------
+
+    # STEP 1 METHOD ###############################################################
+    def Q(self): 
+        # make a list to hold values of Q from each class 
+        Q_list = []
+    
+
+        # For each class, divide the number of examples in that class by the total number of examples N in the training set
+        for c in range(0, len(classes_array) -1): 
+            temp = len(class_array[c])/self.total_samples # check that len()class_array[c] gives the correct value
+            # populate Q_list with each value 
+            Q_list.append(temp) 
+        #turn it into an array 
+        Q_array = np.array(Q_list)
+        return Q_array
+
+
+    # STEP 2 METHOD ###############################################################
+    # d is the number of attributes andNci= #fx2cig. In other words, for each attribute value,divide the number of examples 
+    # that match that attribute value (plus one) by the number of examples in the class (plusd)
+    # for each attribute in a given class
+    def F(self):
+        # empty list of F values x attribute to populate
+        F_attribute = [] 
+
+        # for each class in array of classes, c
+        for c in range(0, self.classes_total -1):
+            # for each attribute in the set 
+            current_class = self.classes_array[c]
+            for a in range(0, self.attributes_total):
+                # calculate the number of examples that match the attribute value (ask what that means) + 1 / attribute_total + the size of the class 
+                # TODO
+
+                # populate F_attribute with the value 
+                return F_attribute
+
+    # STEP 3 METHOD ###############################################################
+    # To classify an example from the test set, do the following for each class. Calculate only for the attribute values that exist in the example.
+
+    # this method could apply to all classes or just one depending on how we want to do this
+    def C(self): 
+        C_list = []
+        # calculate C for each class 
+        temp_array = self.Q
+        for c in range(0, len(self.classes_array) -1):
+            C = temp_array[c]
+            for a in range(len(self.F), 0):
+                C = C*self.F[a] # how do we do this with out recursion?
+
+        #return arg max of C_list 
+
+
+
     
 # CREATE THE TEST SET OBJECT METHOD
 def create_test_set(filename):
@@ -134,55 +192,13 @@ def create_test_set(filename):
     print("Printing classes_array!")
     print(classes_array)
 
+    
+
     #set the total number of samples based on how many rows you have     
     print("Printing total number of samples!") 
     total_samples = int(num_rows)
     print(total_samples)
     
-  # ----------------------------------------------------------------------
-# ALGORITHM IMPLEMENTATION
-# ----------------------------------------------------------------------
-
-# STEP 1 METHOD ###############################################################
-def Q(test_set): 
-    # make an array to hold values of Q from each class 
-    Q_list = np.zeroes(len(classes)) 
-    # get the total number of examples in the test set 
-    N = #todo
-
-    for n in classes: 
-    # For each class, divide the number of examples in that class by the total number of examples N in the training set
-
-    # populate Q_list with each value 
-
-return Q_list
-
-
-# STEP 2 METHOD ###############################################################
-# d is the number of attributes andNci= #fx2cig. In other words, for each attribute value,divide the number of examples 
-# that match that attribute value (plus one) by the number of examples in the class (plusd)
-# for each attribute in a given class
-def F(attribute_total, classes):
-    # 2D array of F values x attribute to populate
-    F_attribute = np.zeroes([len(classes), attribute_total]) 
-
-    # for each class in array of classes, c
-    for n in classes: 
-        # for each attribute in the set 
-        for i # I dont rememeber this notation 
-            # calculate the number of examples that match the attribute value (ask what that means) + 1 / attribute_total + the size of the class 
-
-            # populate F_attribute with the value 
-
-
-# STEP 3 METHOD ###############################################################
-# To classify an example from the test set, do the following for each class. Calculate only for the attribute values that exist in the example.
-
-# this method could apply to all classes or just one depending on how we want to do this
-def C(class): 
-    # calculate C 
-    C = Q_list[#index for class]* the F value for each attribute
-
 
 
 # ----------------------------------------------------------------------
@@ -202,8 +218,8 @@ def main():
 # IMPORTANT AND PRE PROCESS 
 # ----------------------------------------------------------------------
     # to test 
-    create_test_set("glass.csv")
-
+    test = create_test_set("glass.csv")
+   
 
 # ----------------------------------------------------------------------
 # TEST THE ALGORITHM ON TWO DIFFERENT VERSIONS OF THE DATA

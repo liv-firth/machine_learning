@@ -27,3 +27,5 @@ The output of this one will also just be a proportion. However, I think that we 
 For each class  . . .  precision = (# samples correclty classified as being part of the class) / (# samples correclty classified as being part of the class + # samples classified as being part of that class even though they are not part of that class)
 
 In other words precision = (TP)/(TP + FP)
+
+We may be able to average these across a data set, but I'm not certain yet. 

@@ -3,6 +3,7 @@
 import numpy as np 
 import csv 
 import pandas as pd 
+import random
 
 # ----------------------------------------------------------------------
 # TEST SET OBJECT 
@@ -214,14 +215,36 @@ def tenPercentShuffle(item):
     print("Intaking Array to Shuffle")
     arr = item.twoDArray
     
-    numRowsShuff = item.total_samples*0.1
+    numRowsShuff = int(item.total_samples*0.1)
     print(numRowsShuff)
     
+    #Grab attribute values
+    attVal = pd.unique(arr.iloc[:, 1])
+    #print(attVal)
     
+    #Make list to pull random items from
+    rowList = []
+    for k in range(item.total_samples):
+        if k != 0:
+            rowList.append(k)
+    #print(rowList)
     
+    print("Going to Shuffle 10% of Rows")
+    #Change and shuffle 10% of rows
+    for i in range(numRowsShuff):
+        rowIt = random.choice(rowList) #Pick random row
+        rowList.remove(rowIt) #Remove from row list
+        
+        for j in range(item.attributes_total): #for each column
+            if j != 0:
+                arr.iat[rowIt, j] = random.choice(attVal)
+        print(arr.iloc[rowIt])
     
+    print('All Rows Shuffled') 
+    newItem = item
     
-    return(test)
+    newItem.twoDArray = arr
+    return(newItem)
       
 
 

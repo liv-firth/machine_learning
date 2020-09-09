@@ -238,14 +238,45 @@ def tenPercentShuffle(item):
         for j in range(item.attributes_total): #for each column
             if j != 0:
                 arr.iat[rowIt, j] = random.choice(attVal)
-        print(arr.iloc[rowIt])
+       # print(arr.iloc[rowIt])
     
     print('All Rows Shuffled') 
     newItem = item
     
     newItem.twoDArray = arr
     return(newItem)
-      
+
+# ----------------------------------------------------------------------
+# CROSS VALIDATION CREATION AND RUNNING
+# ----------------------------------------------------------------------    
+def tenFoldCreation(item):
+    df = item.twoDArray
+    
+    #Shuffle Rows
+    df = df.sample(frac=1)
+    
+    #Find number of rows to grab with each group
+    numRow = int(item.total_samples * 0.1) #Number of rows to grab in each fold
+    lastRow = int(item.total_samples - 1) #Final row index
+    
+    n = 0 #Row Iterative
+    dfList = [] #Create blank list to append to
+    for i in range (9): #Run nine times
+        print(i)
+        m = n + numRow #Find last row to grab based off of iterative
+        tempdf = df.iloc[n:m] #Grab only rows between n and m
+        dfList.append(tempdf) #Append List with new item
+        n = m + 1 #Update n
+    
+    #Final Iteration (Catches any missed rows)
+    tempdf = df.iloc[n:lastRow] #Grab through current iterative through final row
+    dfList.append(tempdf) #Append List with last df
+    
+    #print(dfList)
+    return(dfList)
+    
+        
+        
 
 
 
@@ -277,15 +308,12 @@ def main():
     hv_set = create_test_set(filename[4])
     hv_mod = tenPercentShuffle(hv_set)
     
-    
-    
-    #test = create_test_set("glass.csv")
-    
-   
 
 # ----------------------------------------------------------------------
 # TEST THE ALGORITHM ON TWO DIFFERENT VERSIONS OF THE DATA
 # ----------------------------------------------------------------------
+
+## Train the Algorithm
 
 # ----------------------------------------------------------------------
 # EVALUATION MEASURES
@@ -295,5 +323,24 @@ def main():
 # EXECUTE EXPERIMENTS USING 10 FOLD CROSS VALIDATION
 # ----------------------------------------------------------------------   
 
+    ## For BC Datasets
+    bc_set_tenFolds = tenFoldCreation(bc_set)
+    bc_mod_tenFolds = tenFoldCreation(bc_mod)
+    
+    ## For Glass Datasets
+    gs_set_tenFolds = tenFoldCreation(gs_set)
+    gs_mod_tenFolds = tenFoldCreation(gs_mod)
+    
+    ## For Iris Datasets
+    ir_set_tenFolds = tenFoldCreation(ir_set)
+    ir_mod_tenFolds = tenFoldCreation(ir_mod)
+    
+    ## For Soybean Datasets
+    sb_set_tenFolds = tenFoldCreation(sb_set)
+    sb_mod_tenFolds = tenFoldCreation(sb_mod)
+    
+    ## For House Votes Datasets
+    hv_set_tenFolds = tenFoldCreation(hv_set)
+    hv_mod_tenFolds = tenFoldCreation(hv_mod)
 
 main()

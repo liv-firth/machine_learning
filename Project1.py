@@ -93,34 +93,97 @@ def create_test_set(filename):
     classes_total = len(classes_holder)
     print(classes_total)
 
+
+    # option 1 - split the array everytime the class changes 
     #set up classes array 
     #first sort the array by the last column 
-    classes_array = twoDArray[twoDArray[:, -1].argsort()]
-    print("Printing sorted classes array!")
-    print(classes_array)
+    #classes_array = twoDArray[twoDArray[:, -1].argsort()]
+    #print("Printing sorted classes array!")
+    #print(classes_array)
 
-    k = 0
-    print("Printing classes_holder index:")
-    temp_class = classes_holder[k]
-    print(temp_class)
+    #k = 0
+    #print("Printing classes_holder index:")
+    #temp_class = classes_holder[k]
+    #print(temp_class)
 
     #problems start here 
-    
-    #split the array everytime the class changes 
-    for row in range(0, int(num_rows) -1):
-        if classes_array[row][int(num_columns) -1] != temp_class:
-            classes_array = np.split(classes_array, classes_array[row], axis=0)
-            k = k + 1
-            temp_class = classes_holder[k]
+
+    #for row in range(0, int(num_rows) -1):
+        #if classes_array[row][int(num_columns) -1] != temp_class:
+            #classes_array = np.split(classes_array, classes_array[row], axis=0)
+            #k = k + 1
+            #temp_class = classes_holder[k]
+
+
+    #option 2 - create a list of python lists 
+    classes_list = []
+    #make lists of 1D numpy arrays from each class and put them in classes_list 
+    for c in classes_holder:
+        c_list = []
+        for row in range (0, int(num_rows)-1):
+            if twoDArray[row][int(num_columns) -1] == c:
+                #add the row to the correct list 
+                c_list.append(twoDArray[row])
+        #turn the list into an array 
+        c_list = np.array(c_list)
+        #add the list to the classes list
+        classes_list.append(c_list)
+    #turn the list of classes into an np array 
+    classes_array = np.array(classes_list)
 
     print("Printing classes_array!")
     print(classes_array)
+
     #set the total number of samples based on how many rows you have     
     print("Printing total number of samples!") 
     total_samples = int(num_rows)
     print(total_samples)
     
-  
+  # ----------------------------------------------------------------------
+# ALGORITHM IMPLEMENTATION
+# ----------------------------------------------------------------------
+
+# STEP 1 METHOD ###############################################################
+def Q(test_set): 
+    # make an array to hold values of Q from each class 
+    Q_list = np.zeroes(len(classes)) 
+    # get the total number of examples in the test set 
+    N = #todo
+
+    for n in classes: 
+    # For each class, divide the number of examples in that class by the total number of examples N in the training set
+
+    # populate Q_list with each value 
+
+return Q_list
+
+
+# STEP 2 METHOD ###############################################################
+# d is the number of attributes andNci= #fx2cig. In other words, for each attribute value,divide the number of examples 
+# that match that attribute value (plus one) by the number of examples in the class (plusd)
+# for each attribute in a given class
+def F(attribute_total, classes):
+    # 2D array of F values x attribute to populate
+    F_attribute = np.zeroes([len(classes), attribute_total]) 
+
+    # for each class in array of classes, c
+    for n in classes: 
+        # for each attribute in the set 
+        for i # I dont rememeber this notation 
+            # calculate the number of examples that match the attribute value (ask what that means) + 1 / attribute_total + the size of the class 
+
+            # populate F_attribute with the value 
+
+
+# STEP 3 METHOD ###############################################################
+# To classify an example from the test set, do the following for each class. Calculate only for the attribute values that exist in the example.
+
+# this method could apply to all classes or just one depending on how we want to do this
+def C(class): 
+    # calculate C 
+    C = Q_list[#index for class]* the F value for each attribute
+
+
 
 # ----------------------------------------------------------------------
 # PRE PROCESS DATA 
@@ -138,6 +201,7 @@ def main():
 # ----------------------------------------------------------------------
 # IMPORTANT AND PRE PROCESS 
 # ----------------------------------------------------------------------
+    # to test 
     create_test_set("glass.csv")
 
 

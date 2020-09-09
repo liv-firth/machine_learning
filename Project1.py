@@ -11,15 +11,15 @@ import random
 
 class Test_Set:
     #initialize our class variables
-    def __init__ (self, name, attributes_total,  classes_holder, classes_total, twoDArray, classes_array, total_samples):
+    def __init__ (self, name, attributes_total,  classes_holder, classes_total, twoDArray, classes_array, total_samples, attributes_array):
         self.name = name
         self.attributes_total = attributes_total
-        #self.attributes_array = attributes_array
         self.classes_holder = classes_holder
         self.classes_total = classes_total
         self.twoDArray = twoDArray
         self.classes_array = classes_array
         self.total_samples = total_samples
+        self.attributes_array = attributes_array
        
     #get methods
     def getName(self):
@@ -137,79 +137,89 @@ def create_test_set(filename):
     #create a list of unique possible class values 
     classes_holder = pd.unique(twoDArray['Class'])
 
-    #set a temporary class value that doesnt exist in any of the data sets
-#    temp_class = 567890
-#    for row in range(0, num_rows): 
-#        #make an array to hold each different class
-#        if twoDArray.iat[row, int(num_columns) -1] != temp_class:
-#            classes_holder.append(twoDArray.iat[row, int(num_columns)-1])
-#            temp_class = twoDArray.iat[row, int(num_columns) -1]
     print("Printing classes_holder list!")
     print(classes_holder)
-    #print("Printing classes holder array!")
-    #classes_holder = np.array(classes_holder)
-    #print(classes_holder)
-
-    #set total number of classes 
+    
+    ## Get Attributes List
+    print("Grabbing Attributes Array")
+    tempList = []
+    for k in range(attributes_total+1):
+        if k != 0:
+            temp = pd.unique(twoDArray.iloc[:,k])
+            for p in temp:
+                tempList.append(k)
+    attributes_array = pd.unique(tempList)
+            
+    ## Set total number of classes 
     print("Printing classes total!")
     classes_total = len(classes_holder)
     print(classes_total)
 
 
-    # option 1 - split the array everytime the class changes 
-    #set up classes array 
-    #first sort the array by the last column 
-    #classes_array = twoDArray[twoDArray[:, -1].argsort()]
-    #print("Printing sorted classes array!")
-    #print(classes_array)
-
-    #k = 0
-    #print("Printing classes_holder index:")
-    #temp_class = classes_holder[k]
-    #print(temp_class)
-
-    #problems start here 
-
-    #for row in range(0, int(num_rows) -1):
-        #if classes_array[row][int(num_columns) -1] != temp_class:
-            #classes_array = np.split(classes_array, classes_array[row], axis=0)
-            #k = k + 1
-            #temp_class = classes_holder[k]
-
-
-    #option 2 - create a list of python lists 
-#    classes_list = []
-#    #make lists of 1D numpy arrays from each class and put them in classes_list 
-#    for c in classes_holder:
-#        c_list = []
-#        for row in range (0, int(num_rows)-1):
-#            if twoDArray[row][int(num_columns) -1] == c:
-#                #add the row to the correct list 
-#                c_list.append(twoDArray[row])
-#        #turn the list into an array 
-#        c_list = np.array(c_list)
-#        #add the list to the classes list
-#        classes_list.append(c_list)
-#    #turn the list of classes into an np array 
-#    classes_array = np.array(classes_list)
-#
-#    print("Printing classes_array!")
-#    print(classes_array)
-
-    
-
-    #set the total number of samples based on how many rows you have     
+    ## Set the total number of samples based on how many rows you have     
     print("Printing total number of samples!") 
     total_samples = int(num_rows)
     print(total_samples)
     
-    temp_test_set = Test_Set(name, attributes_total, classes_holder, classes_total, twoDArray, classes_holder, total_samples)
+    temp_test_set = Test_Set(name, attributes_total, classes_holder, classes_total, twoDArray, classes_holder, total_samples, attributes_array)
     return(temp_test_set)
+   
+# ----------------------------------------------------------------------
+# ALGORITHM 
+# ----------------------------------------------------------------------  
+
+def Q(train_set, classVal):
+    # Filter training set based off of class value
+    arr = train_set.twoDArray
+    is_classVal = arr['Class']==classVal
+    arrClass = arr[is_classVal]
+    
+    # Declare N 
+    N = train_set.total_samples
+    
+    q = len(arrClass) / N #Calculate Q
+    print(q)
+    return(q)
+
+def F(train_set, classVal, attValList): #multiply
+    # Grab Relevant information from training set
+    attList = train_set.attributes_array
+    arr = train_set.twoDArray
+    numAtt = train.attributes_total
+    
+    #Filter by class variable
+    is_classVal = arr['Class']==classVal
+    arrClass = arr[is_classVal]
+    
+    numClass = len(arrClass)
+    
+    f = 1 #Create standard F Value
+    #For each attribute
+    for i in range(attributes_total):
+        #Filter class array for attribute val
+        val = attValList[i]
+        sumMatch = 0
+        for k in range(len(arrClass)):
+            if arrClass.iat[k, i+1]==val:
+                sumMatch = sumMatch + 1
+        tempF = (sumMatch + 1) / (numAtt + numClass)
+        
+        f = f*tempF
+
+    print(f)
+    return(f)
+    
+
+def classify(test_set, train_set):
+    cList = test_set.classes_holder
+    
+    
+    return(train_set)
     
 
 
 # ----------------------------------------------------------------------
-# PRE PROCESS DATA 
+# PRE PROCESS DATA - 10% DATA SHUFFLE
 # ----------------------------------------------------------------------
 def tenPercentShuffle(item):
     print("Intaking Array to Shuffle")

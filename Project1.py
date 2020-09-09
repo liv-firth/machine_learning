@@ -95,6 +95,7 @@ class Test_Set:
                 C = C*self.F[a] # how do we do this with out recursion?
 
         #return arg max of C_list 
+        
 
 
 
@@ -133,20 +134,20 @@ def create_test_set(filename):
     print(attributes_total) 
 
     #create a list of unique possible class values 
-    classes_holder = []
+    classes_holder = pd.unique(twoDArray['Class'])
 
     #set a temporary class value that doesnt exist in any of the data sets
-    temp_class = 567890
-    for row in range(0, num_rows): 
-        #make an array to hold each different class
-        if twoDArray.iat[row, int(num_columns) -1] != temp_class:
-            classes_holder.append(twoDArray.iat[row, int(num_columns)-1])
-            temp_class = twoDArray.iat[row, int(num_columns) -1]
+#    temp_class = 567890
+#    for row in range(0, num_rows): 
+#        #make an array to hold each different class
+#        if twoDArray.iat[row, int(num_columns) -1] != temp_class:
+#            classes_holder.append(twoDArray.iat[row, int(num_columns)-1])
+#            temp_class = twoDArray.iat[row, int(num_columns) -1]
     print("Printing classes_holder list!")
     print(classes_holder)
-    print("Printing classes holder array!")
-    classes_holder = np.array(classes_holder)
-    print(classes_holder)
+    #print("Printing classes holder array!")
+    #classes_holder = np.array(classes_holder)
+    #print(classes_holder)
 
     #set total number of classes 
     print("Printing classes total!")
@@ -176,23 +177,23 @@ def create_test_set(filename):
 
 
     #option 2 - create a list of python lists 
-    classes_list = []
-    #make lists of 1D numpy arrays from each class and put them in classes_list 
-    for c in classes_holder:
-        c_list = []
-        for row in range (0, int(num_rows)-1):
-            if twoDArray[row][int(num_columns) -1] == c:
-                #add the row to the correct list 
-                c_list.append(twoDArray[row])
-        #turn the list into an array 
-        c_list = np.array(c_list)
-        #add the list to the classes list
-        classes_list.append(c_list)
-    #turn the list of classes into an np array 
-    classes_array = np.array(classes_list)
-
-    print("Printing classes_array!")
-    print(classes_array)
+#    classes_list = []
+#    #make lists of 1D numpy arrays from each class and put them in classes_list 
+#    for c in classes_holder:
+#        c_list = []
+#        for row in range (0, int(num_rows)-1):
+#            if twoDArray[row][int(num_columns) -1] == c:
+#                #add the row to the correct list 
+#                c_list.append(twoDArray[row])
+#        #turn the list into an array 
+#        c_list = np.array(c_list)
+#        #add the list to the classes list
+#        classes_list.append(c_list)
+#    #turn the list of classes into an np array 
+#    classes_array = np.array(classes_list)
+#
+#    print("Printing classes_array!")
+#    print(classes_array)
 
     
 
@@ -201,14 +202,25 @@ def create_test_set(filename):
     total_samples = int(num_rows)
     print(total_samples)
     
+    temp_test_set = Test_Set(name, attributes_total, classes_holder, classes_total, twoDArray, classes_holder, total_samples)
+    return(temp_test_set)
+    
 
 
 # ----------------------------------------------------------------------
 # PRE PROCESS DATA 
 # ----------------------------------------------------------------------
-def tenPercentShuffle(test):
+def tenPercentShuffle(item):
     print("Intaking Array to Shuffle")
-    print(test)
+    arr = item.twoDArray
+    
+    numRowsShuff = item.total_samples*0.1
+    print(numRowsShuff)
+    
+    
+    
+    
+    
     return(test)
       
 
@@ -226,11 +238,22 @@ def main():
     # List of all datasets
     filename = ["breast-cancer-wisconsin-fixed.csv", "glass.csv", "iris.csv", "soybean-small.csv", "house-votes-84-fixed.csv"]
     
-    for x in filename:
-        print(x)
-        test = create_test_set(x)
-        
-        alt_test = tenPercentShuffle(test)
+    ## Create Test Sets and Modified sets for each dataset
+    bc_set = create_test_set(filename[0])
+    bc_mod = tenPercentShuffle(bc_set)
+    
+    gs_set = create_test_set(filename[1])
+    gs_mod = tenPercentShuffle(gs_set)
+       
+    ir_set = create_test_set(filename[2])
+    ir_mod = tenPercentShuffle(ir_set)
+    
+    sb_set = create_test_set(filename[3])
+    sb_mod = tenPercentShuffle(sb_set)
+    
+    hv_set = create_test_set(filename[4])
+    hv_mod = tenPercentShuffle(hv_set)
+    
     
     
     #test = create_test_set("glass.csv")

@@ -1,4 +1,3 @@
-
 ############################ PROJECT 1 #################################
 
 import numpy as np 
@@ -107,17 +106,20 @@ def create_test_set(filename):
     print("//////////////////////////////Reading file into 2DArray/////////////////////////////////////")
     #reader = pd.read_csv(r'glass.csv')
     #x = list(reader)
-    file = open(filename)
-    twoDArray = np.loadtxt(file, delimiter=",", skiprows=1)
+    #file = open(filename)
+    #twoDArray = np.loadtxt(file, delimiter=",", skiprows=1)
+    
+    ### CHANGED TO PANDAS - CANNOT MAKE ARRAY WITH NUMPY, REQUIRES HOMOGENEOUS OBJECTS 
+    twoDArray = pd.read_csv(filename)
     print("////////////////////////////Printing Array ////////////////////////////////////////////////")
     print(twoDArray)
 
     #set number of columns and rows so that they can be called   
     print("Getting number of rows!")
-    num_rows = np.shape(twoDArray)[0]
+    num_rows = len(twoDArray) ## Transitioned to pandas
     print(num_rows)
     print("Getting number of columns!")
-    num_columns = np.shape(twoDArray)[1]
+    num_columns = len(twoDArray.columns)
     print(num_columns)
 
     #set the name of the set 
@@ -127,7 +129,7 @@ def create_test_set(filename):
 
     #get the number of attributes from the numer of columns minus the sample id and class   
     print("Getting the total number of attributes!")    
-    attributes_total = int(num_columns) - 2  
+    attributes_total = int(num_columns) - 1  
     print(attributes_total) 
 
     #create a list of unique possible class values 
@@ -135,11 +137,11 @@ def create_test_set(filename):
 
     #set a temporary class value that doesnt exist in any of the data sets
     temp_class = 567890
-    for row in range(0, num_rows -1): 
+    for row in range(0, num_rows): 
         #make an array to hold each different class
-        if twoDArray[row][int(num_columns) -1] != temp_class:
-            classes_holder.append(twoDArray[row][int(num_columns) -1])
-            temp_class = twoDArray[row][int(num_columns) -1]
+        if twoDArray.iat[row, int(num_columns) -1] != temp_class:
+            classes_holder.append(twoDArray.iat[row, int(num_columns)-1])
+            temp_class = twoDArray.iat[row, int(num_columns) -1]
     print("Printing classes_holder list!")
     print(classes_holder)
     print("Printing classes holder array!")
@@ -204,7 +206,11 @@ def create_test_set(filename):
 # ----------------------------------------------------------------------
 # PRE PROCESS DATA 
 # ----------------------------------------------------------------------
-  #TODO CLAIRE  
+def tenPercentShuffle(test):
+    print("Intaking Array to Shuffle")
+    print(test)
+    return(test)
+      
 
 
 
@@ -217,8 +223,18 @@ def main():
 # ----------------------------------------------------------------------
 # IMPORTANT AND PRE PROCESS 
 # ----------------------------------------------------------------------
-    # to test 
-    test = create_test_set("glass.csv")
+    # List of all datasets
+    filename = ["breast-cancer-wisconsin-fixed.csv", "glass.csv", "iris.csv", "soybean-small.csv", "house-votes-84-fixed.csv"]
+    
+    for x in filename:
+        print(x)
+        test = create_test_set(x)
+        
+        alt_test = tenPercentShuffle(test)
+    
+    
+    #test = create_test_set("glass.csv")
+    
    
 
 # ----------------------------------------------------------------------
@@ -235,4 +251,3 @@ def main():
 
 
 main()
-    

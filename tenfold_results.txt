@@ -1,0 +1,79 @@
+/////////// 10 FOLD CROSS VALIDATION ///////////
+## BREAST CANCER
+TEN FOLD - BC - Not Mixed
+0/1 Loss: 0.059322033898305086
+Precision Results: 
+Class: 2.0      Precision: 0.04856512141280353
+Class: 4.0      Precision: 0.059322033898305086
+
+TEN FOLD - BC - Mixed
+0/1 Loss: 0.059734513274336286
+Precision Results: 
+Class: 4.0      Precision: 0.06751054852320675
+Class: 2.0      Precision: 0.059734513274336286
+
+## GLASS
+TEN FOLD - GS - Not Mixed
+0/1 Loss: 0.0
+Precision Results: 
+Class: 2.0      Precision: 0.0
+Class: 6.0      Precision: 0.0
+Class: 7.0      Precision: 0.0
+Class: 5.0      Precision: 0.0
+Class: 3.0      Precision: 0.0
+Class: 1.0      Precision: 0.0
+
+TEN FOLD - GS - Mixed
+0/1 Loss: 0.0
+Precision Results: 
+Class: 1.0      Precision: 0.0
+Class: 2.0      Precision: 0.0
+Class: 3.0      Precision: 0.0
+Class: 7.0      Precision: 0.0
+Class: 5.0      Precision: 0.0
+Class: 6.0      Precision: 0.0
+
+## IRIS
+TEN FOLD - IR - Not Mixed
+0/1 Loss: 0.0
+Precision Results: 
+Class: Iris-virginica   Precision: 0.0
+Class: Iris-setosa      Precision: 0.0
+Class: Iris-versicolor  Precision: 0.0
+
+TEN FOLD - IR - Mixed
+0/1 Loss: 0.08888888888888889
+Precision Results: 
+Class: Iris-virginica   Precision: 0.0
+Class: Iris-versicolor  Precision: 0.0
+Class: Iris-setosa      Precision: 0.08888888888888889
+
+## SOYBEAN
+TEN FOLD - SB - Not Mixed
+0/1 Loss: 0.0
+Precision Results: 
+Class: D3       Precision: 0.0
+Class: D1       Precision: 0.0
+Class: D2       Precision: 0.0
+Class: D4       Precision: 0.0
+
+TEN FOLD - SB - Mixed
+0/1 Loss: 0.0
+Precision Results: 
+Class: D2       Precision: 0.0
+Class: D3       Precision: 0.0
+Class: D4       Precision: 0.0
+Class: D1       Precision: 0.0
+
+## HOUSE VOTES
+TEN FOLD - HV - Not Mixed
+0/1 Loss: 0.049079754601226995
+Precision Results: 
+Class: democrat Precision: 0.05343511450381679
+Class: republican       Precision: 0.049079754601226995
+
+TEN FOLD - HV - Mixed
+0/1 Loss: 0.05725190839694656
+Precision Results: 
+Class: republican       Precision: 0.03680981595092025
+Class: democrat Precision: 0.05725190839694656

@@ -158,7 +158,7 @@ def F(train_set, classVal, attValList): #multiply
     
     f = 1 #Create standard F Value
     #For each attribute
-    for i in range(train_set.attributes_total):
+    for i in range(len(attValList)):
         #Filter class array for attribute val
         val = attValList[i]
         sumMatch = 0
@@ -181,12 +181,14 @@ def classify(test_set, train_set):
     testArr["predClass"]=""
     testArr["correctBool"]=""
     
+    originalLen = copy.deepcopy((len(testArr)))
     
+    #print(len(testArr))
     for i in range(len(testArr)): # For each value of the test array
         cValArr = [] #Blank list to append to with values
         #Build row array
         rowArr = []
-        #print(i)
+        #print(test_set.attributes_total)
         for m in range(test_set.attributes_total):
             rowArr.append(testArr.iat[i,m+1])
         #print(rowArr)
@@ -197,19 +199,19 @@ def classify(test_set, train_set):
             
             c = q*f
             cValArr.append(c)
-        
+            
         #Determine max index
         maxIndex = cValArr.index(max(cValArr))
         classDec = cList[maxIndex]
         testArr.at[i,"predClass"]=classDec
-        
+
         if testArr.at[i, "Class"] == testArr.at[i, "predClass"]:
             testArr.at[i, "correctBool"] = True
         else: testArr.at[i, "correctBool"] = False
         
     #print(cValArr)
     #print(testArr) 
-
+    testArr = testArr.head(originalLen)
     return_set = test_set
     return_set.twoDArray=testArr 
     
@@ -255,11 +257,11 @@ def evaluation(item):
 # PRE PROCESS DATA - 10% DATA SHUFFLE
 # ----------------------------------------------------------------------
 def tenPercentShuffle(item):
-    print("Intaking Array to Shuffle")
+    #print("Intaking Array to Shuffle")
     arr = copy.deepcopy(item.twoDArray)
     
     numRowsShuff = int(item.total_samples*0.1)
-    print(numRowsShuff)
+    #print(numRowsShuff)
     
     #Grab attribute values
     attVal = item.attributes_array
@@ -271,7 +273,7 @@ def tenPercentShuffle(item):
             rowList.append(k)
     #print(rowList)
     
-    print("Going to Shuffle 10% of Rows")
+    #print("Going to Shuffle 10% of Rows")
     #Change and shuffle 10% of rows
     for i in range(numRowsShuff):
         #print(i)
@@ -283,7 +285,7 @@ def tenPercentShuffle(item):
                 arr.iat[rowIt, j] = random.choice(attVal)
        # print(arr.iloc[rowIt])
     
-    print('All Rows Shuffled') 
+    #print('All Rows Shuffled') 
     newItem = copy.deepcopy(item)
     
     newItem.twoDArray = arr
@@ -320,17 +322,25 @@ def tenFoldCreation(item):
     
 def tenFoldCross(dfList):
     tenFoldArr = []
+    #print("TEN FOLD CROSS")
+    #print(len(dfList))
     for x in range(10):
-        testArr = dfList[x]
-        tempList = dfList
+        #print(x)
+        tempList = copy.deepcopy(dfList)
+        testArr = tempList[x]
         del tempList[x]
         
-        trainArr = pd.concat(tempList) #make large dataframe
+        trainArr = pd.concat(tempList, sort = True) #make large dataframe
         
         temp_train = makeTrainSet(trainArr)
+        #print(temp_train.twoDArray)
         temp_test = makeTrainSet(testArr)
         
-        tenFoldArr.append(classify(temp_test, temp_train))
+        appArr = classify(temp_test, temp_train)
+        #print("after classify")
+        #print(appArr.twoDArray)
+        
+        tenFoldArr.append(appArr.twoDArray)
     
     passArr = pd.concat(tenFoldArr)
 
@@ -347,31 +357,31 @@ def tenFoldCross(dfList):
     
 def makeTrainSet(twoDArray):
     #set number of columns and rows so that they can be called   
-    print("Getting number of rows!")
+    #print("Getting number of rows!")
     num_rows = len(twoDArray) ## Transitioned to pandas
-    print(num_rows)
-    print("Getting number of columns!")
+    #print(num_rows)
+    #print("Getting number of columns!")
     num_columns = len(twoDArray.columns)
-    print(num_columns)
+    #print(num_columns)
 
     #set the name of the set 
-    print("Getting the name!")
+    #print("Getting the name!")
     name =  str("file") 
-    print(name)  
+    #print(name)  
 
     #get the number of attributes from the numer of columns minus the sample id and class   
-    print("Getting the total number of attributes!")    
+    #print("Getting the total number of attributes!")    
     attributes_total = int(num_columns) - 1  
-    print(attributes_total) 
+    #print(attributes_total) 
 
     #create a list of unique possible class values 
     classes_holder = pd.unique(twoDArray['Class'])
 
-    print("Printing classes_holder list!")
-    print(classes_holder)
+    #print("Printing classes_holder list!")
+    #print(classes_holder)
     
     ## Get Attributes List
-    print("Grabbing Attributes Array")
+    #print("Grabbing Attributes Array")
     tempList = []
     for k in range(attributes_total+1):
         if k != 0:
@@ -381,15 +391,15 @@ def makeTrainSet(twoDArray):
     attributes_array = pd.unique(tempList)
             
     ## Set total number of classes 
-    print("Printing classes total!")
+    #print("Printing classes total!")
     classes_total = len(classes_holder)
-    print(classes_total)
+    #print(classes_total)
 
 
     ## Set the total number of samples based on how many rows you have     
-    print("Printing total number of samples!") 
+    #print("Printing total number of samples!") 
     total_samples = int(num_rows)
-    print(total_samples)
+    #print(total_samples)
     
     temp_test_set = Test_Set(name, attributes_total, classes_holder, classes_total, twoDArray, classes_holder, total_samples, attributes_array)
     return(temp_test_set)
@@ -433,52 +443,52 @@ def main():
 # ----------------------------------------------------------------------
 # TEST THE ALGORITHM ON TWO DIFFERENT VERSIONS OF THE DATA
 # ----------------------------------------------------------------------
-    print("/////////// TESTING ALGORITHM ON TWO VERSIONS OF THE DATA ///////////")
-    
-    print("## BREAST CANCER")
-    print("BC - Not Mixed")
-    bc_s_pred = evaluation(classify(bc_set, bc_set))
-    print(bc_s_pred)
-    
-    print("BC - Mixed")
-    bc_m_pred = evaluation(classify(bc_mod, bc_mod))
-    print(bc_m_pred)
-    
-    print("## GLASS")
-    print("GS - Not Mixed")
-    gs_s_pred = evaluation(classify(gs_set, gs_set))
-    print(gs_s_pred)
-    
-    print("GS - Mixed")
-    gs_m_pred = evaluation(classify(gs_mod, gs_mod))
-    print(gs_m_pred)
-    
-    print("## IRIS")
-    print("IR - Not Mixed")
-    ir_s_pred = evaluation(classify(ir_set, ir_set))
-    print(ir_s_pred)
-    
-    print("IR - Mixed")
-    ir_m_pred = evaluation(classify(ir_mod, ir_mod))
-    print(ir_m_pred)
-    
-    print("## SOYBEANS")
-    print("SB - Not Mixed")
-    sb_s_pred = evaluation(classify(sb_set, sb_set))
-    print(sb_s_pred)
-    
-    print("SB - Mixed")
-    sb_m_pred = evaluation(classify(sb_mod, sb_mod))
-    print(sb_m_pred)
-    
-    print("## HOUSE VOTES")
-    print("HV - Not Mixed")
-    hv_s_pred = evaluation(classify(hv_set, hv_set))
-    print(hv_s_pred)
-    
-    print("HV - Mixed")
-    hv_m_pred = evaluation(classify(hv_mod, hv_mod))
-    print(hv_m_pred)
+#    print("/////////// TESTING ALGORITHM ON TWO VERSIONS OF THE DATA ///////////")
+#    
+#    print("## BREAST CANCER")
+#    print("BC - Not Mixed")
+#    bc_s_pred = evaluation(classify(bc_set, bc_set))
+#    print(bc_s_pred)
+#    
+#    print("BC - Mixed")
+#    bc_m_pred = evaluation(classify(bc_mod, bc_mod))
+#    print(bc_m_pred)
+#    
+#    print("## GLASS")
+#    print("GS - Not Mixed")
+#    gs_s_pred = evaluation(classify(gs_set, gs_set))
+#    print(gs_s_pred)
+#    
+#    print("GS - Mixed")
+#    gs_m_pred = evaluation(classify(gs_mod, gs_mod))
+#    print(gs_m_pred)
+#    
+#    print("## IRIS")
+#    print("IR - Not Mixed")
+#    ir_s_pred = evaluation(classify(ir_set, ir_set))
+#    print(ir_s_pred)
+#    
+#    print("IR - Mixed")
+#    ir_m_pred = evaluation(classify(ir_mod, ir_mod))
+#    print(ir_m_pred)
+#    
+#    print("## SOYBEANS")
+#    print("SB - Not Mixed")
+#    sb_s_pred = evaluation(classify(sb_set, sb_set))
+#    print(sb_s_pred)
+#    
+#    print("SB - Mixed")
+#    sb_m_pred = evaluation(classify(sb_mod, sb_mod))
+#    print(sb_m_pred)
+#    
+#    print("## HOUSE VOTES")
+#    print("HV - Not Mixed")
+#    hv_s_pred = evaluation(classify(hv_set, hv_set))
+#    print(hv_s_pred)
+#    
+#    print("HV - Mixed")
+#    hv_m_pred = evaluation(classify(hv_mod, hv_mod))
+#    print(hv_m_pred)
     
 
 # ----------------------------------------------------------------------
@@ -489,24 +499,70 @@ def main():
 # EXECUTE EXPERIMENTS USING 10 FOLD CROSS VALIDATION
 # ----------------------------------------------------------------------   
 
+    print("/////////// 10 FOLD CROSS VALIDATION ///////////")
     ## For BC Datasets
     bc_set_tenFolds = tenFoldCreation(bc_set)
     bc_mod_tenFolds = tenFoldCreation(bc_mod)
+    
+    print("## BREAST CANCER")
+    print("TEN FOLD - BC - Not Mixed")
+    bc_s_ten = tenFoldCross(bc_set_tenFolds)
+    print(bc_s_ten)
+    
+    print("TEN FOLD - BC - Mixed")
+    bc_m_ten = tenFoldCross(bc_mod_tenFolds)
+    print(bc_m_ten)
     
     ## For Glass Datasets
     gs_set_tenFolds = tenFoldCreation(gs_set)
     gs_mod_tenFolds = tenFoldCreation(gs_mod)
     
+    print("## GLASS")
+    print("TEN FOLD - GS - Not Mixed")
+    gs_s_ten = tenFoldCross(gs_set_tenFolds)
+    print(gs_s_ten)
+    
+    print("TEN FOLD - GS - Mixed")
+    gs_m_ten = tenFoldCross(gs_mod_tenFolds)
+    print(gs_m_ten)
+    
     ## For Iris Datasets
     ir_set_tenFolds = tenFoldCreation(ir_set)
     ir_mod_tenFolds = tenFoldCreation(ir_mod)
+    
+    print("## IRIS")
+    print("TEN FOLD - IR - Not Mixed")
+    ir_s_ten = tenFoldCross(ir_set_tenFolds)
+    print(ir_s_ten)
+    
+    print("TEN FOLD - IR - Mixed")
+    ir_m_ten = tenFoldCross(ir_mod_tenFolds)
+    print(ir_m_ten)
     
     ## For Soybean Datasets
     sb_set_tenFolds = tenFoldCreation(sb_set)
     sb_mod_tenFolds = tenFoldCreation(sb_mod)
     
+    print("## SOYBEAN")
+    print("TEN FOLD - SB - Not Mixed")
+    sb_s_ten = tenFoldCross(sb_set_tenFolds)
+    print(sb_s_ten)
+    
+    print("TEN FOLD - SB - Mixed")
+    sb_m_ten = tenFoldCross(sb_mod_tenFolds)
+    print(sb_m_ten)
+    
     ## For House Votes Datasets
     hv_set_tenFolds = tenFoldCreation(hv_set)
     hv_mod_tenFolds = tenFoldCreation(hv_mod)
+    
+    print("## HOUSE VOTES")
+    print("TEN FOLD - HV - Not Mixed")
+    hv_s_ten = tenFoldCross(hv_set_tenFolds)
+    print(hv_s_ten)
+    
+    print("TEN FOLD - HV - Mixed")
+    hv_m_ten = tenFoldCross(hv_mod_tenFolds)
+    print(hv_m_ten)
 
 main()

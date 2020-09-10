@@ -1,9 +1,9 @@
 ############################ PROJECT 1 #################################
 
-import numpy as np 
-import csv 
+import numpy as np  
 import pandas as pd 
 import random
+import copy
 
 # ----------------------------------------------------------------------
 # TEST SET OBJECT 
@@ -43,69 +43,30 @@ class Test_Set:
     def getTotalSamples(self):
         return self.total_samples
 
-    # ----------------------------------------------------------------------
-    # ALGORITHM IMPLEMENTATION
-    # ----------------------------------------------------------------------
+# ----------------------------------------------------------------------
+# EVALUATION RESULTS OBJECT 
+# ----------------------------------------------------------------------
 
-    # STEP 1 METHOD ###############################################################
-    def Q(self): 
-        # make a list to hold values of Q from each class 
-        Q_list = []
-    
-
-        # For each class, divide the number of examples in that class by the total number of examples N in the training set
-        for c in range(0, len(classes_array) -1): 
-            temp = len(class_array[c])/self.total_samples # check that len()class_array[c] gives the correct value
-            # populate Q_list with each value 
-            Q_list.append(temp) 
-        #turn it into an array 
-        Q_array = np.array(Q_list)
-        return Q_array
-
-
-    # STEP 2 METHOD ###############################################################
-    # d is the number of attributes andNci= #fx2cig. In other words, for each attribute value,divide the number of examples 
-    # that match that attribute value (plus one) by the number of examples in the class (plusd)
-    # for each attribute in a given class
-    def F(self):
-        # empty list of F values x attribute to populate
-        F_attribute = [] 
-
-        # for each class in array of classes, c
-        for c in range(0, self.classes_total -1):
-            # for each attribute in the set 
-            current_class = self.classes_array[c]
-            for a in range(0, self.attributes_total):
-                # calculate the number of examples that match the attribute value (ask what that means) + 1 / attribute_total + the size of the class 
-                # TODO
-
-                # populate F_attribute with the value 
-                return F_attribute
-
-    # STEP 3 METHOD ###############################################################
-    # To classify an example from the test set, do the following for each class. Calculate only for the attribute values that exist in the example.
-
-    # this method could apply to all classes or just one depending on how we want to do this
-    def C(self): 
-        C_list = []
-        # calculate C for each class 
-        temp_array = self.Q
-        for c in range(0, len(self.classes_array) -1):
-            C = temp_array[c]
-            for a in range(len(self.F), 0):
-                C = C*self.F[a] # how do we do this with out recursion?
-
-        #return arg max of C_list 
+class Eval_Obj:
+    #initialize our class variables
+    def __init__ (self, zeroOneLoss, precisionClassArr, precisionArr):
+        self.zeroOneLoss = zeroOneLoss
+        self.precisionClassArr = precisionClassArr
+        self.precisionArr = precisionArr
         
+    def __str__(self):
+        retString = "0/1 Loss: "+ str(self.zeroOneLoss)+"\nPrecision Results: \n"
+        for i in range(len(self.precisionClassArr)):
+            retString = retString + "Class: "+ str(self.precisionClassArr[i])+ "\tPrecision: "+str(self.precisionArr[i])+"\n"
+        return(retString)
 
-
-
+       
     
 # CREATE THE TEST SET OBJECT METHOD
 def create_test_set(filename):
     #read the file into a 2DArray 
     
-    print("//////////////////////////////Reading file into 2DArray/////////////////////////////////////")
+    #print("//////////////////////////////Reading file into 2DArray/////////////////////////////////////")
     #reader = pd.read_csv(r'glass.csv')
     #x = list(reader)
     #file = open(filename)
@@ -113,7 +74,7 @@ def create_test_set(filename):
     
     ### CHANGED TO PANDAS - CANNOT MAKE ARRAY WITH NUMPY, REQUIRES HOMOGENEOUS OBJECTS 
     twoDArray = pd.read_csv(filename)
-    print("////////////////////////////Printing Array ////////////////////////////////////////////////")
+    #print("////////////////////////////Printing Array ////////////////////////////////////////////////")
     print(twoDArray)
 
     #set number of columns and rows so that they can be called   
@@ -169,7 +130,7 @@ def create_test_set(filename):
 # ----------------------------------------------------------------------  
 
 def Q(train_set, classVal):
-    print("RUNNING Q FUNCTION")
+    #print("RUNNING Q FUNCTION")
     # Filter training set based off of class value
     arr = train_set.twoDArray
     is_classVal = arr['Class']==classVal
@@ -179,11 +140,11 @@ def Q(train_set, classVal):
     N = train_set.total_samples
     
     q = len(arrClass) / N #Calculate Q
-    print(q)
+    #print(q)
     return(q)
 
 def F(train_set, classVal, attValList): #multiply
-    print("RUNNING F FUNCTION")
+    #print("RUNNING F FUNCTION")
     # Grab Relevant information from training set
     attList = train_set.attributes_array
     arr = train_set.twoDArray
@@ -213,7 +174,7 @@ def F(train_set, classVal, attValList): #multiply
     
 
 def classify(test_set, train_set):
-    print("CLASSIFYING DATA")
+    #print("CLASSIFYING DATA")
     cList = test_set.classes_holder
     
     testArr = test_set.twoDArray
@@ -246,13 +207,47 @@ def classify(test_set, train_set):
             testArr.at[i, "correctBool"] = True
         else: testArr.at[i, "correctBool"] = False
         
-    print(cValArr)
-    print(testArr) 
+    #print(cValArr)
+    #print(testArr) 
 
     return_set = test_set
-    return_set.twoDArray=testArr     
-
+    return_set.twoDArray=testArr 
+    
     return(return_set)
+    
+def evaluation(item):
+    #print("EVALUATION BEGINS")
+    testArr = item.twoDArray
+    cList = item.classes_holder
+    
+    ## Evaluations     
+    # Find percent correct, 0/1 Loss
+    is_correct = testArr['correctBool']==True
+    correct_testArr = testArr[is_correct]
+    correct = len(correct_testArr)
+    total = len(testArr)
+    
+    loss = correct / total
+    #print("0/1: ", loss)
+    
+    # Precision
+    precisionArr = []
+    for i in range(len(cList)):
+        #Filter for class
+        is_class = testArr['Class']==cList[i]
+        cArr = testArr[is_class]
+        total = len(cArr)
+        
+        is_correct = cArr['correctBool']==True
+        correctArr = cArr[is_correct]
+        correct = len(correctArr)
+        
+        precision = correct / total
+        precisionArr.append(precision)
+
+    returnEval = Eval_Obj(precision, cList, precisionArr)
+    
+    return(returnEval)
     
 
 
@@ -261,14 +256,13 @@ def classify(test_set, train_set):
 # ----------------------------------------------------------------------
 def tenPercentShuffle(item):
     print("Intaking Array to Shuffle")
-    arr = item.twoDArray
+    arr = copy.deepcopy(item.twoDArray)
     
     numRowsShuff = int(item.total_samples*0.1)
     print(numRowsShuff)
     
     #Grab attribute values
-    attVal = pd.unique(arr.iloc[:, 1])
-    #print(attVal)
+    attVal = item.attributes_array
     
     #Make list to pull random items from
     rowList = []
@@ -280,6 +274,7 @@ def tenPercentShuffle(item):
     print("Going to Shuffle 10% of Rows")
     #Change and shuffle 10% of rows
     for i in range(numRowsShuff):
+        #print(i)
         rowIt = random.choice(rowList) #Pick random row
         rowList.remove(rowIt) #Remove from row list
         
@@ -289,7 +284,7 @@ def tenPercentShuffle(item):
        # print(arr.iloc[rowIt])
     
     print('All Rows Shuffled') 
-    newItem = item
+    newItem = copy.deepcopy(item)
     
     newItem.twoDArray = arr
     return(newItem)
@@ -322,6 +317,84 @@ def tenFoldCreation(item):
     
     #print(dfList)
     return(dfList)
+    
+def tenFoldCross(dfList):
+    tenFoldArr = []
+    for x in range(10):
+        testArr = dfList[x]
+        tempList = dfList
+        del tempList[x]
+        
+        trainArr = pd.concat(tempList) #make large dataframe
+        
+        temp_train = makeTrainSet(trainArr)
+        temp_test = makeTrainSet(testArr)
+        
+        tenFoldArr.append(classify(temp_test, temp_train))
+    
+    passArr = pd.concat(tenFoldArr)
+
+    return_set = makeTrainSet(passArr)  #Make object for evaluations use
+    
+    return_eval = evaluation(return_set)
+        
+    return(return_eval)
+    
+    
+        
+        
+        
+    
+def makeTrainSet(twoDArray):
+    #set number of columns and rows so that they can be called   
+    print("Getting number of rows!")
+    num_rows = len(twoDArray) ## Transitioned to pandas
+    print(num_rows)
+    print("Getting number of columns!")
+    num_columns = len(twoDArray.columns)
+    print(num_columns)
+
+    #set the name of the set 
+    print("Getting the name!")
+    name =  str("file") 
+    print(name)  
+
+    #get the number of attributes from the numer of columns minus the sample id and class   
+    print("Getting the total number of attributes!")    
+    attributes_total = int(num_columns) - 1  
+    print(attributes_total) 
+
+    #create a list of unique possible class values 
+    classes_holder = pd.unique(twoDArray['Class'])
+
+    print("Printing classes_holder list!")
+    print(classes_holder)
+    
+    ## Get Attributes List
+    print("Grabbing Attributes Array")
+    tempList = []
+    for k in range(attributes_total+1):
+        if k != 0:
+            temp = pd.unique(twoDArray.iloc[:,k])
+            for p in temp:
+                tempList.append(k)
+    attributes_array = pd.unique(tempList)
+            
+    ## Set total number of classes 
+    print("Printing classes total!")
+    classes_total = len(classes_holder)
+    print(classes_total)
+
+
+    ## Set the total number of samples based on how many rows you have     
+    print("Printing total number of samples!") 
+    total_samples = int(num_rows)
+    print(total_samples)
+    
+    temp_test_set = Test_Set(name, attributes_total, classes_holder, classes_total, twoDArray, classes_holder, total_samples, attributes_array)
+    return(temp_test_set)
+    
+        
     
         
         
@@ -360,9 +433,52 @@ def main():
 # ----------------------------------------------------------------------
 # TEST THE ALGORITHM ON TWO DIFFERENT VERSIONS OF THE DATA
 # ----------------------------------------------------------------------
-    print("TESTING ALGORITHM ON TWO VERSIONS OF THE DATA")
-    bc_s_pred = classify(bc_set, bc_set)
-    bc_m_pred = classify(bc_mod, bc_set)
+    print("/////////// TESTING ALGORITHM ON TWO VERSIONS OF THE DATA ///////////")
+    
+    print("## BREAST CANCER")
+    print("BC - Not Mixed")
+    bc_s_pred = evaluation(classify(bc_set, bc_set))
+    print(bc_s_pred)
+    
+    print("BC - Mixed")
+    bc_m_pred = evaluation(classify(bc_mod, bc_mod))
+    print(bc_m_pred)
+    
+    print("## GLASS")
+    print("GS - Not Mixed")
+    gs_s_pred = evaluation(classify(gs_set, gs_set))
+    print(gs_s_pred)
+    
+    print("GS - Mixed")
+    gs_m_pred = evaluation(classify(gs_mod, gs_mod))
+    print(gs_m_pred)
+    
+    print("## IRIS")
+    print("IR - Not Mixed")
+    ir_s_pred = evaluation(classify(ir_set, ir_set))
+    print(ir_s_pred)
+    
+    print("IR - Mixed")
+    ir_m_pred = evaluation(classify(ir_mod, ir_mod))
+    print(ir_m_pred)
+    
+    print("## SOYBEANS")
+    print("SB - Not Mixed")
+    sb_s_pred = evaluation(classify(sb_set, sb_set))
+    print(sb_s_pred)
+    
+    print("SB - Mixed")
+    sb_m_pred = evaluation(classify(sb_mod, sb_mod))
+    print(sb_m_pred)
+    
+    print("## HOUSE VOTES")
+    print("HV - Not Mixed")
+    hv_s_pred = evaluation(classify(hv_set, hv_set))
+    print(hv_s_pred)
+    
+    print("HV - Mixed")
+    hv_m_pred = evaluation(classify(hv_mod, hv_mod))
+    print(hv_m_pred)
     
 
 # ----------------------------------------------------------------------

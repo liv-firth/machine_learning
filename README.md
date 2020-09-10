@@ -29,3 +29,18 @@ For each class  . . .  precision = (# samples correclty classified as being part
 In other words precision = (TP)/(TP + FP)
 
 We may be able to average these across a data set, but I'm not certain yet. 
+
+* Video Outline
+
+Instructions from assignment: 
+
+The video is to be no longer than 5 minutes long.–The video should be provided in mp4 format. Alternatively, it can be uploaded to a streamingservice such as YouTube with a link provided.–Fast forwarding is permitted through long computational cycles. Fast forwarding isnot permittedwhenever there is a voice-over or when results are being presented.–Be sure to provide verbal commentary or explanation on all of the elements you are demonstrating.–Demonstrate your discretization method for the real-valued features.–Provide sample outputs on one fold’s hold-out set for one of the data sets showing classificationperformance on both both versions of your algorithm.–Show a sample trained model. This will consist of the set of class parameter values as well as theclass-conditional feature parameter values.–Demonstrate the counting process by showing the constitution counts for a class as well as for aclass-conditional feature counts.–Show the performance on one fold’s hold-out set for both versions of your algorithm on one of thedata sets.
+
+Outline: 
+
+1. Demonstrate how we discretized all of the features in each data set 
+2. Show sample outputs from one folds test set for one data set, including the classifications for original (from first 2 tests?)
+3. Show sample outputs from one folds test set for one data set, including the classifications for augmented (from first two tests?)
+4. Show the class paramter values you get from one of the trained models including class conditional attribute values 
+5. Show the counting process by showing the sample counts for a class and the attribute counts for a class 
+6. Show one fold's hold out set for both versions of the algorithm (augmented and original) on one of the data sets

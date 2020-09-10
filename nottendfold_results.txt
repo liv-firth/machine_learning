@@ -1,0 +1,79 @@
+/////////// TESTING ALGORITHM ON TWO VERSIONS OF THE DATA ///////////
+## BREAST CANCER
+BC - Not Mixed
+0/1 Loss: 0.991701244813278
+Precision Results: 
+Class: 2        Precision: 0.9737991266375546
+Class: 4        Precision: 0.991701244813278
+
+BC - Mixed
+0/1 Loss: 0.991701244813278
+Precision Results: 
+Class: 2        Precision: 0.9454148471615721
+Class: 4        Precision: 0.991701244813278
+
+## GLASS
+GS - Not Mixed
+0/1 Loss: 1.0
+Precision Results: 
+Class: 1        Precision: 0.9571428571428572
+Class: 2        Precision: 0.75
+Class: 3        Precision: 1.0
+Class: 5        Precision: 1.0
+Class: 6        Precision: 1.0
+Class: 7        Precision: 1.0
+
+GS - Mixed
+0/1 Loss: 1.0
+Precision Results: 
+Class: 1        Precision: 0.8857142857142857
+Class: 2        Precision: 0.631578947368421
+Class: 3        Precision: 1.0
+Class: 5        Precision: 1.0
+Class: 6        Precision: 1.0
+Class: 7        Precision: 1.0
+
+## IRIS
+IR - Not Mixed
+0/1 Loss: 1.0
+Precision Results: 
+Class: Iris-setosa      Precision: 1.0
+Class: Iris-versicolor  Precision: 1.0
+Class: Iris-virginica   Precision: 1.0
+
+IR - Mixed
+0/1 Loss: 1.0
+Precision Results: 
+Class: Iris-setosa      Precision: 1.0
+Class: Iris-versicolor  Precision: 1.0
+Class: Iris-virginica   Precision: 1.0
+
+## SOYBEANS
+SB - Not Mixed
+0/1 Loss: 1.0
+Precision Results: 
+Class: D1       Precision: 1.0
+Class: D2       Precision: 1.0
+Class: D3       Precision: 0.9
+Class: D4       Precision: 1.0
+
+SB - Mixed
+0/1 Loss: 1.0
+Precision Results: 
+Class: D1       Precision: 1.0
+Class: D2       Precision: 1.0
+Class: D3       Precision: 1.0
+Class: D4       Precision: 1.0
+
+## HOUSE VOTES
+HV - Not Mixed
+0/1 Loss: 0.9400749063670412
+Precision Results: 
+Class: republican       Precision: 0.9702380952380952
+Class: democrat Precision: 0.9400749063670412
+
+HV - Mixed
+0/1 Loss: 0.9438202247191011
+Precision Results: 
+Class: republican       Precision: 0.9702380952380952
+Class: democrat Precision: 0.9438202247191011

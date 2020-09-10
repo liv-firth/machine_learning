@@ -169,6 +169,7 @@ def create_test_set(filename):
 # ----------------------------------------------------------------------  
 
 def Q(train_set, classVal):
+    print("RUNNING Q FUNCTION")
     # Filter training set based off of class value
     arr = train_set.twoDArray
     is_classVal = arr['Class']==classVal
@@ -182,10 +183,11 @@ def Q(train_set, classVal):
     return(q)
 
 def F(train_set, classVal, attValList): #multiply
+    print("RUNNING F FUNCTION")
     # Grab Relevant information from training set
     attList = train_set.attributes_array
     arr = train_set.twoDArray
-    numAtt = train.attributes_total
+    numAtt = train_set.attributes_total
     
     #Filter by class variable
     is_classVal = arr['Class']==classVal
@@ -195,7 +197,7 @@ def F(train_set, classVal, attValList): #multiply
     
     f = 1 #Create standard F Value
     #For each attribute
-    for i in range(attributes_total):
+    for i in range(train_set.attributes_total):
         #Filter class array for attribute val
         val = attValList[i]
         sumMatch = 0
@@ -206,15 +208,51 @@ def F(train_set, classVal, attValList): #multiply
         
         f = f*tempF
 
-    print(f)
+    #print(f)
     return(f)
     
 
 def classify(test_set, train_set):
+    print("CLASSIFYING DATA")
     cList = test_set.classes_holder
     
+    testArr = test_set.twoDArray
+    testArr["predClass"]=""
+    testArr["correctBool"]=""
     
-    return(train_set)
+    
+    for i in range(len(testArr)): # For each value of the test array
+        cValArr = [] #Blank list to append to with values
+        #Build row array
+        rowArr = []
+        #print(i)
+        for m in range(test_set.attributes_total):
+            rowArr.append(testArr.iat[i,m+1])
+        #print(rowArr)
+        
+        for k in cList: #For each class available
+            q = Q(train_set, k)
+            f = F(train_set, k, rowArr)
+            
+            c = q*f
+            cValArr.append(c)
+        
+        #Determine max index
+        maxIndex = cValArr.index(max(cValArr))
+        classDec = cList[maxIndex]
+        testArr.at[i,"predClass"]=classDec
+        
+        if testArr.at[i, "Class"] == testArr.at[i, "predClass"]:
+            testArr.at[i, "correctBool"] = True
+        else: testArr.at[i, "correctBool"] = False
+        
+    print(cValArr)
+    print(testArr) 
+
+    return_set = test_set
+    return_set.twoDArray=testArr     
+
+    return(return_set)
     
 
 
@@ -272,7 +310,7 @@ def tenFoldCreation(item):
     n = 0 #Row Iterative
     dfList = [] #Create blank list to append to
     for i in range (9): #Run nine times
-        print(i)
+        #print(i)
         m = n + numRow #Find last row to grab based off of iterative
         tempdf = df.iloc[n:m] #Grab only rows between n and m
         dfList.append(tempdf) #Append List with new item
@@ -322,8 +360,10 @@ def main():
 # ----------------------------------------------------------------------
 # TEST THE ALGORITHM ON TWO DIFFERENT VERSIONS OF THE DATA
 # ----------------------------------------------------------------------
-
-## Train the Algorithm
+    print("TESTING ALGORITHM ON TWO VERSIONS OF THE DATA")
+    bc_s_pred = classify(bc_set, bc_set)
+    bc_m_pred = classify(bc_mod, bc_set)
+    
 
 # ----------------------------------------------------------------------
 # EVALUATION MEASURES

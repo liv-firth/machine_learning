@@ -38,6 +38,19 @@ output - classification
 
 # edited k - nearest neighbor outline 
 
+In this rule, editing the reference set is first performed, every sample in the reference set is classified by using the k-NN rule and the set is formed by eliminating it from the reference set. All the samples mistakenly classified are then deleted from the reference set. Afterward, any input sample is classified using the k-NN rule and the edited reference set. Obviously, the editing k-nearest neighbors classifier (EK -NN) consists of the k-nearest neighbor classifier and an editing reference set. However, the editing reference set gained by this method is only a subset of the reference set. This may result in the loss of some important information and decline of classification accuracy.
+
+- Steps 
+
+1. Classify the reference set using the k-NN rule you developed 
+
+2. Determine whether or not those examples have been correctly classfified or not. If they are incorrectly classified, remove them from the reference set.  
+
+3. Use the editied reference set to perform k-NN again and classify points as desired. 
+
+- Ignore this 
+For every sample y in the edited reference set, all the k - or (k + 1) nearest neighbors of y must be in the class to which y belongs. Here n denotes the number of samples which tie with the kth nearest neighbor of y with respect to the distance from y (So all of the points that are the same distance as the k-th nearest neighbor). The performance of the rule proposed has been investigated using three classification examples. 
+
 
 
 
@@ -74,3 +87,6 @@ At the end of this process, the classification of a given point is that of the n
 https://towardsdatascience.com/machine-learning-basics-with-the-k-nearest-neighbors-algorithm-6a6e71d01761
 
 https://www.geeksforgeeks.org/ml-k-medoids-clustering-with-example/
+
+https://pdfs.semanticscholar.org/dc08/dbe7b7550ae0c10c568e8500df0bca94e267.pdf
+

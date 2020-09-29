@@ -1,6 +1,6 @@
 ## TO DOS
 
-* Pre-process data
+* Pre-process data [complete]
 * Implement k - nearest neighbor 
 * Implement edited k - nearest neighbor 
 * Implement partitioning around k - medoids

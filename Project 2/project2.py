@@ -8,6 +8,7 @@ Project Two
 
 # Include the Following Packages
 import pandas as pd
+from math import sqrt
 
 # ----
 # Dataset class and creation function
@@ -41,6 +42,18 @@ def tenFold(datas):
 # ----       
 def k_near_neighbor(datas):
     print("--- K Nearest Neighbor ---")
+    df = datas.dataArr
+    row0 = df.iloc[[0]]
+    
+    for i in range(datas.numObsv):
+        distance = euclidean_distance(row0, df.iloc[i])
+        print(distance)
+    
+def euclidean_distance(row1, row2):
+    distance = 0.0
+    for i in range(len(row1)-1):
+        distance += (row1[i]-row2[i])**2
+    return(sqrt(distance))
 
 def edited_k(datas):
     print("--- Edited K Nearest Neighbor ---")
@@ -61,6 +74,8 @@ def main():
     mac_data = create_data_set(filenames[4])
     seg_data = create_data_set(filenames[5])
     print("All Dataset Objects Created")
+    
+    k_near_neighbor(for_data)
   
 # ----
 #  RUN MAIN FUNCTION

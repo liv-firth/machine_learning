@@ -33,8 +33,20 @@ def create_data_set(filename):
 # ----
 # DEFINE TEN FOLD FUNCTION
 # ----
-#def tenFold(datas):      
-        
+def tenFold(datas):   
+    print("--- Ten Fold Cross Validation ---")
+ 
+# ----
+#  DEFINE CLASSIFICATION FUNCTIONS
+# ----       
+def k_near_neighbor(datas):
+    print("--- K Nearest Neighbor ---")
+
+def edited_k(datas):
+    print("--- Edited K Nearest Neighbor ---")
+
+def partitioning_k(datas):
+    print("--- Partitioning K ---")
     
 # ----
 #  BUILD MAIN FUNCTION

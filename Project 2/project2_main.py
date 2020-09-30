@@ -5,39 +5,25 @@ Project Two
 
 @author: Claire Richards, Olivia Firth
 """
+# ----
+# IMPORT FILES AND PACKAGES
+# ----
 
-
-# Include the Following Packages and Files
 import pandas as pd
-import dataset_class
 from math import sqrt
 
+import dataset_class
+import k_nearest_neighbor
 
- 
-    
 # ----
 # DEFINE TEN FOLD FUNCTION
 # ----
-def tenFold(datas):   
-    print("--- Ten Fold Cross Validation ---")
+
  
 # ----
 #  DEFINE CLASSIFICATION FUNCTIONS
 # ----       
-def k_near_neighbor(datas):
-    print("--- K Nearest Neighbor ---")
-    df = datas.dataArr
-    row0 = df.iloc[[0]]
-    
-    for i in range(datas.numObsv):
-        distance = euclidean_distance(row0, df.iloc[i])
-        print(distance)
-    
-def euclidean_distance(row1, row2):
-    distance = 0.0
-    for i in range(len(row1)-1):
-        distance += (row1[i]-row2[i])**2
-    return(sqrt(distance))
+
 
 def edited_k(datas):
     print("--- Edited K Nearest Neighbor ---")

@@ -11,6 +11,7 @@
 
 
 # k - nearest neighbor outline 
+non-parametric (no assumptions about the underlying distribution of the data)
 
 input - data subset 
 
@@ -83,7 +84,14 @@ For every sample y in the edited reference set, all the k - or (k + 1) nearest n
 At the end of this process, the classification of a given point is that of the nearest medoid. 
 
 # hypothesis 
+knn works better for lower dimension data sets
+base hypothesis on choosing k?
 
+https://machinelearningmastery.com/k-nearest-neighbors-for-machine-learning/
+https://towardsdatascience.com/k-medoids-clustering-on-iris-data-set-1931bf781e05
+
+
+# links 
 https://towardsdatascience.com/machine-learning-basics-with-the-k-nearest-neighbors-algorithm-6a6e71d01761
 
 https://www.geeksforgeeks.org/ml-k-medoids-clustering-with-example/

@@ -26,6 +26,8 @@ def create_data_set(filename):
     temp_test_set = data_set(dataArr, numAttr, numObsv, classArr)
     return(temp_test_set)
     
-
+# ----
+# DEFINE TEN FOLD FUNCTION
+# ----
 def tenFold(datas):   
     print("--- Ten Fold Cross Validation ---")

@@ -73,6 +73,29 @@ class k_near_neighbor:
                 allTestPred.append(returnRow)
         allPredRows = pd.concat(allTestPred)
         
+        
+        
+
+        print(allPredRows)
+        
+    # ----
+    # FUNCTION TO RUN THE EDITED KNN ALGORITHM
+    # ----   
+    def run_edited_knn(self):
+        allTestPred = []
+        ## Run for each 10 fold cross
+        for i in range(10): #Run for each set, 10 times
+            self.fit(self.trainArr[i], self.testArr[i]) #Define train and test data sets
+            numRows = len(self.test) #Define the number of rows to classify
+            
+            for x in range(numRows):
+                tempTestRow = self.test.iloc[[x]]
+                returnRow = self.predict(tempTestRow)
+                allTestPred.append(returnRow)
+        allPredRows = pd.concat(allTestPred)
+        
+        ## Evaluate to find which were incorrect and remove them
+        
 
         print(allPredRows)
                 

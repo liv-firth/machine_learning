@@ -37,7 +37,7 @@ def main():
 #    hou_knn = k_near_neighbor(5, hou_data)
 #    hou_knn.run_knn()
     
-    seg_knn = k_near_neighbor(9, seg_data)
+    seg_knn = k_near_neighbor(15, seg_data)
     seg_knn.run_knn()
     
     

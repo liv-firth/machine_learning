@@ -22,10 +22,36 @@ class data_set:
         self.numObsv = numObsv
         self.classArr = classArr
         self.regression = regression
+
+    
+    # ----
+    # FUNCTION TO TUNE THE DATA 
+    # ----
+
+    def tune(self)
+    # extract 10% of data 
+        tenPer = int(self.numObs*0.1) # calculate how many rows are ten percent  
+        df = self.dataArr #define data frame as data array
+        df = df.sample(frac=1) #shuffle data frame rows
+        r = 0 #set a starting point 
+        tuningSet = df.iloc[r:tenPer] #Grab Rows within r tenPer range
+
+        #todo - remove tuningSet from the dataset 
+
+        # perform tuning (5 values)
+
+        #return k value to be used for training set 
+        
+
+    # for training set, test against this 10 percent with different parameter values 
+    
     
     # ----
     # FUNCTION TO INTERNALLY CREATE A TEN FOLD TEST AND TRAIN ARRAYS
     # ----
+
+    # note - stratification not necessarry for regression data sets 
+
     def make10Fold(self):
         ## Find int for 10% of Rows
         tenPer = int(self.numObsv*0.1)

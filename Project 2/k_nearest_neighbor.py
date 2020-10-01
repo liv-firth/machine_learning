@@ -8,6 +8,7 @@ K-Nearest Neighbor Implementation
 ## IMPORT THE FOLLOWING PACKAGES
 import pandas as pd
 import math as m
+from math import sqrt
 import copy
 
 ## IMPORT DATA SET CLASS FILE
@@ -30,6 +31,8 @@ class k_near_neighbor:
     def fit(self, train, test):
         self.train = train
         self.test = test
+
+
                
     # ----
     # FUNCTION TO PREDICT THE CLASS OF A ROW FROM THE TEST SET

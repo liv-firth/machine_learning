@@ -31,8 +31,6 @@ input - data subset
 
 3. Assign that classfification to the vector (example) being tested. 
 
-
-
 Both for classification and regression, a useful technique can be to assign weights to the contributions of the neighbors, so that the nearer neighbors contribute more to the average than the more distant ones. For example, a common weighting scheme consists in giving each neighbor a weight of 1/d, where d is the distance to the neighbor.
 
 The neighbors are taken from a set of objects for which the class (for k-NN classification) or the object property value (for k-NN regression) is known. This can be thought of as the training set for the algorithm, though no explicit training step is required.
@@ -51,12 +49,10 @@ In this rule, editing the reference set is first performed, every sample in the 
 
 2. Determine whether or not those examples have been correctly classfified or not. If they are incorrectly classified, remove them from the reference set.  
 
-3. Use the editied reference set to perform k-NN again and classify points as desired. 
+3. Use the edited reference set to perform k-NN again and classify points as desired. 
 
 - Ignore this 
 For every sample y in the edited reference set, all the k - or (k + 1) nearest neighbors of y must be in the class to which y belongs. Here n denotes the number of samples which tie with the kth nearest neighbor of y with respect to the distance from y (So all of the points that are the same distance as the k-th nearest neighbor). The performance of the rule proposed has been investigated using three classification examples. 
-
-
 
 
 # partinioning around k - medoids outline 
@@ -90,6 +86,7 @@ At the end of this process, the classification of a given point is that of the n
 # hypothesis 
 knn works better for lower dimension data sets
 base hypothesis on choosing k?
+
 
 https://machinelearningmastery.com/k-nearest-neighbors-for-machine-learning/
 https://towardsdatascience.com/k-medoids-clustering-on-iris-data-set-1931bf781e05

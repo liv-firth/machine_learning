@@ -1,6 +1,10 @@
 ## TO DOS
 
-* Pre-process data [complete]
+* Pre-process data [complete] (Steps Below)
+	+ All Data files were transferred to csv files for easy transfer into pandas dataframe
+	+ Result / Class Attributes were renamed to 'Class' in all files
+	+ Non predictive Attributes were removed (see each .names file for details on which attributes were removed, maybe we can put this in a table)
+	+ Missing attribute values were assigned randomized values for that attribute (will add more details)
 * Implement k - nearest neighbor 
 * Implement edited k - nearest neighbor 
 * Implement partitioning around k - medoids
@@ -94,4 +98,3 @@ https://towardsdatascience.com/machine-learning-basics-with-the-k-nearest-neighb
 https://www.geeksforgeeks.org/ml-k-medoids-clustering-with-example/
 
 https://pdfs.semanticscholar.org/dc08/dbe7b7550ae0c10c568e8500df0bca94e267.pdf
-

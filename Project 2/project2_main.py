@@ -12,8 +12,11 @@ Project Two
 import pandas as pd
 from math import sqrt
 
+
 import dataset_class
+from dataset_class import create_data_set
 import k_nearest_neighbor
+from k_nearest_neighbor import k_near_neighbor
 import edited_knn
 import partitioning_knn
   

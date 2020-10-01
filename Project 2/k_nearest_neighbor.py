@@ -31,8 +31,6 @@ class k_near_neighbor:
     def fit(self, train, test):
         self.train = train
         self.test = test
-
-
                
     # ----
     # FUNCTION TO PREDICT THE CLASS OF A ROW FROM THE TEST SET
@@ -58,7 +56,7 @@ class k_near_neighbor:
         predictedClass = topNeighbors['Class'].value_counts()[:1].index.tolist()
         #print(predictedClass)
         testRow['PredClass'] = predictedClass
-        return testRow
+        return testRow 
     
     # ----
     # FUNCTION TO RUN THE KNN ALGORITHM
@@ -76,6 +74,13 @@ class k_near_neighbor:
                 allTestPred.append(returnRow)
         allPredRows = pd.concat(allTestPred)
         
+        ## Determine Which Predictions Were Correct
+        correctList = []
+        for n in range(len(allPredRows)): #For each row
+            if(allPredRows['Class'].iloc([[n]]) == allPredRows['PredClass'].iloc([[n]])):
+                correctList.append(True)
+            else:
+                correctList.append(False)
         
         
 

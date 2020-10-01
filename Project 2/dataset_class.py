@@ -53,6 +53,7 @@ class data_set:
 
         #test on each k value 
         for v in kvalues:
+            print()
             #run knn on training set 
             #report success 
 

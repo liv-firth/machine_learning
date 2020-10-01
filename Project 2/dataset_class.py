@@ -7,6 +7,7 @@ Data Set Class File and Related Functions
 """
 # IMPORT THE FOLLOWING PACKAGES
 import copy
+import pandas as pd 
 
 # ----
 # Dataset class and creation function

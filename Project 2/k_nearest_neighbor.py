@@ -31,6 +31,8 @@ class k_near_neighbor:
     def fit(self, train, test):
         self.train = train
         self.test = test
+
+
                
     # ----
     # FUNCTION TO PREDICT THE CLASS OF A ROW FROM THE TEST SET

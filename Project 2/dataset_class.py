@@ -38,7 +38,24 @@ class data_set:
 
         #todo - remove tuningSet from the dataset 
 
-        # perform tuning (5 values)
+        # find k values to be tuned to 
+        kvalues =  []
+        k1 = sqrt(self.numObs)
+        kvalues.append(k1)
+        k2 = k1 + (self.numObs*.05)
+        kvalues.append(k2)
+        k3 = k2 + (self.numObs*.05)
+        kvalues.append(k3)
+        k4 = k1 - (self.numObs*.05)
+        kvalues.append(k4)
+        k5 = k3 + (self.numObs*.05)
+        kvalues.append(k5)
+
+        #test on each k value 
+        for v in kvalues:
+            #run knn on training set 
+            #report success 
+
 
         #return k value to be used for training set 
 

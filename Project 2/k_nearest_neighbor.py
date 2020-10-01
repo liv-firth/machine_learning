@@ -47,15 +47,23 @@ class k_near_neighbor:
         # Sort dataset by ascending distances
         newTrain = copy.deepcopy(self.train) #Create deepcopy of train (not connected with original)
         newTrain['Distances'] = distances #Add Distances column to data frame
-        newTrain.sort_values(by = 'Distances', ascending = True) #Order by distances column
+        newTrain = newTrain.sort_values(by = 'Distances', ascending = True) #Order by distances column
+
         
         # Grab top k neighbors
         topNeighbors = newTrain.head(self.k) #Grab top k rows
         
         # Predict Class
         predictedClass = topNeighbors['Class'].value_counts()[:1].index.tolist()
-        #print(predictedClass)
+        
         testRow['PredClass'] = predictedClass
+        
+        if(testRow.iloc[0]['PredClass'] == testRow.iloc[0]['Class']):
+            testRow['Correct'] = True
+        else:
+            testRow['Correct'] = False
+            
+        print(testRow)
         return testRow 
     
     # ----
@@ -74,17 +82,8 @@ class k_near_neighbor:
                 allTestPred.append(returnRow)
         allPredRows = pd.concat(allTestPred)
         
-        ## Determine Which Predictions Were Correct
-        correctList = []
-        for n in range(len(allPredRows)): #For each row
-            if(allPredRows['Class'].iloc([[n]]) == allPredRows['PredClass'].iloc([[n]])):
-                correctList.append(True)
-            else:
-                correctList.append(False)
-        
-        
-
         print(allPredRows)
+
         
     # ----
     # FUNCTION TO RUN THE EDITED KNN ALGORITHM
@@ -102,7 +101,7 @@ class k_near_neighbor:
                 allTestPred.append(returnRow)
         allPredRows = pd.concat(allTestPred)
         
-        ## Evaluate to find which were incorrect and remove them
+        ## Remove Incorrect Rows
         
 
         print(allPredRows)

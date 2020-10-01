@@ -28,7 +28,7 @@ class data_set:
     # FUNCTION TO TUNE THE DATA 
     # ----
 
-    def tune(self)
+    def tune(self):
     # extract 10% of data 
         tenPer = int(self.numObs*0.1) # calculate how many rows are ten percent  
         df = self.dataArr #define data frame as data array
@@ -41,7 +41,7 @@ class data_set:
         # perform tuning (5 values)
 
         #return k value to be used for training set 
-        
+
 
     # for training set, test against this 10 percent with different parameter values 
     

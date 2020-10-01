@@ -8,6 +8,7 @@ K-Nearest Neighbor Implementation
 ## IMPORT THE FOLLOWING PACKAGES
 import pandas as pd
 import math as m
+from math import sqrt
 import copy
 
 ## IMPORT DATA SET CLASS FILE

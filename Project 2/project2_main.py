@@ -10,7 +10,8 @@ Project Two
 # ----
 
 import pandas as pd
-from math import sqrt
+import math
+#from math import sqrt
 
 
 import dataset_class
@@ -24,7 +25,7 @@ import partitioning_knn
 #  BUILD MAIN FUNCTION
 # ----
 def main():
-    filenames = ["Datasets/abalone.csv", "Datasets/forestfires.csv", "Datasets/glass.csv", "Datasets/house-votes-84-fixed.csv", "Datasets/machine.csv", "Datasets/segmentation.csv"]
+    filenames = ["abalone.csv", "forestfires.csv", "glass.csv", "house-votes-84-fixed.csv", "machine.csv", "segmentation.csv"]
 
     gla_data = create_data_set(filenames[2], False) #Import Glass Dataset
     hou_data = create_data_set(filenames[3], False) #Import House Vote Dataset

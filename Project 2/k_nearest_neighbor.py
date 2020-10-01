@@ -35,38 +35,56 @@ class k_near_neighbor:
     # FUNCTION TO PREDICT THE CLASS OF A ROW FROM THE TEST SET
     # ----   
     def predict(self, testRow):
-        print("--- Predict Class by KNN ---")
+        #print("--- Predict Class by KNN ---")
         distances = []
         # Calculate Distances For All Neighbors
         for i in range(len(self.train)): #For all training set values
-            tempDist = euclidean_distance(testRow, train.iloc) #Return euclidean distance
+            tempDist = euclidean_distance(testRow, self.train.iloc[[i]]) #Return euclidean distance
             distances.append(tempDist) #Append distances list with temp distance calculated
-        print(distances)
+        #print(distances)
         
         # Sort dataset by ascending distances
-        newTrain = copy.deepcopy(train) #Create deepcopy of train (not connected with original)
+        newTrain = copy.deepcopy(self.train) #Create deepcopy of train (not connected with original)
         newTrain['Distances'] = distances #Add Distances column to data frame
         newTrain.sort_values(by = 'Distances', ascending = True) #Order by distances column
         
         # Grab top k neighbors
-        topNeighbors = head(self.k) #Grab top k rows
+        topNeighbors = newTrain.head(self.k) #Grab top k rows
         
         # Predict Class
-        topNeighbors['Class'].value_counts()
+        predictedClass = topNeighbors['Class'].value_counts()[:1].index.tolist()
+        #print(predictedClass)
+        testRow['PredClass'] = predictedClass
+        return testRow
     
     # ----
     # FUNCTION TO RUN THE KNN ALGORITHM
     # ----   
     def run_knn(self):
+        allTestPred = []
         ## Run for each 10 fold cross
         for i in range(10): #Run for each set, 10 times
-            fit(self.trainArr[i], self.testArr[i]) #Define train and test data sets
+            self.fit(self.trainArr[i], self.testArr[i]) #Define train and test data sets
+            numRows = len(self.test) #Define the number of rows to classify
+            
+            for x in range(numRows):
+                tempTestRow = self.test.iloc[[x]]
+                returnRow = self.predict(tempTestRow)
+                allTestPred.append(returnRow)
+        allPredRows = pd.concat(allTestPred)
+        
+
+        print(allPredRows)
+                
+                
  
 # ----
 # FUNCTION TO FIND THE EUCLIDEAN DISTANCE BETWEEN ALL VALUES BETWEEN TWO ROWS
 # ---- 
 def euclidean_distance(row1, row2):
     distance = 0.0
-    for i in range(len(row1)-1):
-        distance += (row1[i]-row2[i])**2
+    row1Val = row1.values.tolist()
+    row2Val = row2.values.tolist()
+    for i in range(len(row1Val[0])-1):
+        distance += (row1Val[0][i]-row2Val[0][i])**2
     return(sqrt(distance))

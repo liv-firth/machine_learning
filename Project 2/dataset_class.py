@@ -50,7 +50,7 @@ class data_set:
             tempList = copy.deepcopy(tenDFList) #Create a temporary copy of the tenDFList to reference
             test.append(tempList[x]) #Append Test Array with data frame at x in list
             del tempList[x] #Delete test data frame from list
-            train.append(tempList) #Append train list with the remaining dataframes in the list
+            train.append(pd.concat(tempList)) #Append train list with the remaining dataframes in the list
         
         self.trainArr = train
         self.testArr = test

@@ -24,6 +24,7 @@ class k_near_neighbor:
         self.regression = data_obj.regression
         self.trainArr = data_obj.trainArr
         self.testArr = data_obj.testArr  
+        self.tuneArr = data_obj.tuneArr
     
     # ----
     # FUNCTION TO DEFINE WHAT THE TRAIN AND TEST SETS ARE TO USE
@@ -65,6 +66,48 @@ class k_near_neighbor:
             
         print(testRow)
         return testRow 
+
+    # ----
+    # FUNCTION TO TUNE THE DATA 
+    # ----
+
+    def tune(self):
+    # extract 10% of data 
+        tenPer = int(self.numObs*0.1) # calculate how many rows are ten percent  
+        df = self.dataArr #define data frame as data array
+        df = df.sample(frac=1) #shuffle data frame rows
+        r = 0 #set a starting point 
+        self.tuneArr = df.iloc[r:tenPer] #Grab Rows within r tenPer range
+
+        #todo - remove tuningSet from the dataset 
+
+        # find k values to be tuned to 
+        kvalues =  []
+        k1 = sqrt(self.numObs)
+        kvalues.append(k1)
+        k2 = k1 + (self.numObs*.05)
+        kvalues.append(k2)
+        k3 = k2 + (self.numObs*.05)
+        kvalues.append(k3)
+        k4 = k1 - (self.numObs*.05)
+        kvalues.append(k4)
+        k5 = k3 + (self.numObs*.05)
+        kvalues.append(k5)
+        loss_values = []
+
+        #test on each k value 
+        for v in kvalues:
+            temp_k = kvalues[v]
+            print()
+            #run knn on tuniing set 
+            self.k = temp_k
+            self.run_knn()
+            #run a loss function to approximate accuracy 
+            #store accuracy result in loss_values 
+        #find best accuracy value 
+        #reset self.k to be the best k
+
+    # for training set, test against this 10 percent with different parameter values 
     
     # ----
     # FUNCTION TO RUN THE KNN ALGORITHM
@@ -73,6 +116,7 @@ class k_near_neighbor:
         allTestPred = []
         ## Run for each 10 fold cross
         for i in range(10): #Run for each set, 10 times
+            self.tune(self) #perform tuning 
             self.fit(self.trainArr[i], self.testArr[i]) #Define train and test data sets
             numRows = len(self.test) #Define the number of rows to classify
             

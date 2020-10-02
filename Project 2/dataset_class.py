@@ -22,48 +22,7 @@ class data_set:
         self.numObsv = numObsv
         self.classArr = classArr
         self.regression = regression
-
-    
-    # ----
-    # FUNCTION TO TUNE THE DATA 
-    # ----
-
-    def tune(self):
-    # extract 10% of data 
-        tenPer = int(self.numObs*0.1) # calculate how many rows are ten percent  
-        df = self.dataArr #define data frame as data array
-        df = df.sample(frac=1) #shuffle data frame rows
-        r = 0 #set a starting point 
-        tuningSet = df.iloc[r:tenPer] #Grab Rows within r tenPer range
-
-        #todo - remove tuningSet from the dataset 
-
-        # find k values to be tuned to 
-        kvalues =  []
-        k1 = sqrt(self.numObs)
-        kvalues.append(k1)
-        k2 = k1 + (self.numObs*.05)
-        kvalues.append(k2)
-        k3 = k2 + (self.numObs*.05)
-        kvalues.append(k3)
-        k4 = k1 - (self.numObs*.05)
-        kvalues.append(k4)
-        k5 = k3 + (self.numObs*.05)
-        kvalues.append(k5)
-
-        #test on each k value 
-        for v in kvalues:
-            print()
-            #run knn on training set 
-            #report success 
-
-
-        #return k value to be used for training set 
-
-
-    # for training set, test against this 10 percent with different parameter values 
-    
-    
+   
     # ----
     # FUNCTION TO INTERNALLY CREATE A TEN FOLD TEST AND TRAIN ARRAYS
     # ----

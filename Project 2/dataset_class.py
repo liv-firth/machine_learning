@@ -69,6 +69,8 @@ def create_data_set(filename, regression):
     numAttr = len(dataArr.columns) - 1 #
     classArr = pd.unique(dataArr.iloc[:, numAttr])
 
+    #create tuning set 
+    #remove obs used for tuning 
     temp_test_set = data_set(dataArr, numAttr, numObsv, classArr, regression) #Create test set object
     temp_test_set.make10Fold() #Make 10 Fold Test and Train set arrays
     return(temp_test_set)

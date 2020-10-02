@@ -31,8 +31,6 @@ class k_near_neighbor:
     def fit(self, train, test):
         self.train = train
         self.test = test
-
-
                
     # ----
     # FUNCTION TO PREDICT THE CLASS OF A ROW FROM THE TEST SET
@@ -49,16 +47,24 @@ class k_near_neighbor:
         # Sort dataset by ascending distances
         newTrain = copy.deepcopy(self.train) #Create deepcopy of train (not connected with original)
         newTrain['Distances'] = distances #Add Distances column to data frame
-        newTrain.sort_values(by = 'Distances', ascending = True) #Order by distances column
+        newTrain = newTrain.sort_values(by = 'Distances', ascending = True) #Order by distances column
+
         
         # Grab top k neighbors
         topNeighbors = newTrain.head(self.k) #Grab top k rows
         
         # Predict Class
         predictedClass = topNeighbors['Class'].value_counts()[:1].index.tolist()
-        #print(predictedClass)
+        
         testRow['PredClass'] = predictedClass
-        return testRow
+        
+        if(testRow.iloc[0]['PredClass'] == testRow.iloc[0]['Class']):
+            testRow['Correct'] = True
+        else:
+            testRow['Correct'] = False
+            
+        print(testRow)
+        return testRow 
     
     # ----
     # FUNCTION TO RUN THE KNN ALGORITHM
@@ -75,6 +81,27 @@ class k_near_neighbor:
                 returnRow = self.predict(tempTestRow)
                 allTestPred.append(returnRow)
         allPredRows = pd.concat(allTestPred)
+        
+        print(allPredRows)
+
+        
+    # ----
+    # FUNCTION TO RUN THE EDITED KNN ALGORITHM
+    # ----   
+    def run_edited_knn(self):
+        allTestPred = []
+        ## Run for each 10 fold cross
+        for i in range(10): #Run for each set, 10 times
+            self.fit(self.trainArr[i], self.testArr[i]) #Define train and test data sets
+            numRows = len(self.test) #Define the number of rows to classify
+            
+            for x in range(numRows):
+                tempTestRow = self.test.iloc[[x]]
+                returnRow = self.predict(tempTestRow)
+                allTestPred.append(returnRow)
+        allPredRows = pd.concat(allTestPred)
+        
+        ## Remove Incorrect Rows
         
 
         print(allPredRows)

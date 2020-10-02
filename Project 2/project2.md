@@ -88,8 +88,10 @@ knn works better for lower dimension data sets
 base hypothesis on choosing k?
 
 
+https://www.mygreatlearning.com/blog/knn-algorithm-introduction/
 https://machinelearningmastery.com/k-nearest-neighbors-for-machine-learning/
 https://towardsdatascience.com/k-medoids-clustering-on-iris-data-set-1931bf781e05
+http://ijarcet.org/wp-content/uploads/IJARCET-VOL-5-ISSUE-6-1943-1946.pdf
 
 
 # links 

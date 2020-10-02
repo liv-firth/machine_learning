@@ -18,6 +18,8 @@ def partitioning_k(datas):
 
     #While current cost is less that 
 
+    #Classify based on nearest medoid
+
  
  #Function for calculating cost 
     #For each medoid 

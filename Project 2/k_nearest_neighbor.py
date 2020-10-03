@@ -45,7 +45,7 @@ class k_near_neighbor:
         self.testArr = data_obj.testArr  
         self.tuneArr = data_obj.tuneArr
         self.numObs = data_obj.numObsv
-    
+        self.baseData = data_obj.dataArr
     # ----
     # FUNCTION TO DEFINE WHAT THE TRAIN AND TEST SETS ARE TO USE
     # ----
@@ -180,9 +180,13 @@ class k_near_neighbor:
     # FUNCTION TO RUN THE PARTITIONED K ALGORITHM
     # ----   
     def run_partitioned_knn(self):
-            print("--- Partitioning K ---")
-
+        print("--- Partitioning K ---")
+        allTestPred = [] #Blank List for Predicted Rows
+        df = copy.deepcopy(self.baseData)
         #Select k random points out of the data points in datas to use as medoids
+        df = df.sample(frac=1) #shuffle data frame rows
+        
+        
     
         #For each point in datas, find the closest medoid and make collect them (list of lists)
     

@@ -13,6 +13,20 @@ import pandas as pd
 # Dataset class and creation function
 # ----
 class data_set:
+    # -----------------------------------------
+    # ORDER OF FUNCTIONS WITHIN THE CLASS 
+        # UNIVERSAL INTERNAL FUNCTIONS
+            # INITALIZER FOR DATA OBJECT
+            # FUNCTION TO CREATE TRAIN AND TEST SETS FOR 10 FOLDS
+            # FUNCTION TO CREATE A TUNING SET
+    # FUNCTIONS IN THE DOCUMENT, OUTSIDE THE CLASS
+        # CREATE DATA OBJECT: BUILDS DATA SET OBJECT FROM A FILE NAME
+    # -----------------------------------------
+    
+    # ----------------------------------------- #
+    # ------ UNIVERSL INTERNAL FUNCTIONS ------ #  
+    # ----------------------------------------- #
+    
     # ----
     # INITALIZER FUNCTION
     # ----
@@ -70,7 +84,23 @@ class data_set:
         df = df.sample(frac=1) #shuffle data frame rows
         
         self.tuneArr = df.head(tenPer) #grab top 10% of rows and assign as a tuning set
+    
+    # ----
+    # FUNCTION TO PICK K MEDIODS RANDOMLY AND REMOVE FROM DATASET
+    # ----
+    def makeMediods(self, k):
+        #Shuffle the dataset
         
+        #Grab Medoids from top k rows of shuffled dataset
+        
+        #Transfer the rest of the dataset into a separate data array
+        
+        #Return self
+
+        
+# ----------------------------------------- #
+# ------ FUNCTIONS OUTSIDE THE CLASS ------ #  
+# ----------------------------------------- #   
         
 # ----
 # DEFINE FUNCTION TO READ CSV AND CREATE A DATA SET OBJECT (WITH TEST AND TRAINING 10 FOLD CREATED)

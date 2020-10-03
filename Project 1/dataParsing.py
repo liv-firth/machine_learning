@@ -19,10 +19,17 @@ for i in range(len(hv)):
     for j in range(len(hv.columns)):
         tempval = hv.iat[i,j]
         if tempval == "?":
-            newtemp = random.choice(["n", "y"])
+            newtemp = 0
+        elif tempval =="y":
+            newtemp = 1
+        elif tempval =="n":
+            newtemp = 2
+        else:
+            newtemp = tempval
             
-            hv.iat[i, j] = newtemp
-            print(hv.iat[i, j])
+            
+        hv.iat[i, j] = newtemp
+        print(hv.iat[i, j])
 
 hv.to_csv('house-votes-84-fixed.csv')
 

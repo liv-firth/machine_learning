@@ -18,6 +18,7 @@ import dataset_class
 from dataset_class import create_data_set
 import k_nearest_neighbor
 from k_nearest_neighbor import k_near_neighbor
+from ExtraFuncs import zeroOneLoss, precisionLoss
 import edited_knn
 import partitioning_knn
   
@@ -42,7 +43,10 @@ def main():
 #    hou_knn.run_knn()
     
     seg_knn = k_near_neighbor(15, seg_data)
-    seg_knn.run_knn()
+    precisionLoss(seg_knn.run_knn())
+    self.tune()
+    precisionLoss(seg_knn.run_knn())
+    
     
     
   

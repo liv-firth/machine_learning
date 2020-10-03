@@ -13,6 +13,7 @@ import copy
 
 ## IMPORT DATA SET CLASS FILE
 import dataset_class
+from ExtraFuncs import euclidean_distance, zeroOneLoss
 import ExtraFuncs
 
 
@@ -26,6 +27,7 @@ class k_near_neighbor:
         self.trainArr = data_obj.trainArr
         self.testArr = data_obj.testArr  
         self.tuneArr = data_obj.tuneArr
+        self.numObs = data_obj.numObsv
     
     # ----
     # FUNCTION TO DEFINE WHAT THE TRAIN AND TEST SETS ARE TO USE
@@ -65,7 +67,7 @@ class k_near_neighbor:
         else:
             testRow['Correct'] = False
             
-        print(testRow)
+        #print(testRow)
         return testRow 
 
     # ----
@@ -74,39 +76,42 @@ class k_near_neighbor:
 
     def tune(self):
     # extract 10% of data 
-        tenPer = int(self.numObs*0.1) # calculate how many rows are ten percent  
-        df = self.dataArr #define data frame as data array
-        df = df.sample(frac=1) #shuffle data frame rows
-        r = 0 #set a starting point 
-        self.tuneArr = df.iloc[r:tenPer] #Grab Rows within r tenPer range
+#        tenPer = len(self.tuneArr)*.1 # calculate how many rows are ten percent  
+#        df = self.dataArr #define data frame as data array
+#        df = df.sample(frac=1) #shuffle data frame rows
+#        r = 0 #set a starting point 
+#        self.tuneArr = df.iloc[r:tenPer] #Grab Rows within r tenPer range
 
         #todo - remove tuningSet from the dataset 
-
+        
         # find k values to be tuned to 
         kvalues =  []
-        k1 = sqrt(self.numObs)
+        k1 = int(sqrt(self.numObs))
         kvalues.append(k1)
-        k2 = k1 + (self.numObs*.05)
+        k2 = int(k1 + (self.numObs*.05))
         kvalues.append(k2)
-        k3 = k2 + (self.numObs*.05)
+        k3 = int(k2 + (self.numObs*.05))
         kvalues.append(k3)
-        k4 = k1 - (self.numObs*.05)
+        k4 = int(k1 - (self.numObs*.05))
         kvalues.append(k4)
-        k5 = k3 + (self.numObs*.05)
+        k5 = int(k3 + (self.numObs*.05))
         kvalues.append(k5)
         loss_values = []
 
         #test on each k value 
-        for v in kvalues:
+        for v in range(len(kvalues)):
             temp_k = kvalues[v]
-            print()
             #run knn on tuniing set 
             self.k = temp_k
-            self.run_knn()
-            #run a loss function to approximate accuracy 
-            #store accuracy result in loss_values 
-        #find best accuracy value 
-        #reset self.k to be the best k
+            tempDataFrame = self.run_knn()
+            lossValue = zeroOneLoss(tempDataFrame) #run a loss function to approximate accuracy 
+            
+            loss_values.append(lossValue) #store accuracy result in loss_values 
+        max_value = max(loss_values) #Find Highest Precision Value
+        max_index = loss_values.index(max_value) #grab index of max value
+        best_k = kvalues[max_index] #grab best k value with the index of the max values
+        
+        self.k = best_k #reset self.k to be the best k
 
     # for training set, test against this 10 percent with different parameter values 
     
@@ -117,7 +122,6 @@ class k_near_neighbor:
         allTestPred = []
         ## Run for each 10 fold cross
         for i in range(10): #Run for each set, 10 times
-            self.tune(self) #perform tuning 
             self.fit(self.trainArr[i], self.testArr[i]) #Define train and test data sets
             numRows = len(self.test) #Define the number of rows to classify
             
@@ -126,8 +130,8 @@ class k_near_neighbor:
                 returnRow = self.predict(tempTestRow)
                 allTestPred.append(returnRow)
         allPredRows = pd.concat(allTestPred)
-        
-        print(allPredRows)
+        #print(allPredRows)
+        return(allPredRows)
 
         
     # ----

@@ -60,6 +60,18 @@ class data_set:
         self.testArr = test
         print("--- 10 FOLD TEST AND TRAIN SETS CREATED ---")
         
+    # ----
+    # FUNCTION TO INTERNALLY CREATE A TEN FOLD TEST AND TRAIN ARRAYS
+    # ----
+    def makeTuneSet(self):
+        tenPer = int(self.numObsv*0.1)
+        
+        df = self.dataArr #define data frame as data array
+        df = df.sample(frac=1) #shuffle data frame rows
+        
+        self.tuneArr = df.head(tenPer) #grab top 10% of rows and assign as a tuning set
+        
+        
 # ----
 # DEFINE FUNCTION TO READ CSV AND CREATE A DATA SET OBJECT (WITH TEST AND TRAINING 10 FOLD CREATED)
 # ----  
@@ -72,6 +84,7 @@ def create_data_set(filename, regression):
     #create tuning set 
     #remove obs used for tuning 
     temp_test_set = data_set(dataArr, numAttr, numObsv, classArr, regression) #Create test set object
+    temp_test_set.makeTuneSet() #Make and Assign Tuning Set
     temp_test_set.make10Fold() #Make 10 Fold Test and Train set arrays
     return(temp_test_set)
   

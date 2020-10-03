@@ -13,6 +13,7 @@ import copy
 
 ## IMPORT DATA SET CLASS FILE
 import dataset_class
+import ExtraFuncs
 
 
 class k_near_neighbor:
@@ -152,13 +153,3 @@ class k_near_neighbor:
                 
                 
  
-# ----
-# FUNCTION TO FIND THE EUCLIDEAN DISTANCE BETWEEN ALL VALUES BETWEEN TWO ROWS
-# ---- 
-def euclidean_distance(row1, row2):
-    distance = 0.0
-    row1Val = row1.values.tolist()
-    row2Val = row2.values.tolist()
-    for i in range(len(row1Val[0])-1):
-        distance += (row1Val[0][i]-row2Val[0][i])**2
-    return(sqrt(distance))

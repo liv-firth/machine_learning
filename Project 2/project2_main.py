@@ -44,7 +44,7 @@ def main():
     
     seg_knn = k_near_neighbor(15, seg_data)
     precisionLoss(seg_knn.run_knn())
-    self.tune()
+    seg_knn.tune()
     precisionLoss(seg_knn.run_knn())
     
     

@@ -42,17 +42,17 @@ def zeroOneLoss(dataFrame):
 #   Used in knn class functions
 # ---- 
 def precisionLoss(dataFrame):
-    numAttr = len(dataFrame.columns) - 1 #Find Number of Attributes in Dataset
-    classArr = pd.unique(dataFrame.iloc[:, numAttr]) #Find Class Values and create a list to reference
+    classArr = pd.unique(dataFrame['Class']) #Find Class Values and create a list to reference
     
     precisionArray = [] #Create blank list to write to with precision values
     for n in range(len(classArr)): #For every class in the class List
+        print(classArr[n])
         is_class = dataFrame['Class'] == classArr[n] #Determine if the rows match the current class
         cArr = dataFrame[is_class] #Filter for rows that match the current class
-        numTotal = len(cArr) #Count the number of rows to determine the max correct values
+        numTotal = len(cArr) #Count the number of rows to determine the max correct value
         
         is_correct = cArr['Correct'] == True #Find all rows with correct classes assigned
-        correctArr = dataFrame[is_correct] #Filter for rows that have been classified correctly
+        correctArr = cArr[is_correct] #Filter for rows that have been classified correctly
         numCorrect = len(correctArr) #Count the number of rows to determine how many rows were identified correctly
         
         precision = numCorrect / numTotal #Determine Precision for that class

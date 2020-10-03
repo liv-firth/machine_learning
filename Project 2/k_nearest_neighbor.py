@@ -18,6 +18,23 @@ import ExtraFuncs
 
 
 class k_near_neighbor:
+    # -----------------------------------------
+    # ORDER OF FUNCTIONS WITHIN THE CLASS 
+        # UNIVERSAL INTERNAL FUNCTIONS
+            # INITALIZER FOR KNN OBJECT
+            # FIT FUNCTION TO DEFINE TRAIN AND TEST SETS WITHIN THE KNN OBJECT
+            # PREDICT FUNCTION TO PREDICT THE CLASS FROM NEAREST K NEIGHBORS
+            # TUNE FUNCTION TO REFINE THE K VALUE INPUTTED INTO EACH KNN FUNCTION
+        # KNN ALORITHM FUNCTIONS
+            # BASE KNN FUNCTION
+            # KNN EDITED FUNCTION
+            # KNN PARTITIONED FUNCTION
+    # -----------------------------------------
+    
+    # ----------------------------------------- #
+    # ------ UNIVERSL INTERNAL FUNCTIONS ------ #  
+    # ----------------------------------------- #
+    
     # ----
     # FUNCTION TO INITALIZE KNN OBJECT
     # ----
@@ -71,9 +88,8 @@ class k_near_neighbor:
         return testRow 
 
     # ----
-    # FUNCTION TO TUNE THE DATA 
+    # FUNCTION TO TUNE K USING THE ZERO ONE LOSS FUNCTION
     # ----
-
     def tune(self):
     # extract 10% of data 
 #        tenPer = len(self.tuneArr)*.1 # calculate how many rows are ten percent  
@@ -115,6 +131,11 @@ class k_near_neighbor:
 
     # for training set, test against this 10 percent with different parameter values 
     
+    
+    # ----------------------------------------- #
+    # -------- KNN ALGORITHM FUNCTIONS -------- #  
+    # ----------------------------------------- #
+    
     # ----
     # FUNCTION TO RUN THE KNN ALGORITHM
     # ----   
@@ -154,6 +175,30 @@ class k_near_neighbor:
         
 
         print(allPredRows)
-                
+    
+    # ----
+    # FUNCTION TO RUN THE PARTITIONED K ALGORITHM
+    # ----   
+    def run_partitioned_knn(self):
+            print("--- Partitioning K ---")
+
+        #Select k random points out of the data points in datas to use as medoids
+    
+        #For each point in datas, find the closest medoid and make collect them (list of lists)
+    
+    
+        #Set initial cost 
+    
+        #While current cost is less that 
+    
+        #Classify based on nearest medoid
+    
+     
+     #Function for calculating cost 
+        #For each medoid 
+                    #For each point in your set 
+                        #Calculate the absolute value of the difference (distance) (point - medoid)
+                    #Sum the differences over all the points 
+                #Sum the sums for each medoid            
                 
  

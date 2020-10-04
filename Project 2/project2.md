@@ -13,7 +13,7 @@
 * Employ a plurality vote [complete]
 * Employ Regression assignment
 * Test the above three algoriths using at least 5 values for k 
-* paper 
+* paper [in-progress]
 * video 
 
 
@@ -85,6 +85,33 @@ For every sample y in the edited reference set, all the k - or (k + 1) nearest n
                 2. If the total cost is more than that in the previous step, undo the swap.
 
 At the end of this process, the classification of a given point is that of the nearest medoid. 
+
+# Condensed K NN
+
+- uses a subset of the training set 
+- creates a stored reference set for the NN rule 
+- only uses points that are on the boundary of a neighborhood
+- minimum consitent subset - minimum classified set that will correctly classify any obs 
+
+Steps: 
+
+1. Find consistent subset. To do so  . . .
+    * Create two bins/arrays for storage, call one storage and one grab bag
+    * Take a sample and place it in store 
+    * Take a second sample - Second sample is classified by nn rule using contents of storage 
+        If classified correclty, - put it in grab bag 
+        If it is classified incorreclty - put it in storage 
+    * Proceed through the examples, classify based on what is in storage 
+        If classified correclty, - put it in grab bag 
+        If it is classified incorreclty - put it in storage 
+    * Once you loop through the sample/training set, loop through the grab bag until one of two things occurs:
+        1. The grab bag is exhausted with all of its elements placed in storage 
+        2. One complete pass has been made through grab bag without any obs being moved to storage 
+
+2. Use consistent subset for NN Rule. Final contents of storage are used for your reference set when using the NN rule. 
+
+http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.294.6968&rep=rep1&type=pdf
+https://pdfs.semanticscholar.org/4473/1460f9a1ca3e30c376d2a4f0c843573b2c6b.pdf
 
 # hypothesis 
 knn works better for lower dimension data sets

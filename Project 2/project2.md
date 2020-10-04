@@ -5,10 +5,13 @@
 	+ Result / Class Attributes were renamed to 'Class' in all files
 	+ Non predictive Attributes were removed (see each .names file for details on which attributes were removed, maybe we can put this in a table)
 	+ Missing attribute values were assigned randomized values for that attribute (will add more details)
-* Implement k - nearest neighbor 
-* Implement edited k - nearest neighbor 
-* Implement partitioning around k - medoids
-* Employ a plurality vote 
+* Implement k - nearest neighbor [complete]
+* Implement edited k - nearest neighbor [in-progress]
+* Implement condensed knn [in progress]
+* Implement k-means clustering 
+* Implement partitioning around k - medoids [in-progress]
+* Employ a plurality vote [complete]
+* Employ Regression assignment
 * Test the above three algoriths using at least 5 values for k 
 * paper 
 * video 

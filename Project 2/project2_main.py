@@ -19,8 +19,7 @@ from dataset_class import create_data_set
 import k_nearest_neighbor
 from k_nearest_neighbor import k_near_neighbor
 from ExtraFuncs import zeroOneLoss, precisionLoss
-import edited_knn
-import partitioning_knn
+
   
 # ----
 #  BUILD MAIN FUNCTION
@@ -37,13 +36,14 @@ def main():
     print("All Dataset Objects Created")
     
 #    gla_knn = k_near_neighbor(9, gla_data)
-#    gla_knn.run_knn()
+#    gla_knn.tune()
+#    precisionLoss(gla_knn.run_knn())
     
-#    hou_knn = k_near_neighbor(5, hou_data)
-#    hou_knn.run_knn()
+    hou_knn = k_near_neighbor(5, hou_data)
+    hou_knn.tune()
+    precisionLoss(hou_knn.run_knn())
     
     seg_knn = k_near_neighbor(15, seg_data)
-    precisionLoss(seg_knn.run_knn())
     seg_knn.tune()
     precisionLoss(seg_knn.run_knn())
     

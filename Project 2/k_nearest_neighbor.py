@@ -46,6 +46,7 @@ class k_near_neighbor:
         self.tuneArr = data_obj.tuneArr
         self.numObs = data_obj.numObsv
         self.baseData = data_obj.dataArr
+        self.data_obj = data_obj
     # ----
     # FUNCTION TO DEFINE WHAT THE TRAIN AND TEST SETS ARE TO USE
     # ----
@@ -153,7 +154,6 @@ class k_near_neighbor:
         allPredRows = pd.concat(allTestPred)
         #print(allPredRows)
         return(allPredRows)
-
         
     # ----
     # FUNCTION TO RUN THE EDITED KNN ALGORITHM
@@ -184,9 +184,14 @@ class k_near_neighbor:
         allTestPred = [] #Blank List for Predicted Rows
         df = copy.deepcopy(self.baseData)
         #Select k random points out of the data points in datas to use as medoids
-        df = df.sample(frac=1) #shuffle data frame rows
+        self.data_obj.makeMediods(self.k) #Run MakeMediods for the data object
+        self.data_obj.make10Fold() #Rebuild the Ten folds
         
-        
+        # Re assign several self objects
+        self.trainArr = data_obj.trainArr
+        self.testArr = data_obj.testArr  
+        self.baseData = data_obj.dataArr
+        self.mediods = data_obj.mediods #Add mediods variable to the class        
     
         #For each point in datas, find the closest medoid and make collect them (list of lists)
     

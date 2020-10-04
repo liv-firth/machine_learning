@@ -84,18 +84,28 @@ class data_set:
         df = df.sample(frac=1) #shuffle data frame rows
         
         self.tuneArr = df.head(tenPer) #grab top 10% of rows and assign as a tuning set
+        tuneDataRemoved = df.iloc[tenPer:self.numObsv-1] #Create separate data set that has the tuning set removed
+        self.dataArr = tuneDataRemoved #Reassign base data set to the new base data with the tuning set remvoed
+        
     
     # ----
     # FUNCTION TO PICK K MEDIODS RANDOMLY AND REMOVE FROM DATASET
     # ----
     def makeMediods(self, k):
+        print("Make Mediods")
         #Shuffle the dataset
+        df = self.dataArr #define data frame as data array
+        df = df.sample(frac=1) #shuffle the dataset
         
         #Grab Medoids from top k rows of shuffled dataset
+        mediodsArray = []
+        for i in range(k):
+            mediodsArray.append(df.iloc[0]) #grab the top row from the shuffled dataframe
+            df.drop(df.index[0]) #drop the row from the current dataframe
+        print(mediodsArray)
         
-        #Transfer the rest of the dataset into a separate data array
-        
-        #Return self
+        self.dataArr = df #Update the base data array with modified df
+        self.mediods = pd.concat(mediodsArray)
 
         
 # ----------------------------------------- #

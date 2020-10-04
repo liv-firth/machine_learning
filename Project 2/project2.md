@@ -7,12 +7,12 @@
 	+ Missing attribute values were assigned randomized values for that attribute (will add more details)
 * Implement k - nearest neighbor [complete]
 * Implement edited k - nearest neighbor [in-progress]
-* Implement condensed knn [in progress]
+* Implement condensed knn [in-progress]
 * Implement k-means clustering 
 * Implement partitioning around k - medoids [in-progress]
 * Employ a plurality vote [complete]
 * Employ Regression assignment
-* Test the above three algoriths using at least 5 values for k 
+* Test the above three algoriths using at least 5 values for (Isn't this tuning?) [in-progress]
 * paper [in-progress]
 * video 
 
@@ -112,6 +112,20 @@ Steps:
 
 http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.294.6968&rep=rep1&type=pdf
 https://pdfs.semanticscholar.org/4473/1460f9a1ca3e30c376d2a4f0c843573b2c6b.pdf
+
+# K means clustering 
+
+- Find subgroups that are relatively similar and group them for classification 
+- Unsuperivsed learning 
+
+Steps: 
+
+1. Specify number of clusters K (we can tune for this)
+2. Initialize centroids by first shuffling the dataset and then randomly selecting K data points for the centroids without replacement.
+3. Keep iterating until there is no change to the centroids - assignment of data points to clusters isn’t changing (I think this is the tricky part)
+4. Compute the sum of the squared distance between data points and all centroids. 
+5. Assign each data point to the closest cluster (centroid).
+6. Compute the centroids for the clusters by taking the average of the all data points that belong to each cluster.
 
 # hypothesis 
 knn works better for lower dimension data sets

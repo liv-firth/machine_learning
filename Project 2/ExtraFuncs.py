@@ -8,7 +8,18 @@ Extra Functions Not Attatched to a Class
 ## IMPORT THE FOLLOWING PACKAGES
 import pandas as pd
 from math import sqrt
+# -----------------------------------------
+# ORDER OF FUNCTIONS WITHIN THE FILE
+    # KNN REFERENCE FUNCTIONS
+        # EUCLIDEAN DISTANCE FUNCTION
+    # LOSS FUNCTIONS
+        # 0/1 LOSS
+        # PRECISION
+# -----------------------------------------
 
+# ----------------------------------------- #
+# -------- KNN REFERENCE FUNCTIONS -------- #  
+# ----------------------------------------- #
 
 # ----
 # FUNCTION TO FIND THE EUCLIDEAN DISTANCE BETWEEN ALL VALUES BETWEEN TWO ROWS 
@@ -21,10 +32,14 @@ def euclidean_distance(row1, row2, numAttr):
     for i in range(numAttr):
         distance += (row1Val[0][i]-row2Val[0][i])**2
     return(sqrt(distance))
+ 
+# ----------------------------------------- #
+# ------------ LOSS FUNCTIONS ------------- #  
+# ----------------------------------------- #
     
 # ----
 # LOSS FUNCTION: 0/1 LOSS
-#   Used in knn class functions
+#   Used in main to find accuracy of knn class functions
 # ---- 
 def zeroOneLoss(dataFrame):
     is_correct = dataFrame['Correct'] == True
@@ -39,7 +54,7 @@ def zeroOneLoss(dataFrame):
     
 # ----
 # LOSS FUNCTION: PRECISION
-#   Used in knn class functions
+#   Used in main to find accuracy of knn class functions
 # ---- 
 def precisionLoss(dataFrame):
     classArr = pd.unique(dataFrame['Class']) #Find Class Values and create a list to reference

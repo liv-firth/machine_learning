@@ -92,7 +92,7 @@ class data_set:
     # FUNCTION TO PICK K MEDIODS RANDOMLY AND REMOVE FROM DATASET
     # ----
     def makeMediodsCentroids(self, k):
-        print("Make Mediods")
+        print("Make Mediods and Centrpoids")
         #Shuffle the dataset
         df = self.dataArr #define data frame as data array
         df = df.sample(frac=1) #shuffle the dataset
@@ -100,21 +100,24 @@ class data_set:
         #Grab Medoids from top k rows of shuffled dataset
         mediodsArray = []
         for i in range(k):
-            mediodsArray.append(df.iloc[0]) #grab the top row from the shuffled dataframe
-            df.drop(df.index[0]) #drop the row from the current dataframe
+            mediodsArray.append(df.iloc[[i]]) #grab the top row from the shuffled dataframe
+            df.drop(df.index[[i]]) #drop the row from the current dataframe
         
         self.dataArr = df #Update the base data array with modified df
         self.mediods = pd.concat(mediodsArray)
+        print(self.mediods)
         
         #Add Centroids to centroid Array
         centroidsArray = [] #Make blank centroids array to append to 
         for i in range(k):
             tempcentroidRow = mediodsArray[i]
-            tempcentroidRow['Centroid'] = tempCentroidRow.iloc[[0]].index
-            print(tempcentroidRow)
+            tempcentroidRow['Centroid'] = tempcentroidRow.iloc[[0]].index
+            #print(tempcentroidRow)
             centroidsArray.append(tempcentroidRow)
-        self.centroids = pd.concat(centroidsArray)
-        print(self.mediods)
+        returnCentroids = pd.concat(centroidsArray)
+        print(returnCentroids)
+        self.centroids = returnCentroids
+        #print(self.mediods)
 
         
 # ----------------------------------------- #

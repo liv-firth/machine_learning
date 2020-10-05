@@ -327,12 +327,129 @@ class k_near_neighbor:
     # ----
     # FUNCTION TO RUN THE K MEANS CLUSTERING
     # ---- 
-    def run_k_means_cluster(self):
+    def run_k_means_cluster(self, maxIterations):
         print("--- K Means Clustering ---")
         #Initalize Centroids by first shuffling the dataset then randomly selecting k data points for the centroids without replacement
         #Keep iterating until there is no change to the centroids
+<<<<<<< HEAD
         #Compute the sum of the squared distance between data points and all centroids
         #Assign each data point to the closests cluster
         #Compute the centroids for the clusters by taking the average of all the data points that belong to each cluster
+=======
+        iterations = 0 #Initalize for bookeeping
+        oldCentroids = None #Blank object for holding the old centroids
+        stopIterating = False #Flag for while loop
+        allData = copy.deepcopy(self.baseData) #Create Copy of Base Data to reference
         
- 
+        while stopIterating != True: 
+            # Save old centroids and iterate by one
+            oldCentroids = self.centroids #save current centroids to old centroids
+            iterations += 1 #Iterate iterations by one
+            centroidAssignment = [] #Create blank list to store centroid Assignment
+            
+            # Assign centroids to each data point
+            for x in range(len(self.baseData)): #For every row in the base data
+                #Find the closest centroid
+                indexArray = [] #Blank Array to Record Row / Centroid Indexes Into
+                distanceArray = [] #Blank Array to record Distances 
+                for y in range(len(self.centroids)): #Measure Distance for each centroid
+                    #print(self.centroids)
+                    tempCentRow = self.centroids.iloc[[y]] #Move centroid row inot temporary variable for easy access
+                    indexCentRow = tempCentRow.iloc[0]['Centroid'] # record the index for easy reference
+                    
+                    indexArray.append(indexCentRow) #Append to list for later reference
+                    
+                    distCentroid = euclidean_distance(tempCentRow, allData.iloc[[x]], self.numAttr) #Calculate euclidean distance to Centroid
+                    distanceArray.append(distCentroid) #Append to list for easy reference
+                    
+                #Determine centroid with minimium distance to row
+                minDist = min(distanceArray)
+                minDistIndex = distanceArray.index(minDist)
+                #print(indexArray)
+                minIndex = indexArray[minDistIndex] # Grab index of minimum value to assign as centroid
+                #print(minIndex)
+                centroidAssignment.append(minIndex)
+            
+            # Assign Centroids based off of Centroid Assignment to Data points
+            allData['Centroid'] = centroidAssignment
+            print(allData)
+            for i in range(self.k): #For each centroid
+                referenceIndex = self.centroids.iloc[i]['Centroid']
+                dfCopy = copy.deepcopy(allData) #Create copy of dataset to mutate for data analysis
+                is_in_centroid = dfCopy['Centroid'] == referenceIndex # find rows that match
+                dfCopy = dfCopy[is_in_centroid] #Filter for rows that are in the centroid group
+                col = dfCopy.iloc[:, 0:self.numAttr-1]
+                dfCopy['Mean'] = col.mean(axis=1) #Find the mean of each attribute
+                
+                #Find reference mean total then find the closest row in datas
+                referenceMean = dfCopy['Mean'].mean()
+                
+                dfCopy['Difference'] = dfCopy['Mean'] - referenceMean
+                minColIndex = int(dfCopy[['Difference']].idxmin())
+                print(minColIndex)
+                minColVal = dfCopy.loc[minColIndex]['Difference']
+                
+                #Determine difference between current centroid and reference Mean
+                centroidRow = copy.deepcopy(self.centroids.iloc[[i]])
+                colCentroids = centroidRow.iloc[:, 0:self.numAttr-1]
+                centroidMean = float(colCentroids.mean(axis = 1))
+                
+                centroidDifference = centroidMean - referenceMean
+                print(minColVal)
+                print(centroidDifference)
+                #If difference for new centroid index is less than the current centroid, swap centroids
+                if abs(minColVal) < abs(centroidDifference): #If new centroid is better
+                    newCentroidRow = copy.deepcopy(allData.iloc[[minColIndex]]) #Create copy of new centroid row
+                    newCentroidRow.iloc[0]['Centroid'] = newCentroidRow.index[[0]]
+                    oldCentroidRow = copy.deepcopy(self.centroids.iloc[[i]]) #Create copy of old centroid row
+                    
+                    allData.drop(mincolIndex) #Drop new centroid from all data
+                    allData.append(oldCentroidRow) #Append Dataframe with old Centroid Row
+                    self.centroids.iloc[[i]] = newCentroidRow #Replace old centroid row with new centroid row
+                    
+                #If false, do not change any rows out
+            
+            # Sort centroids datasets by index values
+            self.centroids.sort_index() #Sort centroids
+            oldCentroids.sort_index() #Sort oldCentroids data frame
+            # Determine if while loop can stop
+            if oldCentroids.equals(self.centroids): stopIterating = True #If new centroids equals the old centroids, stop Iterating
+            if iterations > maxIterations: stopIterating = True #If max iterations exceeded, stop iterating
+>>>>>>> 8161882a0032ffe1de78c46d6f3b196e8d8c0566
+        
+        # After Centroids are Determined
+        #Final Assignment of Centroids with Classes
+        allPredRows = [] #Blank list to append with rows
+        for x in range(len(allData)): #For every row in the base data
+                #Find the closest centroid
+                indexArray = [] #Blank Array to Record Row / Centroid Indexes Into
+                distanceArray = [] #Blank Array to record Distances 
+                testRow = allData.iloc[[x]]
+                for y in range(len(self.centroids)): #Measure Distance for each centroid
+                    tempCentRow = self.centroids.iloc[[y]] #Move centroid row inot temporary variable for easy access
+                    indexCentRow = tempCentRow.iloc[[0]].index # record the index for easy reference
+                    indexArray.append(indexCentRow) #Append to list for later reference
+                    
+                    distCentroid = euclidean_distance(tempCentRow, allData.iloc[[x]], self.numAttr) #Calculate euclidean distance to Centroid
+                    distanceArray.append(distCentroid) #Append to list for easy reference
+                    
+                #Determine centroid with minimium distance to row
+                minDist = min(distanceArray)
+                minDistIndex = distanceArray.index(minDist)
+                minIndex = indexArray[minDistIndex] # Grab index of minimum value to assign as centroid
+                
+                centroidClass = self.centroids.loc[minIndex]['Class'] #Grab Centroid Class
+                testRow['Centroid'] = minIndex #Assign to Centroid
+                testRow['PredClass'] = centroidClass #Assign Same Class as Centroid
+                
+                #Determine if Centroid Class Assignment is Correct
+                print(centroidClass, testRow.iloc[0]['PredClass'])
+                if testRow.iloc[0]['PredClass'] == testRow.iloc[0]['Class']:
+                    testRow['Correct'] = True
+                else: 
+                    testRow['Correct'] = False
+                
+                allPredRows.append(testRow)
+        allPredRowsReturn = pd.concat(allPredRows)
+        return(allPredRowsReturn)
+                        

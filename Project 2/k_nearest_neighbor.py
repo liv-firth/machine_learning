@@ -28,6 +28,7 @@ class k_near_neighbor:
         # KNN ALORITHM FUNCTIONS
             # BASE KNN FUNCTION
             # KNN EDITED FUNCTION
+            # KNN CONDENSED FUNCTION
             # KNN PARTITIONED FUNCTION
     # -----------------------------------------
     
@@ -45,6 +46,7 @@ class k_near_neighbor:
         self.testArr = data_obj.testArr  
         self.tuneArr = data_obj.tuneArr
         self.numObs = data_obj.numObsv
+        self.numAttr = data_obj.numAttr
         self.baseData = data_obj.dataArr
         self.data_obj = data_obj
     # ----
@@ -62,7 +64,7 @@ class k_near_neighbor:
         distances = []
         # Calculate Distances For All Neighbors
         for i in range(len(self.train)): #For all training set values
-            tempDist = euclidean_distance(testRow, self.train.iloc[[i]]) #Return euclidean distance
+            tempDist = euclidean_distance(testRow, self.train.iloc[[i]], self.numAttr) #Return euclidean distance
             distances.append(tempDist) #Append distances list with temp distance calculated
         #print(distances)
         
@@ -216,8 +218,10 @@ class k_near_neighbor:
         
         #Put every other row into storage, test on other row
         for x in range(numRows):
-            storage = pd.concat(storageArr)
-            self.fit(storage, self.baseData)
+            if(len(storageArr) != 0): # If not the first run      
+                storage = pd.concat(storageArr)
+                self.fit(storage, self.baseData)
+            
             if x == 0: #If the first sample
                 firstStorageRow = copy.deepcopy(self.baseData.iloc[[x]]) #Make Deep copy of first row in main data set
                 firstStorageRow['PredClass'] = firstStorageRow['Class']
@@ -230,11 +234,14 @@ class k_near_neighbor:
                     grabBagArr.append(returnRow)
                 else:
                     storageArr.append(returnRow)
-         # Test Until grab bag is exhausted or complete pass is made without any grab bag objects moved to storage
+        # Test Until grab bag is exhausted or complete pass is made without any grab bag objects moved to storage
         complete = False #Set complete to false
         while complete==False: #while not complete
             numIncorrect = 0 #Iterative for number incorrect reset to 0
-            for x in range(len(grabBagArr)):
+            x = 0
+            while x < len(grabBagArr):
+                print(x)
+                print(len(grabBagArr))
                 storage = pd.concat(storageArr) #Concatinate all storage Array rows into a single pandas dataframe
                 self.fit(storage, self.baseData) #Reset test and training sets to equal the storage and base data information
                 testRow = grabBagArr[x] #Set test row to be predicted upon
@@ -243,8 +250,10 @@ class k_near_neighbor:
                 # Check if not correct
                 if returnRow.iloc[0]['Correct'] == False: #If classification was not correct
                     storageArr.append(returnRow) #Add to the storage array
-                    del grabBagArr[x] #Remove from the grab bag
+                    del grabBagArr[x]
+                    numIncorrect += 1 #Add one to num incorrect
                 # Do nothing if it was correct
+                x += 1
             
             # Check for Completness
             if len(grabBagArr) == 0: #If grab back is empty
@@ -252,11 +261,21 @@ class k_near_neighbor:
             elif numIncorrect == 0: #If complete pass has been made without any being move to storage from the grab bag
                 complete = True #Set Complete to True, ending while Loop
             
-            # Set Consistent subset
-            self.c_subset = pd.concat(storageArr)
-             
-                    
+        # Set Consistent subset
+        self.c_subset = pd.concat(storageArr)
         
+        # Run KNN with condensed KNN as the reference set
+        allTestPred = [] #Create blank array for predicted rows
+        for i in range(10): #For each fold
+            self.fit(self.c_subset, self.testArr[i]) #Set test array to the ith test fold and set the train array to the condensed data set
+            numRows = len(self.test)
+            
+            for k in range(numRows): #For each test row
+                returnRow = self.predict(self.test.iloc[[k]]) #Predict for the row
+                allTestPred.append(returnRow)
+        predictedTable = pd.concat(allTestPred) #concatinate all predicted rows into a data frame for returning
+        return predictedTable     
+             
     # ----
     # FUNCTION TO RUN THE PARTITIONED K ALGORITHM
     # ----   

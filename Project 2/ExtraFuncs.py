@@ -14,11 +14,11 @@ from math import sqrt
 # FUNCTION TO FIND THE EUCLIDEAN DISTANCE BETWEEN ALL VALUES BETWEEN TWO ROWS 
 #   Used in knn class functions
 # ---- 
-def euclidean_distance(row1, row2):
+def euclidean_distance(row1, row2, numAttr):
     distance = 0.0
     row1Val = row1.values.tolist()
     row2Val = row2.values.tolist()
-    for i in range(len(row1Val[0])-1):
+    for i in range(numAttr):
         distance += (row1Val[0][i]-row2Val[0][i])**2
     return(sqrt(distance))
     

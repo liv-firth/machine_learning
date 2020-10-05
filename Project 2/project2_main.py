@@ -44,10 +44,10 @@ def main():
 #    precisionLoss(hou_knn.run_knn())
     
     seg_knn = k_near_neighbor(15, seg_data)
-    #precisionLoss(seg_knn.run_knn())
+    #seg_knn.tune()
+    precisionLoss(seg_knn.run_knn())
+    precisionLoss(seg_knn.run_edited_knn())
     precisionLoss(seg_knn.run_condensed_knn())
-#    seg_knn.tune()
-#    precisionLoss(seg_knn.run_knn())
     
     
     

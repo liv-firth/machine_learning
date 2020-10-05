@@ -170,6 +170,7 @@ class k_near_neighbor:
     # FUNCTION TO RUN THE KNN ALGORITHM
     # ----   
     def run_knn(self):
+        print("--- Original KNN ---")
         allTestPred = []
         ## Run for each 10 fold cross
         for i in range(10): #Run for each set, 10 times
@@ -189,7 +190,7 @@ class k_near_neighbor:
     # ----   
     def run_edited_knn(self):
         print("--- Edited KNN ---")
-        allTestPred = []
+        referenceRows = []
         ## Run for each 10 fold cross
         for i in range(10): #Run for each set, 10 times
             self.fit(self.trainArr[i], self.testArr[i]) #Define train and test data sets
@@ -198,13 +199,28 @@ class k_near_neighbor:
             for x in range(numRows):
                 tempTestRow = self.test.iloc[[x]]
                 returnRow = self.predict(tempTestRow)
-                allTestPred.append(returnRow)
-        allPredRows = pd.concat(allTestPred)
+                referenceRows.append(returnRow)
+        referenceSet = pd.concat(referenceRows) #Turn into data frame
         
         ## Remove Incorrect Rows
+        i = 0 #Build iterator for indexing rows during search and removal, set at 0
+        while i < len(referenceSet):
+            if referenceSet.iloc[i]['Correct'] == False: #If classified incorrectly,
+                referenceSet.drop(referenceSet.index[i])
+            #If not false, do nothing
+            i += 1 #Iterate i by one
         
-
-        print(allPredRows)
+        ## Run with reference set as the training Array
+        allTestPred = [] #Blank list to collect all predicted rows
+        for n in range(10): #Run for each fold set, 10 times
+            self.fit(referenceSet, self.testArr[n]) #Define train set as reference set, and test set as fold
+            
+            for x in range(len(self.test)): # For each test row
+                returnRow = self.predict(self.test.iloc[[x]]) #Build return row from prediction on test row
+                allTestPred.append(returnRow) #Append to row list
+        returnDataFrame = pd.concat(allTestPred) #Concat all rows into a dataframe to return
+        return returnDataFrame
+    
     # ----
     # FUNCTION TO RUN THE CONDENSED K NN ALGORITHM
     # ---- 
@@ -240,8 +256,6 @@ class k_near_neighbor:
             numIncorrect = 0 #Iterative for number incorrect reset to 0
             x = 0
             while x < len(grabBagArr):
-                print(x)
-                print(len(grabBagArr))
                 storage = pd.concat(storageArr) #Concatinate all storage Array rows into a single pandas dataframe
                 self.fit(storage, self.baseData) #Reset test and training sets to equal the storage and base data information
                 testRow = grabBagArr[x] #Set test row to be predicted upon

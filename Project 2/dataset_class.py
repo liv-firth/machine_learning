@@ -102,10 +102,10 @@ class data_set:
         for i in range(k):
             mediodsArray.append(df.iloc[0]) #grab the top row from the shuffled dataframe
             df.drop(df.index[0]) #drop the row from the current dataframe
-        print(mediodsArray)
         
         self.dataArr = df #Update the base data array with modified df
         self.mediods = pd.concat(mediodsArray)
+        print(self.mediods)
 
         
 # ----------------------------------------- #

@@ -39,11 +39,12 @@ def main():
 #    gla_knn.tune()
 #    precisionLoss(gla_knn.run_knn())
     
-    hou_knn = k_near_neighbor(5, hou_data)
-    hou_knn.tune()
-    precisionLoss(hou_knn.run_knn())
+#    hou_knn = k_near_neighbor(5, hou_data)
+#    hou_knn.tune()
+#    precisionLoss(hou_knn.run_knn())
     
     seg_knn = k_near_neighbor(15, seg_data)
+    precisionLoss(seg_knn.run_knn())
     seg_knn.tune()
     precisionLoss(seg_knn.run_knn())
     

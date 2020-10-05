@@ -76,14 +76,20 @@ class k_near_neighbor:
         topNeighbors = newTrain.head(self.k) #Grab top k rows
         
         # Predict Class
-        predictedClass = topNeighbors['Class'].value_counts()[:1].index.tolist()
+        if self.regression == True: #If data set is regressive
+            print("Use Gaussean Classification")
+            
         
-        testRow['PredClass'] = predictedClass
+        else: #If not regressive
+            #print("Use Plurality Vote")
+            predictedClass = topNeighbors['Class'].value_counts()[:1].index.tolist()
         
-        if(testRow.iloc[0]['PredClass'] == testRow.iloc[0]['Class']):
-            testRow['Correct'] = True
+        testRow['PredClass'] = predictedClass #Assign value of Pred Class in row to the predicted class
+        
+        if(testRow.iloc[0]['PredClass'] == testRow.iloc[0]['Class']): #If the predicted class equals the class
+            testRow['Correct'] = True #Mark as correct
         else:
-            testRow['Correct'] = False
+            testRow['Correct'] = False #Otherwise mark as false
             
         #print(testRow)
         return testRow 
@@ -92,6 +98,7 @@ class k_near_neighbor:
     # FUNCTION TO TUNE K USING THE ZERO ONE LOSS FUNCTION
     # ----
     def tune(self):
+        print("--- TUNING K ---")
     # extract 10% of data 
 #        tenPer = len(self.tuneArr)*.1 # calculate how many rows are ten percent  
 #        df = self.dataArr #define data frame as data array
@@ -130,7 +137,7 @@ class k_near_neighbor:
         
         self.k = best_k #reset self.k to be the best k
 
-    # for training set, test against this 10 percent with different parameter values 
+    
     
     
     # ----------------------------------------- #

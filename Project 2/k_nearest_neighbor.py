@@ -70,13 +70,15 @@ class k_near_neighbor:
         newTrain = copy.deepcopy(self.train) #Create deepcopy of train (not connected with original)
         newTrain['Distances'] = distances #Add Distances column to data frame
         newTrain = newTrain.sort_values(by = 'Distances', ascending = True) #Order by distances column
-
         
         # Grab top k neighbors
         topNeighbors = newTrain.head(self.k) #Grab top k rows
         
-        # Predict Class using vote 
-        predictedClass = topNeighbors['Class'].value_counts()[:1].index.tolist()
+        # Find Predicted Class
+        if self.regression == False: #If not regressive, use prediction method
+            predictedClass = topNeighbors['Class'].value_counts()[:1].index.tolist()
+        else:
+            print("Run Regression")
         
         testRow['PredClass'] = predictedClass
         
@@ -184,6 +186,7 @@ class k_near_neighbor:
     # FUNCTION TO RUN THE EDITED KNN ALGORITHM
     # ----   
     def run_edited_knn(self):
+        print("--- Edited KNN ---")
         allTestPred = []
         ## Run for each 10 fold cross
         for i in range(10): #Run for each set, 10 times
@@ -200,7 +203,60 @@ class k_near_neighbor:
         
 
         print(allPredRows)
-    
+    # ----
+    # FUNCTION TO RUN THE CONDENSED K NN ALGORITHM
+    # ---- 
+    def run_condensed_knn(self):
+        print("--- Condensed KNN ---")
+        # Create storage and grab bag arrays
+        storageArr = [] #Create blank storage array
+        grabBagArr = [] #Create blank grab back
+        
+        numRows = len(self.baseData) #Define number of rows to reference
+        
+        #Put every other row into storage, test on other row
+        for x in range(numRows):
+            storage = pd.concat(storageArr)
+            self.fit(storage, self.baseData)
+            if x == 0: #If the first sample
+                firstStorageRow = copy.deepcopy(self.baseData.iloc[[x]]) #Make Deep copy of first row in main data set
+                firstStorageRow['PredClass'] = firstStorageRow['Class']
+                firstStorageRow['Correct'] = True
+                storageArr.append(firstStorageRow) #Place sample in storage
+            else: #If not an even number
+                returnRow = self.predict(self.test.iloc[[x]]) #Predict using KNN 
+                # Check if correct
+                if returnRow.iloc[0]['Correct']: #If classification was correct
+                    grabBagArr.append(returnRow)
+                else:
+                    storageArr.append(returnRow)
+         # Test Until grab bag is exhausted or complete pass is made without any grab bag objects moved to storage
+        complete = False #Set complete to false
+        while complete==False: #while not complete
+            numIncorrect = 0 #Iterative for number incorrect reset to 0
+            for x in range(len(grabBagArr)):
+                storage = pd.concat(storageArr) #Concatinate all storage Array rows into a single pandas dataframe
+                self.fit(storage, self.baseData) #Reset test and training sets to equal the storage and base data information
+                testRow = grabBagArr[x] #Set test row to be predicted upon
+                returnRow = self.predict(testRow) #Predict using KNN 
+                
+                # Check if not correct
+                if returnRow.iloc[0]['Correct'] == False: #If classification was not correct
+                    storageArr.append(returnRow) #Add to the storage array
+                    del grabBagArr[x] #Remove from the grab bag
+                # Do nothing if it was correct
+            
+            # Check for Completness
+            if len(grabBagArr) == 0: #If grab back is empty
+                complete = True #Set Complete to True, ending While Loop
+            elif numIncorrect == 0: #If complete pass has been made without any being move to storage from the grab bag
+                complete = True #Set Complete to True, ending while Loop
+            
+            # Set Consistent subset
+            self.c_subset = pd.concat(storageArr)
+             
+                    
+        
     # ----
     # FUNCTION TO RUN THE PARTITIONED K ALGORITHM
     # ----   

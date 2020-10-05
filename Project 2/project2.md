@@ -6,9 +6,9 @@
 	+ Non predictive Attributes were removed (see each .names file for details on which attributes were removed, maybe we can put this in a table)
 	+ Missing attribute values were assigned randomized values for that attribute (will add more details)
 * Implement k - nearest neighbor [complete]
-* Implement edited k - nearest neighbor [in-progress, with exeption of Error]
+* Implement edited k - nearest neighbor [complete, with exeption of Error]
 * Implement condensed knn [complete, with exception of Error]
-* Implement k-means clustering 
+* Implement k-means clustering [in-progress]
 * Implement partitioning around k - medoids [in-progress]
 * Employ a plurality vote [complete]
 * Employ Regression assignment

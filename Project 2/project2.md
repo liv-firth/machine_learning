@@ -8,7 +8,7 @@
 * Implement k - nearest neighbor [complete]
 * Implement edited k - nearest neighbor [complete, with exeption of Error]
 * Implement condensed knn [complete, with exception of Error]
-* Implement k-means clustering [complete]
+* Implement k-means clustering [in-progress]
 * Implement partitioning around k - medoids [in-progress]
 * Employ a plurality vote [complete]
 * Employ Regression assignment
@@ -56,6 +56,10 @@ In this rule, editing the reference set is first performed, every sample in the 
 
 - Ignore this 
 For every sample y in the edited reference set, all the k - or (k + 1) nearest neighbors of y must be in the class to which y belongs. Here n denotes the number of samples which tie with the kth nearest neighbor of y with respect to the distance from y (So all of the points that are the same distance as the k-th nearest neighbor). The performance of the rule proposed has been investigated using three classification examples. 
+
+- Error Term: 
+
+
 
 
 # partinioning around k - medoids outline 
@@ -109,6 +113,9 @@ Steps:
         2. One complete pass has been made through grab bag without any obs being moved to storage 
 
 2. Use consistent subset for NN Rule. Final contents of storage are used for your reference set when using the NN rule. 
+
+- Error term: 
+
 
 http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.294.6968&rep=rep1&type=pdf
 https://pdfs.semanticscholar.org/4473/1460f9a1ca3e30c376d2a4f0c843573b2c6b.pdf

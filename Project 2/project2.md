@@ -148,6 +148,10 @@ https://towardsdatascience.com/kernel-regression-made-easy-to-understand-86caf2d
 
 For tuning h : About 68% of values drawn from a normal distribution are within one standard deviation σ away from the mean; about 95% of the values lie within two standard deviations; and about 99.7% are within three standard deviations.
 
+Grid search - cross validation 
+
+https://scikit-learn.org/stable/auto_examples/model_selection/plot_grid_search_digits.html
+https://www.youtube.com/watch?v=jY2v4q3TPbs
 
 # hypothesis 
 knn works better for lower dimension data sets
@@ -166,3 +170,36 @@ https://towardsdatascience.com/machine-learning-basics-with-the-k-nearest-neighb
 https://www.geeksforgeeks.org/ml-k-medoids-clustering-with-example/
 
 https://pdfs.semanticscholar.org/dc08/dbe7b7550ae0c10c568e8500df0bca94e267.pdf
+
+# notes from paper 
+
+\subsubsection{Notes: K Nearest Neighbor}
+We know that KNN does not work well for large scale data 
+KNN does not work well for large dimension data 
+Sensitive to noisy datasets
+Does not work well for imbalanced data 
+Sensitive to outliers
+Does work great with mixed data and with nonbinary categorical data 
+
+We can assume that Edited K Nearest Neighbor will work better in all cases, but maybe not better than partitioning 
+
+The larger the K value the less stable your predictions 
+
+\subsubsection{Notes: Partitioning around K Medoids}
+
+Because K is initially chosen at random, first run may yield different results 
+
+Does not work well for non spherical (arbitrarily distributed data)
+
+Not impacted by outliers 
+
+Better with small datasets 
+
+\subsubsection{Notes: Edited K Nearest Neighbor}
+
+Will work well for data sets where normal KNN would have had a lot of errors, i.e. the ones we originally predicted would not work well. 
+
+
+
+\emph{We hypothesise that all three algorithms will yield the least accurate results for the "Abalone" and "Forest Fires" data sets. The "Abalone" data has a power of ten more observations than any of the other data sets. None of the algorithms we are implementing respond well to very large data sets.  The "Forest Fire" data set also is fairly large, but more importantly in this case, it is unbalanced due to the disproportionately large number of class 0 observations. In addition the "Forest Fire" data set has a very large number of classes. These algorithms do not perform accurately on highly dimensional sets such as this one.}
+

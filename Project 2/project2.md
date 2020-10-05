@@ -8,7 +8,7 @@
 * Implement k - nearest neighbor [complete]
 * Implement edited k - nearest neighbor [complete, with exeption of Error]
 * Implement condensed knn [complete, with exception of Error]
-* Implement k-means clustering [in-progress]
+* Implement k-means clustering [complete]
 * Implement partitioning around k - medoids [in-progress]
 * Employ a plurality vote [complete]
 * Employ Regression assignment

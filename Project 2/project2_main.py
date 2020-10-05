@@ -45,9 +45,10 @@ def main():
     
     seg_knn = k_near_neighbor(15, seg_data)
     #seg_knn.tune()
-    precisionLoss(seg_knn.run_knn())
-    precisionLoss(seg_knn.run_edited_knn())
-    precisionLoss(seg_knn.run_condensed_knn())
+#    precisionLoss(seg_knn.run_knn())
+#    precisionLoss(seg_knn.run_edited_knn())
+#    precisionLoss(seg_knn.run_condensed_knn())
+    precisionLoss(seg_knn.run_k_means_cluster(10))
     
     
     

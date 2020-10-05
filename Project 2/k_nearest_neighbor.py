@@ -75,30 +75,48 @@ class k_near_neighbor:
         # Grab top k neighbors
         topNeighbors = newTrain.head(self.k) #Grab top k rows
         
-        # Predict Class
-        if self.regression == True: #If data set is regressive
-            print("Use Gaussean Classification")
-            
+        # Predict Class using vote 
+        predictedClass = topNeighbors['Class'].value_counts()[:1].index.tolist()
         
-        else: #If not regressive
-            #print("Use Plurality Vote")
-            predictedClass = topNeighbors['Class'].value_counts()[:1].index.tolist()
+        testRow['PredClass'] = predictedClass
         
-        testRow['PredClass'] = predictedClass #Assign value of Pred Class in row to the predicted class
-        
-        if(testRow.iloc[0]['PredClass'] == testRow.iloc[0]['Class']): #If the predicted class equals the class
-            testRow['Correct'] = True #Mark as correct
+        if(testRow.iloc[0]['PredClass'] == testRow.iloc[0]['Class']):
+            testRow['Correct'] = True
         else:
-            testRow['Correct'] = False #Otherwise mark as false
+            testRow['Correct'] = False
             
         #print(testRow)
         return testRow 
+
+        #Regression
+
+        # Step 1: Get an array (later called array x) of equidistant unique possible values for an observation based on the data set i.e. for house -votes 
+        # it would just be {democrat, republican} (however the classes may need to be represented numerically)
+
+        #Step 2: Tune the band width (h) (this is similar to standard deviation)
+            #To do this we will need to get a distribution of the data or K values, and find the range that 68% of the data falls into. 
+            #based on that we can find the standard deviation and then we can tune within a small range centered at whatever the standard deviation was
+            # The best way to do this is a little confusing for me, I am waiting for an email back from Giorgio
+             
+        #Step 3: For a given observation x_i that we wish to calculate, we calculate K at every value in array x 
+            #Create a k_array to store K values for each element in x
+            #To calculate K 
+                    #Calculate A = 1/(h sqrt(2pi) (same for every value in array x) 
+                    #Calulate B = -0.5[(x - x_i)/h]^2 where x_i is the observation value and x is the particular value from array x we are at 
+                    #Calculate K = Ae^B  
+                    #Put that value in k_array
+
+            #Find the mean of k_array 
+            #The prediciotn/classification is the value from array x, where the mean of the k_array occurs                  
+
+        
+
+ 
 
     # ----
     # FUNCTION TO TUNE K USING THE ZERO ONE LOSS FUNCTION
     # ----
     def tune(self):
-        print("--- TUNING K ---")
     # extract 10% of data 
 #        tenPer = len(self.tuneArr)*.1 # calculate how many rows are ten percent  
 #        df = self.dataArr #define data frame as data array
@@ -137,7 +155,7 @@ class k_near_neighbor:
         
         self.k = best_k #reset self.k to be the best k
 
-    
+    # for training set, test against this 10 percent with different parameter values 
     
     
     # ----------------------------------------- #

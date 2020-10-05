@@ -126,6 +126,28 @@ Steps:
 4. Compute the sum of the squared distance between data points and all centroids. 
 5. Assign each data point to the closest cluster (centroid).
 6. Compute the centroids for the clusters by taking the average of the all data points that belong to each cluster.
+https://towardsdatascience.com/k-means-clustering-algorithm-applications-evaluation-methods-and-drawbacks-aa03e644b48a
+
+# Regression
+
+- Involves three variables x, x_i, and h
+x = An evenly distributed (linearly spaced) list of all unique possible values of x in the data set in order
+x_i = observed data point (the one we are trying to classify/predict)
+h = bandwith (needs to be tuned) also presented as standard deviation
+
+K = Ae^B
+
+A = 1/(h sqrt(2pi)
+
+B = -0.5[(x - x_i)/h]^2
+
+If you graph x and K, x_i will be the mean 
+
+https://towardsdatascience.com/kernel-regression-made-easy-to-understand-86caf2d2b844
+
+
+For tuning h : About 68% of values drawn from a normal distribution are within one standard deviation σ away from the mean; about 95% of the values lie within two standard deviations; and about 99.7% are within three standard deviations.
+
 
 # hypothesis 
 knn works better for lower dimension data sets

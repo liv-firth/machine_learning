@@ -29,7 +29,8 @@ class k_near_neighbor:
             # BASE KNN FUNCTION
             # KNN EDITED FUNCTION
             # KNN CONDENSED FUNCTION
-            # KNN PARTITIONED FUNCTION
+            # K PARTITIONED FUNCTION
+            # K MEANS CLUSTERING FUNCTION
     # -----------------------------------------
     
     # ----------------------------------------- #
@@ -322,6 +323,16 @@ class k_near_neighbor:
                     #For each point in your set 
                         #Calculate the absolute value of the difference (distance) (point - medoid)
                     #Sum the differences over all the points 
-                #Sum the sums for each medoid            
-                
+                #Sum the sums for each medoid  
+    # ----
+    # FUNCTION TO RUN THE K MEANS CLUSTERING
+    # ---- 
+    def run_k_means_cluster(self):
+        print("--- K Means Clustering ---")
+        #Initalize Centroids by first shuffling the dataset then randomly selecting k data points for the centroids without replacement
+        #Keep iterating until there is no change to the centroids
+        #Compute the sum of the squared distance between data points and all centroids
+        #Assign each data point to the closests cluster
+        #Compute the centroids for the clusters by taking the average of all the data points that belong to each cluster
+        
  

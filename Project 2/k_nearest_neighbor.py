@@ -101,7 +101,7 @@ class k_near_neighbor:
         #Step 2: Tune the band width (h) (this is similar to standard deviation)
             #To do this we will need to get a distribution of the data or K values, and find the range that 68% of the data falls into. 
             #based on that we can find the standard deviation and then we can tune within a small range centered at whatever the standard deviation was
-            # The best way to do this is a little confusing for me, I am waiting for an email back from Giorgio
+            # Grid search with cross validation 
              
         #Step 3: For a given observation x_i that we wish to calculate, we calculate K at every value in array x 
             #Create a k_array to store K values for each element in x
@@ -299,7 +299,7 @@ class k_near_neighbor:
         allTestPred = [] #Blank List for Predicted Rows
         df = copy.deepcopy(self.baseData)
         #Select k random points out of the data points in datas to use as medoids
-        self.data_obj.makeMediodsCentroids(self.k) #Run MakeMediods for the data object
+        self.data_obj.makeMediods(self.k) #Run MakeMediods for the data object
         self.data_obj.make10Fold() #Rebuild the Ten folds
         
         # Re assign several self objects
@@ -309,8 +309,8 @@ class k_near_neighbor:
         self.mediods = data_obj.mediods #Add mediods variable to the class        
     
         #For each point in datas, find the closest medoid and make collect them (list of lists)
-    
-    
+        for x in range(len(self.trainArr)):
+            
         #Set initial cost 
     
         #While current cost is less that 
@@ -330,51 +330,7 @@ class k_near_neighbor:
     def run_k_means_cluster(self):
         print("--- K Means Clustering ---")
         #Initalize Centroids by first shuffling the dataset then randomly selecting k data points for the centroids without replacement
-        self.data_obj.makeMediodsCentroids(self.k)
-        self.centroids = self.data_obj.centroids # Initalize centroids data table
-        self.baseData = self.data_obj.dataArr # Re-initalize base dat with new data object data array
-        
         #Keep iterating until there is no change to the centroids
-        iterations = 0 #Initalize for bookeeping
-        oldCentroids = None #Blank object for holding the old centroids
-        stopIterating = False #Flag for while loop
-        allData = copy.deepcopy(self.baseData) #Create Copy of Base Data to reference
-        
-        while stopIterating != True: 
-            # Save old centroids and iterate by one
-            oldCentroids = self.centroids #save current centroids to old centroids
-            iterations += 1 #Iterate iterations by one
-            
-            # Assign centroids to each data point
-            for x in range(len(self.baseData)): #For every row in the base data
-                #Find the closest centroid
-                indexArray = [] #Blank Array to Record Row / Centroid Indexes Into
-                distanceArray = [] #Blank Array to record Distances 
-                for y in range(len(self.centroids)): #Measure Distance for each centroid
-                    tempCentRow = self.centroids.iloc[[y]] #Move centroid row inot temporary variable for easy access
-                    indexCentRow = tempCentRow.iloc[[0]].index # record the index for easy reference
-                    indexArray.append(indexCentRow) #Append to list for later reference
-                    
-                    distCentroid = euclidean_distance(tempCentRow, allData.iloc[[x]], self.numAttr) #Calculate euclidean distance to Centroid
-                    distanceArray.append(distCentroid) #Append to list for easy reference
-                    
-                #Determine centroid with minimium distance to row
-                minDist = min(distanceArray)
-                minDistIndex = distanceArray.index(minDist)
-                minIndex = indexArray[minDistIndex] # Grab index of minimum value to assign as centroid
-                
-                allData.iloc[x]['Centroid'] = minIndex #Assign to Centroid
-            
-            # Assign Centroids based off of Centroid Assignment to Data points
-            
-            
-            # Sort centroids datasets by index values
-            self.centroids.sort_index() #Sort centroids
-            oldCentroids.sort_index() #Sort oldCentroids data frame
-            # Determine if while loop can stop
-            if oldCentroids == self.Centroids: stopIterating = True #If new centroids equals the old centroids, stop Iterating
-            
-                
         #Compute the sum of the squared distance between data points and all centroids
         #Assign each data point to the closests cluster
         #Compute the centroids for the clusters by taking the average of all the data points that belong to each cluster

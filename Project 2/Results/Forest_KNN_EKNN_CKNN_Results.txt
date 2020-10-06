@@ -1,0 +1,39 @@
+Forest Data - K = 22
+--- Original KNN ---
+0/1 Loss 0.04343434343434343
+--- Edited KNN ---
+0/1 Loss 0.04343434343434343
+--- Condensed KNN ---
+0/1 Loss 0.04343434343434343
+
+Forest Data - K = 47
+--- Original KNN ---
+0/1 Loss 0.04252525252525252
+--- Edited KNN ---
+0/1 Loss 0.04252525252525252
+--- Condensed KNN ---
+0/1 Loss 0.04252525252525252
+
+Forest Data - K = 72
+--- Original KNN ---
+0/1 Loss 0.04587166458269426
+--- Edited KNN ---
+0/1 Loss 0.04687166853976316
+--- Condensed KNN ---
+0/1 Loss 0.04587536166458251
+
+Forest Data - K = 3
+--- Original KNN ---
+0/1 Loss 0.00328315183184153
+--- Edited KNN ---
+0/1 Loss 0.00277846864318438
+--- Condensed KNN ---
+0/1 Loss 0.00281864899153993
+
+Forest Data - K = 97
+--- Original KNN ---
+0/1 Loss 0.04587126892134384
+--- Edited KNN ---
+0/1 Loss 0.04493473187126892
+--- Condensed KNN ---
+0/1 Loss 0.04384883785843551

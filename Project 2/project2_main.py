@@ -71,25 +71,25 @@ def main():
 ##        zeroOneLoss(aba_knn.run_edited_knn())
 ##        zeroOneLoss(aba_knn.run_condensed_knn())
 #    
-    mac_knn = k_near_neighbor(9, mac_data)
-    mac_k = mac_knn.tune_k_set()
-    print(mac_k)
-    for k in mac_k:
-        print("Machine Data - K =,", k)
-        mac_knn = k_near_neighbor(k, mac_data)
-        zeroOneLoss(mac_knn.run_knn())
-        zeroOneLoss(mac_knn.run_edited_knn())
-        zeroOneLoss(mac_knn.run_condensed_knn())
+#    mac_knn = k_near_neighbor(9, mac_data)
+#    mac_k = mac_knn.tune_k_set()
+#    print(mac_k)
+#    for k in mac_k:
+#        print("Machine Data - K =,", k)
+#        mac_knn = k_near_neighbor(k, mac_data)
+#        zeroOneLoss(mac_knn.run_knn())
+#        zeroOneLoss(mac_knn.run_edited_knn())
+#        zeroOneLoss(mac_knn.run_condensed_knn())
 #    
-#    for_knn = k_near_neighbor(9, for_data)
-#    for_k = for_knn.tune_k_set()
-#    print(for_k)
-##    for k in for_k:
-##        print("Forest Fire Data - K =,", k)
-##        for_knn = k_near_neighbor(k, for_data)
-##        zeroOneLoss(for_knn.run_knn())
-##        zeroOneLoss(for_knn.run_edited_knn())
-##        zeroOneLoss(for_knn.run_condensed_knn())
+    for_knn = k_near_neighbor(9, for_data)
+    for_k = for_knn.tune_k_set()
+    print(for_k)
+    for k in for_k:
+        print("Forest Fire Data - K =,", k)
+        for_knn = k_near_neighbor(k, for_data)
+        zeroOneLoss(for_knn.run_knn())
+        zeroOneLoss(for_knn.run_edited_knn())
+        zeroOneLoss(for_knn.run_condensed_knn())
 
     
     

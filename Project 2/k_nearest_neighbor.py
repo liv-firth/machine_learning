@@ -10,6 +10,7 @@ import pandas as pd
 import math as m
 from math import sqrt
 import copy
+import numpy as np
 
 ## IMPORT DATA SET CLASS FILE
 import dataset_class
@@ -42,6 +43,7 @@ class k_near_neighbor:
     # ----
     def __init__(self, k, data_obj):
         self.k = k
+        self.classArr = data_obj.classArr
         self.regression = data_obj.regression
         self.trainArr = data_obj.trainArr
         self.testArr = data_obj.testArr  
@@ -95,24 +97,42 @@ class k_near_neighbor:
 
         #Regression
 
+    def regression(self, testRow): 
         # Step 1: Get an array (later called array x) of equidistant unique possible values for an observation based on the data set i.e. for house -votes 
         # it would just be {democrat, republican} (however the classes may need to be represented numerically)
+        array_x = data_object.classArr[]
 
         #Step 2: Tune the band width (h) (this is similar to standard deviation)
-            #To do this we will need to get a distribution of the data or K values, and find the range that 68% of the data falls into. 
-            #based on that we can find the standard deviation and then we can tune within a small range centered at whatever the standard deviation was
-            # Grid search with cross validation 
+            # 1. Find the standard deviation of the class values for the data set, we will call this sigma or s. 
+            class_val_array = self.dataArr[self.numAttr + 1]
+            std = np.std(class_val_array)
+            # 2. Calculate bandwidth, h,  from the rule of thumb h = (4(s^5))/3n)^(1/5) where n is the number of observations in the data set. 
+            band = (4(std^5))/3(self.numObs))^(1/5)
+            # 3. Tune the bandwidth using a grid search?
+
+
+
              
         #Step 3: For a given observation x_i that we wish to calculate, we calculate K at every value in array x 
-            #Create a k_array to store K values for each element in x
+            #Create a k_array to store K values for each element in x in array x 
+            np.k_array= []
             #To calculate K 
+            for o in range(len(array_x)):
                     #Calculate A = 1/(h sqrt(2pi) (same for every value in array x) 
+                    A = 1/(band*sqrt(2*pi))
                     #Calulate B = -0.5[(x - x_i)/h]^2 where x_i is the observation value and x is the particular value from array x we are at 
+                    B = -0.5((x_array[o] - testRow[numAttr + 1])/band)^2
                     #Calculate K = Ae^B  
+                    k_array[o] = A*e^(B)
                     #Put that value in k_array
-
+           
             #Find the mean of k_array 
-            #The prediciotn/classification is the value from array x, where the mean of the k_array occurs                  
+            mean = np.mean(k_array)
+            #The prediciotn/classification is the value from array x, where the mean of the k_array occurs  
+            predict_x = np.where(k_array==mean) 
+            predict = x_array[predict_x]  
+
+            return predict  
 
         
 
@@ -309,8 +329,8 @@ class k_near_neighbor:
         self.mediods = data_obj.mediods #Add mediods variable to the class        
     
         #For each point in datas, find the closest medoid and make collect them (list of lists)
-        for x in range(len(self.trainArr)):
-            
+        #for x in range(len(self.trainArr)):
+
         #Set initial cost 
     
         #While current cost is less that 
@@ -331,11 +351,6 @@ class k_near_neighbor:
         print("--- K Means Clustering ---")
         #Initalize Centroids by first shuffling the dataset then randomly selecting k data points for the centroids without replacement
         #Keep iterating until there is no change to the centroids
-<<<<<<< HEAD
-        #Compute the sum of the squared distance between data points and all centroids
-        #Assign each data point to the closests cluster
-        #Compute the centroids for the clusters by taking the average of all the data points that belong to each cluster
-=======
         iterations = 0 #Initalize for bookeeping
         oldCentroids = None #Blank object for holding the old centroids
         stopIterating = False #Flag for while loop
@@ -415,7 +430,6 @@ class k_near_neighbor:
             # Determine if while loop can stop
             if oldCentroids.equals(self.centroids): stopIterating = True #If new centroids equals the old centroids, stop Iterating
             if iterations > maxIterations: stopIterating = True #If max iterations exceeded, stop iterating
->>>>>>> 8161882a0032ffe1de78c46d6f3b196e8d8c0566
         
         # After Centroids are Determined
         #Final Assignment of Centroids with Classes

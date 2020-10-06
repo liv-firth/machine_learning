@@ -61,7 +61,7 @@ def precisionLoss(dataFrame):
     
     precisionArray = [] #Create blank list to write to with precision values
     for n in range(len(classArr)): #For every class in the class List
-        print(classArr[n])
+        #print(classArr[n])
         is_class = dataFrame['Class'] == classArr[n] #Determine if the rows match the current class
         cArr = dataFrame[is_class] #Filter for rows that match the current class
         numTotal = len(cArr) #Count the number of rows to determine the max correct value

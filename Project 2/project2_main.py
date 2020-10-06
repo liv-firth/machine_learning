@@ -35,20 +35,52 @@ def main():
     for_data = create_data_set(filenames[1], True) #Import Forest Fire Dataset
     print("All Dataset Objects Created")
     
-#    gla_knn = k_near_neighbor(9, gla_data)
-#    gla_knn.tune()
-#    precisionLoss(gla_knn.run_knn())
+    
+    gla_knn = k_near_neighbor(9, gla_data)
+    gla_k = gla_knn.tune_k_set()
+    for k in gla_k:
+        print("GLASS DATA - K = ",k)
+        gla_knn = k_near_neighbor(k, gla_data)
+        precisionLoss(gla_knn.run_knn())
+        precisionLoss(gla_knn.run_edited_knn())
+        precisionLoss(gla_knn.run_condensed_knn())
+        
+    #precisionLoss(gla_knn.run_knn())
     
 #    hou_knn = k_near_neighbor(5, hou_data)
 #    hou_knn.tune()
 #    precisionLoss(hou_knn.run_knn())
     
-    seg_knn = k_near_neighbor(15, seg_data)
-    #seg_knn.tune()
+#    print("SEGMENTATION DATA - K = 14")
+#    seg_knn = k_near_neighbor(14, seg_data)
 #    precisionLoss(seg_knn.run_knn())
 #    precisionLoss(seg_knn.run_edited_knn())
 #    precisionLoss(seg_knn.run_condensed_knn())
-    precisionLoss(seg_knn.run_k_means_cluster(10))
+#
+#    print("SEGMENTATION DATA - K = 24")
+#    seg_knn = k_near_neighbor(24, seg_data)
+#    precisionLoss(seg_knn.run_knn())
+#    precisionLoss(seg_knn.run_edited_knn())
+#    precisionLoss(seg_knn.run_condensed_knn())
+#
+#    print("SEGMENTATION DATA - K = 34")
+#    seg_knn = k_near_neighbor(34, seg_data)
+#    precisionLoss(seg_knn.run_knn())
+#    precisionLoss(seg_knn.run_edited_knn())
+#    precisionLoss(seg_knn.run_condensed_knn())
+#
+#    print("SEGMENTATION DATA - K = 3")
+#    seg_knn = k_near_neighbor(3, seg_data)
+#    precisionLoss(seg_knn.run_knn())
+#    precisionLoss(seg_knn.run_edited_knn())
+#    precisionLoss(seg_knn.run_condensed_knn())
+#
+#    print("SEGMENTATION DATA - K = 44")
+#    seg_knn = k_near_neighbor(44, seg_data)
+#    precisionLoss(seg_knn.run_knn())
+#    precisionLoss(seg_knn.run_edited_knn())
+#    precisionLoss(seg_knn.run_condensed_knn())
+
     
     
     

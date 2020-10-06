@@ -115,7 +115,23 @@ class k_near_neighbor:
             #The prediciotn/classification is the value from array x, where the mean of the k_array occurs                  
 
         
-
+    # ----
+    # FUNCTION TO BUILD AND RETURN THE K TUNING SET
+    # ----
+    def tune_k_set(self):
+        kvalues =  []
+        k1 = int(sqrt(self.numObs))
+        kvalues.append(k1)
+        k2 = int(k1 + (self.numObs*.05))
+        kvalues.append(k2)
+        k3 = int(k2 + (self.numObs*.05))
+        kvalues.append(k3)
+        k4 = int(k1 - (self.numObs*.05))
+        kvalues.append(k4)
+        k5 = int(k3 + (self.numObs*.05))
+        kvalues.append(k5)
+        
+        return(kvalues)
  
 
     # ----
@@ -143,6 +159,7 @@ class k_near_neighbor:
         kvalues.append(k4)
         k5 = int(k3 + (self.numObs*.05))
         kvalues.append(k5)
+        print(kvalues)
         loss_values = []
 
         #test on each k value 
@@ -327,12 +344,13 @@ class k_near_neighbor:
     # ----
     # FUNCTION TO RUN THE K MEANS CLUSTERING
     # ---- 
-    def run_k_means_cluster(self, maxIterations):
+    def run_k_means_cluster(self):
         print("--- K Means Clustering ---")
         #Initalize Centroids by first shuffling the dataset then randomly selecting k data points for the centroids without replacement
         self.data_obj.makeMediodsCentroids(self.k)
         self.centroids = self.data_obj.centroids # Initalize centroids data table
         self.baseData = self.data_obj.dataArr # Re-initalize base dat with new data object data array
+        maxIterations = self.k
         
         #Keep iterating until there is no change to the centroids
         iterations = 0 #Initalize for bookeeping
@@ -385,7 +403,7 @@ class k_near_neighbor:
                 
                 dfCopy['Difference'] = dfCopy['Mean'] - referenceMean
                 minColIndex = int(dfCopy[['Difference']].idxmin())
-                print(minColIndex)
+                #print(minColIndex)
                 minColVal = dfCopy.loc[minColIndex]['Difference']
                 
                 #Determine difference between current centroid and reference Mean
@@ -394,8 +412,8 @@ class k_near_neighbor:
                 centroidMean = float(colCentroids.mean(axis = 1))
                 
                 centroidDifference = centroidMean - referenceMean
-                print(minColVal)
-                print(centroidDifference)
+                #print(minColVal)
+                #print(centroidDifference)
                 #If difference for new centroid index is less than the current centroid, swap centroids
                 if abs(minColVal) < abs(centroidDifference): #If new centroid is better
                     newCentroidRow = copy.deepcopy(allData.iloc[[minColIndex]]) #Create copy of new centroid row

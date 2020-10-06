@@ -105,7 +105,7 @@ class data_set:
         
         self.dataArr = df #Update the base data array with modified df
         self.mediods = pd.concat(mediodsArray)
-        print(self.mediods)
+        #print(self.mediods)
         
         #Add Centroids to centroid Array
         centroidsArray = [] #Make blank centroids array to append to 
@@ -115,7 +115,7 @@ class data_set:
             #print(tempcentroidRow)
             centroidsArray.append(tempcentroidRow)
         returnCentroids = pd.concat(centroidsArray)
-        print(returnCentroids)
+        #print(returnCentroids)
         self.centroids = returnCentroids
         #print(self.mediods)
 

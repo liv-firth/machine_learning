@@ -1,0 +1,148 @@
+--------------------------------------------------------
+SEGMENTATION DATA - K = 14
+--------------------------------------------------------
+--- Original KNN ---
+Class:  BRICKFACE       Precision:  0.20833333333333334
+Class:  SKY      	Precision:  1.0
+Class:  WINDOW   	Precision:  0.6428571428571429
+Class:  PATH     	Precision:  0.9615384615384616
+Class:  GRASS    	Precision:  0.9629629629629629
+Class:  FOLIAGE         Precision:  0.64
+Class:  CEMENT   	Precision:  0.76
+
+--- Edited KNN ---
+Class:  BRICKFACE       Precision:  0.5833333333333334
+Class:  SKY      	Precision:  1.0
+Class:  WINDOW   	Precision:  0.6428571428571429
+Class:  PATH     	Precision:  0.9615384615384616
+Class:  GRASS    	Precision:  1.0
+Class:  FOLIAGE         Precision:  0.76
+Class:  CEMENT   	Precision:  0.8
+
+--- Condensed KNN ---
+Class:  BRICKFACE       Precision:  0.5833333333333334
+Class:  SKY      	Precision:  1.0
+Class:  WINDOW   	Precision:  0.6785714285714286
+Class:  PATH     	Precision:  0.9230769230769231
+Class:  GRASS    	Precision:  0.9629629629629629
+Class:  FOLIAGE         Precision:  0.76
+Class:  CEMENT   	Precision:  0.68
+--------------------------------------------------------
+SEGMENTATION DATA - K = 24
+--------------------------------------------------------
+--- Original KNN ---
+Class:  BRICKFACE       Precision:  0.16666666666666666
+Class:  SKY      	Precision:  1.0
+Class:  WINDOW   	Precision:  0.6428571428571429
+Class:  PATH     	Precision:  0.9615384615384616
+Class:  GRASS    	Precision:  0.9629629629629629
+Class:  FOLIAGE         Precision:  0.64
+Class:  CEMENT   	Precision:  0.72
+
+--- Edited KNN ---
+Class:  BRICKFACE       Precision:  0.375
+Class:  SKY     	Precision:  1.0
+Class:  WINDOW   	Precision:  0.6428571428571429
+Class:  PATH     	Precision:  0.9615384615384616
+Class:  GRASS    	Precision:  0.9629629629629629
+Class:  FOLIAGE         Precision:  0.68
+Class:  CEMENT   	Precision:  0.76
+
+--- Condensed KNN ---
+Class:  BRICKFACE       Precision:  0.625
+Class:  SKY      	Precision:  0.96
+Class:  WINDOW   	Precision:  0.4642857142857143
+Class:  PATH     	Precision:  0.9230769230769231
+Class:  GRASS    	Precision:  0.8888888888888888
+Class:  FOLIAGE         Precision:  0.64
+Class:  CEMENT   	Precision:  0.76
+
+--------------------------------------------------------
+SEGMENTATION DATA - K = 34
+--------------------------------------------------------
+--- Original KNN ---
+Class:  BRICKFACE       Precision:  0.125
+Class:  SKY      	Precision:  1.0
+Class:  WINDOW   	Precision:  0.6785714285714286
+Class:  PATH     	Precision:  0.9230769230769231
+Class:  GRASS    	Precision:  0.8518518518518519
+Class:  FOLIAGE         Precision:  0.6
+Class:  CEMENT   	Precision:  0.76
+
+--- Edited KNN ---
+Class:  BRICKFACE       Precision:  0.3333333333333333
+Class:  SKY      	Precision:  1.0
+Class:  WINDOW   	Precision:  0.6785714285714286
+Class:  PATH     	Precision:  0.9615384615384616
+Class:  GRASS    	Precision:  0.9629629629629629
+Class:  FOLIAGE         Precision:  0.68
+Class:  CEMENT   	Precision:  0.8
+
+--- Condensed KNN ---
+Class:  BRICKFACE       Precision:  0.5416666666666666
+Class:  SKY      	Precision:  0.96
+Class:  WINDOW   	Precision:  0.4642857142857143
+Class:  PATH     	Precision:  0.8846153846153846
+Class:  GRASS    	Precision:  0.8888888888888888
+Class:  FOLIAGE         Precision:  0.56
+Class:  CEMENT   	Precision:  0.76
+
+--------------------------------------------------------
+SEGMENTATION DATA - K = 3
+--------------------------------------------------------
+--- Original KNN ---
+Class:  BRICKFACE       Precision:  0.5
+Class:  SKY      	Precision:  1.0
+Class:  WINDOW  	Precision:  0.5714285714285714
+Class:  PATH    	Precision:  0.9615384615384616
+Class:  GRASS    	Precision:  0.9629629629629629
+Class:  FOLIAGE         Precision:  0.52
+Class:  CEMENT   	Precision:  0.76
+
+--- Edited KNN ---
+Class:  BRICKFACE       Precision:  0.875
+Class:  SKY      	Precision:  1.0
+Class:  WINDOW   	Precision:  0.8928571428571429
+Class:  PATH     	Precision:  0.9615384615384616
+Class:  GRASS    	Precision:  1.0
+Class:  FOLIAGE         Precision:  1.0
+Class:  CEMENT   	Precision:  0.84
+
+--- Condensed KNN ---
+Class:  BRICKFACE       Precision:  0.875
+Class:  SKY      	Precision:  1.0
+Class:  WINDOW   	Precision:  0.9285714285714286
+Class:  PATH     	Precision:  0.9615384615384616
+Class:  GRASS    	Precision:  0.9629629629629629
+Class:  FOLIAGE         Precision:  1.0
+Class:  CEMENT   	Precision:  0.76
+
+--------------------------------------------------------
+SEGMENTATION DATA - K = 44
+--------------------------------------------------------
+--- Original KNN ---
+Class:  BRICKFACE       Precision:  0.08333333333333333
+Class:  SKY      	Precision:  1.0
+Class:  WINDOW   	Precision:  0.6785714285714286
+Class:  PATH     	Precision:  0.8846153846153846
+Class:  GRASS    	Precision:  0.48148148148148145
+Class:  FOLIAGE         Precision:  0.48
+Class:  CEMENT   	Precision:  0.56
+
+--- Edited KNN ---
+Class:  BRICKFACE       Precision:  0.16666666666666666
+Class:  SKY      	Precision:  1.0
+Class:  WINDOW  	Precision:  0.7142857142857143
+Class:  PATH     	Precision:  0.8846153846153846
+Class:  GRASS    	Precision:  0.9259259259259259
+Class:  FOLIAGE         Precision:  0.76
+Class:  CEMENT   	Precision:  0.76
+
+--- Condensed KNN ---
+Class:  BRICKFACE       Precision:  0.3333333333333333
+Class:  SKY      	Precision:  0.96
+Class:  WINDOW   	Precision:  0.6428571428571429
+Class:  PATH     	Precision:  0.8846153846153846
+Class:  GRASS    	Precision:  0.7037037037037037
+Class:  FOLIAGE         Precision:  0.48
+Class:  CEMENT   	Precision:  0.72

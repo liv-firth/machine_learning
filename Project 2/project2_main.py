@@ -36,20 +36,25 @@ def main():
     print("All Dataset Objects Created")
     
     
-    gla_knn = k_near_neighbor(9, gla_data)
-    gla_k = gla_knn.tune_k_set()
-    for k in gla_k:
+#    gla_knn = k_near_neighbor(9, gla_data)
+#    gla_k = gla_knn.tune_k_set()
+#    for k in gla_k:
+#        print("GLASS DATA - K = ",k)
+#        gla_knn = k_near_neighbor(k, gla_data)
+#        precisionLoss(gla_knn.run_knn())
+#        precisionLoss(gla_knn.run_edited_knn())
+#        precisionLoss(gla_knn.run_condensed_knn())
+     
+    hou_knn = k_near_neighbor(9, hou_data)
+    #hou_k = hou_knn.tune_k_set()
+    hou_k = [20, 41, 62, 1, 83]
+    for k in hou_k:
         print("GLASS DATA - K = ",k)
-        gla_knn = k_near_neighbor(k, gla_data)
-        precisionLoss(gla_knn.run_knn())
-        precisionLoss(gla_knn.run_edited_knn())
-        precisionLoss(gla_knn.run_condensed_knn())
-        
-    #precisionLoss(gla_knn.run_knn())
-    
-#    hou_knn = k_near_neighbor(5, hou_data)
-#    hou_knn.tune()
-#    precisionLoss(hou_knn.run_knn())
+        hou_knn = k_near_neighbor(k, hou_data)
+        precisionLoss(hou_knn.run_knn())
+        precisionLoss(hou_knn.run_edited_knn())
+        precisionLoss(hou_knn.run_condensed_knn())  
+
     
 #    print("SEGMENTATION DATA - K = 14")
 #    seg_knn = k_near_neighbor(14, seg_data)

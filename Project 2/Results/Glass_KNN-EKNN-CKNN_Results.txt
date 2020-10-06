@@ -1,0 +1,117 @@
+Glass Data - K = 14
+Class:  7        Precision:  0.8214285714285714
+Class:  1        Precision:  0.7241379310344828
+Class:  2        Precision:  0.6417910447761194
+Class:  6        Precision:  0.0
+Class:  5        Precision:  0.6
+Class:  3        Precision:  0.13333333333333333
+--- Edited KNN ---
+Class:  7        Precision:  0.8214285714285714
+Class:  1        Precision:  0.7931034482758621
+Class:  2        Precision:  0.6716417910447762
+Class:  6        Precision:  0.0
+Class:  5        Precision:  0.6
+Class:  3        Precision:  0.3333333333333333
+--- Condensed KNN ---
+Class:  7        Precision:  0.8214285714285714
+Class:  1        Precision:  0.7413793103448276
+Class:  2        Precision:  0.7611940298507462
+Class:  6        Precision:  0.0
+Class:  5        Precision:  0.4
+Class:  3        Precision:  0.26666666666666666
+
+
+GLASS DATA - K =  24
+--- Original KNN ---
+Class:  7        Precision:  0.8214285714285714
+Class:  1        Precision:  0.7931034482758621
+Class:  2        Precision:  0.6865671641791045
+Class:  6        Precision:  0.0
+Class:  5        Precision:  0.0
+Class:  3        Precision:  0.06666666666666667
+--- Edited KNN ---
+Class:  7        Precision:  0.8214285714285714
+Class:  1        Precision:  0.8103448275862069
+Class:  2        Precision:  0.7014925373134329
+Class:  6        Precision:  0.0
+Class:  5        Precision:  0.3
+Class:  3        Precision:  0.13333333333333333
+--- Condensed KNN ---
+Class:  7        Precision:  0.7857142857142857
+Class:  1        Precision:  0.7758620689655172
+Class:  2        Precision:  0.746268656716418
+Class:  6        Precision:  0.0
+Class:  5        Precision:  0.5
+Class:  3        Precision:  0.26666666666666666
+
+
+GLASS DATA - K =  34
+--- Original KNN ---
+Class:  7        Precision:  0.8571428571428571
+Class:  1        Precision:  0.7413793103448276
+Class:  2        Precision:  0.6567164179104478
+Class:  6        Precision:  0.0
+Class:  5        Precision:  0.0
+Class:  3        Precision:  0.0
+--- Edited KNN ---
+Class:  7        Precision:  0.8214285714285714
+Class:  1        Precision:  0.7068965517241379
+Class:  2        Precision:  0.6865671641791045
+Class:  6        Precision:  0.0
+Class:  5        Precision:  0.0
+Class:  3        Precision:  0.0
+--- Condensed KNN ---
+Class:  7        Precision:  0.8214285714285714
+Class:  1        Precision:  0.7586206896551724
+Class:  2        Precision:  0.582089552238806
+Class:  6        Precision:  0.0
+Class:  5        Precision:  0.0
+Class:  3        Precision:  0.0
+
+
+GLASS DATA - K =  3
+--- Original KNN ---
+Class:  7        Precision:  0.7857142857142857
+Class:  1        Precision:  0.6724137931034483
+Class:  2        Precision:  0.6716417910447762
+Class:  6        Precision:  0.5
+Class:  5        Precision:  0.7
+Class:  3        Precision:  0.5333333333333333
+--- Edited KNN ---
+Class:  7        Precision:  0.9642857142857143
+Class:  1        Precision:  0.8448275862068966
+Class:  2        Precision:  0.8208955223880597
+Class:  6        Precision:  0.6666666666666666
+Class:  5        Precision:  0.8
+Class:  3        Precision:  0.8
+--- Condensed KNN ---
+Class:  7        Precision:  0.9642857142857143
+Class:  1        Precision:  0.8275862068965517
+Class:  2        Precision:  0.7761194029850746
+Class:  6        Precision:  0.6666666666666666
+Class:  5        Precision:  0.8
+Class:  3        Precision:  0.6666666666666666
+
+
+GLASS DATA - K =  44
+--- Original KNN ---
+Class:  7        Precision:  0.8571428571428571
+Class:  1        Precision:  0.6896551724137931
+Class:  2        Precision:  0.6268656716417911
+Class:  6        Precision:  0.0
+Class:  5        Precision:  0.0
+Class:  3        Precision:  0.0
+--- Edited KNN ---
+Class:  7        Precision:  0.8571428571428571
+Class:  1        Precision:  0.7068965517241379
+Class:  2        Precision:  0.6567164179104478
+Class:  6        Precision:  0.0
+Class:  5        Precision:  0.0
+Class:  3        Precision:  0.0
+--- Condensed KNN ---
+Class:  7        Precision:  0.6428571428571429
+Class:  1        Precision:  0.7931034482758621
+Class:  2        Precision:  0.6119402985074627
+Class:  6        Precision:  0.0
+Class:  5        Precision:  0.0
+Class:  3        Precision:  0.0

@@ -80,10 +80,7 @@ class k_near_neighbor:
         topNeighbors = newTrain.head(self.k) #Grab top k rows
         
         # Find Predicted Class
-        if self.regression == False: #If not regressive, use prediction method
-            predictedClass = topNeighbors['Class'].value_counts()[:1].index.tolist()
-        else:
-            print("Run Regression")
+        predictedClass = topNeighbors['Class'].value_counts()[:1].index.tolist()
         
         testRow['PredClass'] = predictedClass
         
@@ -100,42 +97,56 @@ class k_near_neighbor:
     def regression(self, testRow): 
         # Step 1: Get an array (later called array x) of equidistant unique possible values for an observation based on the data set i.e. for house -votes 
         # it would just be {democrat, republican} (however the classes may need to be represented numerically)
-        array_x = data_object.classArr[]
+        array_x = data_object.classArr
 
         #Step 2: Tune the band width (h) (this is similar to standard deviation)
-            # 1. Find the standard deviation of the class values for the data set, we will call this sigma or s. 
-            class_val_array = self.dataArr[self.numAttr + 1]
-            std = np.std(class_val_array)
-            # 2. Calculate bandwidth, h,  from the rule of thumb h = (4(s^5))/3n)^(1/5) where n is the number of observations in the data set. 
-            band = (4(std^5))/3(self.numObs))^(1/5)
-            # 3. Tune the bandwidth using a grid search?
+        # 1. Find the standard deviation of the class values for the data set, we will call this sigma or s. 
+        class_val_array = self.dataArr[self.numAttr + 1]
+        std = np.std(class_val_array)
+        # 2. Calculate bandwidth, h,  from the rule of thumb h = (4(s^5))/3n)^(1/5) where n is the number of observations in the data set. 
+        band = ((4(std^5))/3(self.numObs))^(1/5)
+        # 3. Tune the bandwidth using a grid search?
 
 
 
              
         #Step 3: For a given observation x_i that we wish to calculate, we calculate K at every value in array x 
-            #Create a k_array to store K values for each element in x in array x 
-            np.k_array= []
-            #To calculate K 
-            for o in range(len(array_x)):
-                    #Calculate A = 1/(h sqrt(2pi) (same for every value in array x) 
-                    A = 1/(band*sqrt(2*pi))
-                    #Calulate B = -0.5[(x - x_i)/h]^2 where x_i is the observation value and x is the particular value from array x we are at 
-                    B = -0.5((x_array[o] - testRow[numAttr + 1])/band)^2
-                    #Calculate K = Ae^B  
-                    k_array[o] = A*e^(B)
-                    #Put that value in k_array
-           
-            #Find the mean of k_array 
-            mean = np.mean(k_array)
-            #The prediciotn/classification is the value from array x, where the mean of the k_array occurs  
-            predict_x = np.where(k_array==mean) 
-            predict = x_array[predict_x]  
+        #Create a k_array to store K values for each element in x in array x 
+        np.k_array= []
+        #To calculate K 
+        for o in range(len(array_x)):
+                #Calculate A = 1/(h sqrt(2pi) (same for every value in array x) 
+                A = 1/(band*sqrt(2*pi))
+                #Calulate B = -0.5[(x - x_i)/h]^2 where x_i is the observation value and x is the particular value from array x we are at 
+                B = -0.5((x_array[o] - testRow[numAttr + 1])/band)^2
+                #Calculate K = Ae^B  
+                k_array[o] = A*e^(B)
+                #Put that value in k_array
+       
+        #Find the mean of k_array 
+        mean = np.mean(k_array)
+        #The prediciotn/classification is the value from array x, where the mean of the k_array occurs  
+        predict_x = np.where(k_array==mean) 
+        predict = x_array[predict_x]  
 
-            return predict  
+        return predict  
 
-        
-
+    # ----
+    # FUNCTION TO RETURN LIST OF K VALUES FOR TUNING
+    # ----
+    def tune_k_set(self): 
+        kvalues =  []
+        k1 = int(sqrt(self.numObs))
+        kvalues.append(k1)
+        k2 = int(k1 + (self.numObs*.05))
+        kvalues.append(k2)
+        k3 = int(k2 + (self.numObs*.05))
+        kvalues.append(k3)
+        k4 = int(k1 - (self.numObs*.05))
+        kvalues.append(k4)
+        k5 = int(k3 + (self.numObs*.05))
+        kvalues.append(k5)
+        return(kvalues)
  
 
     # ----
@@ -200,7 +211,10 @@ class k_near_neighbor:
             
             for x in range(numRows):
                 tempTestRow = self.test.iloc[[x]]
-                returnRow = self.predict(tempTestRow)
+                if self.regression == False:
+                    returnRow = self.predict(tempTestRow)
+                else:
+                    returnRow = self.regression(tempTestRow)                    
                 allTestPred.append(returnRow)
         allPredRows = pd.concat(allTestPred)
         #print(allPredRows)

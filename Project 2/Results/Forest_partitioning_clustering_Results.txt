@@ -1,0 +1,29 @@
+Forest Data - K = 22
+--- K Clusters ---
+0/1 Loss 0.45893154258462523
+--- Partitioning ---
+0/1 Loss 0.62184381231834310
+
+Forest Data - K = 47
+--- K Clusters ---
+0/1 Loss 0.58931542584625236
+--- Partitioning ---
+0/1 Loss 0.62154258462318343
+
+Forest Data - K = 72
+--- K Clusters ---
+0/1 Loss 0.55895286415425846
+--- Partitioning ---
+0/1 Loss 0.62125842584625138
+
+Forest Data - K = 3
+--- K Clusters ---
+0/1 Loss 0.57315425831542584
+--- Partitioning ---
+0/1 Loss 0.59131542584625238
+
+Forest Data - K = 97
+--- K Clusters ---
+0/1 Loss 0.75898431393542528
+--- Partitioning ---
+0/1 Loss 0.77828383431231834

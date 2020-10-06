@@ -1,0 +1,29 @@
+Abalone Data - K = 64
+--- K Clusters ---
+0/1 Loss 0.73778283882838948
+--- Partitioning ---
+0/1 Loss 0.77828383519345317
+
+Abalone Data - K = 272
+--- K Clusters ---
+0/1 Loss 0.79895193453178431
+--- Partitioning ---
+0/1 Loss 0.79828383431789312
+
+Abalone Data - K = 480
+--- K Clusters ---
+0/1 Loss 0.69898431519343178
+--- Partitioning ---
+0/1 Loss 0.73828383431231834
+
+Abalone Data - K = 144
+--- K Clusters ---
+0/1 Loss 0.70051934531748648
+--- Partitioning ---
+0/1 Loss 0.77828383519345331
+
+Abalone Data - K = 688
+--- K Clusters ---
+0/1 Loss 0.74219345317898439
+--- Partitioning ---
+0/1 Loss 0.76928331789834315

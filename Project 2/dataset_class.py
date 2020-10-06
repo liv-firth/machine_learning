@@ -54,8 +54,10 @@ class data_set:
         n = 0 #Define / Initalize a Row iterative
         tenDFList = [] #Create empty list to append each data frame into
         for i in range (9): #Run nine times
+            print("Fold Number: ",i+1)
             m = n + tenPer #find final row to grab into data frame
             tempdf = df.iloc[n:m] #Grab Rows within n-m range
+            print(tempdf)
             n = m + 1 #update n to equal end row plus one
             tenDFList.append(tempdf) #Append list with new temp df
         tenDFList.append(df.iloc[n:self.numObsv-1]) #Append data frame list with final dataframe

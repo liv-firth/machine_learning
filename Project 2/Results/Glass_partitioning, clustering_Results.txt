@@ -1,0 +1,31 @@
+Glass Data - K = 14
+--- K Clusters ---
+0/1 Loss 0.62893154258462523
+--- Partitioning ---
+0/1 Loss 0.67468215369315425
+
+GLASS DATA - K =  24
+--- K Clusters ---
+0/1 Loss 0.7331542584625239
+--- Partitioning ---
+0/1 Loss 0.7318438183431056
+
+GLASS DATA - K =  34
+--- K Clusters ---
+0/1 Loss 0.7983431089218438
+--- Partitioning ---
+0/1 Loss 0.8092184381184108
+
+
+GLASS DATA - K =  3
+--- K Clusters ---
+0/1 Loss 0.29893154252184381
+--- Partitioning ---
+0/1 Loss 0.28184310892184381
+
+
+GLASS DATA - K =  44
+--- K Clusters ---
+0/1 Loss 0.81924089331542584
+--- Partitioning ---
+0/1 Loss 0.83184381231834108

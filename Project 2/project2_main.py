@@ -27,13 +27,23 @@ from ExtraFuncs import zeroOneLoss, precisionLoss
 def main():
     filenames = ["abalone.csv", "forestfires.csv", "glass.csv", "house-votes-84-fixed.csv", "machine.csv", "segmentation.csv"]
 
-    gla_data = create_data_set(filenames[2], False) #Import Glass Dataset
-    hou_data = create_data_set(filenames[3], False) #Import House Vote Dataset
+#    gla_data = create_data_set(filenames[2], False) #Import Glass Dataset
+#    hou_data = create_data_set(filenames[3], False) #Import House Vote Dataset
     seg_data = create_data_set(filenames[5], False) #Import Image Segmentation Dataset
     aba_data = create_data_set(filenames[0], True) #Import Abalone Dataset 
-    mac_data = create_data_set(filenames[4], True) #Import Computer Hardware / Machine Dataset
-    for_data = create_data_set(filenames[1], True) #Import Forest Fire Dataset
+#    mac_data = create_data_set(filenames[4], True) #Import Computer Hardware / Machine Dataset
+#    for_data = create_data_set(filenames[1], True) #Import Forest Fire Dataset
     print("All Dataset Objects Created")
+    
+#    seg_knn = k_near_neighbor(10, seg_data)
+#    zeroOneLoss(seg_knn.run_knn())
+#    zeroOneLoss(seg_knn.run_edited_knn())
+#    zeroOneLoss(seg_knn.run_condensed_knn())
+    
+    aba_knn = k_near_neighbor(10, aba_data)
+    zeroOneLoss(aba_knn.run_knn())
+    zeroOneLoss(aba_knn.run_edited_knn())
+    zeroOneLoss(aba_knn.run_condensed_knn())
     
     
 #    gla_knn = k_near_neighbor(9, gla_data)
@@ -81,15 +91,15 @@ def main():
 #        zeroOneLoss(mac_knn.run_edited_knn())
 #        zeroOneLoss(mac_knn.run_condensed_knn())
 #    
-    for_knn = k_near_neighbor(9, for_data)
-    for_k = for_knn.tune_k_set()
-    print(for_k)
-    for k in for_k:
-        print("Forest Fire Data - K =,", k)
-        for_knn = k_near_neighbor(k, for_data)
-        zeroOneLoss(for_knn.run_knn())
-        zeroOneLoss(for_knn.run_edited_knn())
-        zeroOneLoss(for_knn.run_condensed_knn())
+#    for_knn = k_near_neighbor(9, for_data)
+#    for_k = for_knn.tune_k_set()
+#    print(for_k)
+#    for k in for_k:
+#        print("Forest Fire Data - K =,", k)
+#        for_knn = k_near_neighbor(k, for_data)
+#        zeroOneLoss(for_knn.run_knn())
+#        zeroOneLoss(for_knn.run_edited_knn())
+#        zeroOneLoss(for_knn.run_condensed_knn())
 
     
     

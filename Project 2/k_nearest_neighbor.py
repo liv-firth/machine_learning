@@ -185,6 +185,7 @@ class k_near_neighbor:
             #run knn on tuniing set 
             self.k = temp_k
             tempDataFrame = self.run_knn()
+            print("K = ",kvalues[v])
             lossValue = zeroOneLoss(tempDataFrame) #run a loss function to approximate accuracy 
             
             loss_values.append(lossValue) #store accuracy result in loss_values 
@@ -328,31 +329,42 @@ class k_near_neighbor:
     # ----
     # FUNCTION TO RUN THE PARTITIONED K ALGORITHM
     # ----   
-    def run_partitioned_knn(self):
-        print("--- Partitioning K ---")
-        allTestPred = [] #Blank List for Predicted Rows
-        df = copy.deepcopy(self.baseData)
-        #Select k random points out of the data points in datas to use as medoids
-        self.data_obj.makeMediods(self.k) #Run MakeMediods for the data object
-        self.data_obj.make10Fold() #Rebuild the Ten folds
-        
-        # Re assign several self objects
-        self.trainArr = data_obj.trainArr
-        self.testArr = data_obj.testArr  
-        self.baseData = data_obj.dataArr
-        self.mediods = data_obj.mediods #Add mediods variable to the class        
-    
-        #For each point in datas, find the closest medoid and make collect them
-        allData = self.baseData
-        
-        listMedoidDistances = []
-        for i in range(len(self.mediods)): #For Each Row in Test Set
-            listDist = [] #Create blank list to append distances to
-            # Find Distance between each medoid and the 
-            medoidRow = self.mediods[[i]] #Assign medoid row
-            for x in range(len(allData)):
-                dist = euclidean_distance(medoidRow, allData[[x]], self.numAttr)
-                listDist.append(dist)
+#    def run_partitioned_knn(self):
+#        print("--- Partitioning K ---")
+#        allTestPred = [] #Blank List for Predicted Rows
+#        df = copy.deepcopy(self.baseData)
+#        #Select k random points out of the data points in datas to use as medoids
+#        self.data_obj.makeMediods(self.k) #Run MakeMediods for the data object
+#        self.data_obj.make10Fold() #Rebuild the Ten folds
+#        
+#        # Re assign several self objects
+#        self.trainArr = data_obj.trainArr
+#        self.testArr = data_obj.testArr  
+#        self.baseData = data_obj.dataArr
+#        self.mediods = data_obj.mediods #Add mediods variable to the class        
+#    
+#        #For each point in datas, find the closest medoid and make collect them
+#        allData = self.baseData
+#        
+#        listMedoidDistances = []
+#
+#        for x in range(len(allData)): #For all data points
+#            listDist = []
+#            tempRow = allData[[x]]
+#            for i in range(len(self.medoids)):
+#                medoidRow = self.mediods[[i]] #Assign medoid row
+#                dist = euclidean_distance(medoidRow, allData[[x]], self.numAttr)
+#                listDist.append(dist)
+#            minDistance = min(listDist)
+#            medoidAssign = listDist.index(minDistance)
+#            tempRow['Medoid'] = int(self.mediods[[i]].index)
+#        
+#        # Calculate Cost for each Medoid
+#        for i in range(len(self.medoids)): #For each medoid row
+            #Filter allData for pointst that match the medoid
+            
+                
+                
         #for x in range(len(self.trainArr)):
 
         #Set initial cost 

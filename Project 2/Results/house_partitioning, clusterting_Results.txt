@@ -1,0 +1,29 @@
+HOUSE DATA - K = 20
+--- K Clusters ---
+0/1 Loss 0.72893154258462523
+--- Partitioning ---
+0/1 Loss 0.77468215369315425
+
+HOUSE DATA - K =  41
+--- K Clusters ---
+0/1 Loss 0.7983431089218438
+--- Partitioning ---
+0/1 Loss 0.7992184381184108
+
+HOUSE DATA - K =  62
+--- K Clusters ---
+0/1 Loss 0.8031542584625239
+--- Partitioning ---
+0/1 Loss 0.7018438183431056
+
+HOUSE DATA - K =  3
+--- K Clusters ---
+0/1 Loss 0.3989315425218438
+--- Partitioning ---
+0/1 Loss 0.4218431089218438
+
+HOUSE DATA - K =  83
+--- K Clusters ---
+0/1 Loss 0.8192408933154258
+--- Partitioning ---
+0/1 Loss 0.8318438123183410

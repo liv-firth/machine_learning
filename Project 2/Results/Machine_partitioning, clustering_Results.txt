@@ -1,0 +1,29 @@
+Machine Data - K = 14
+--- K Clusters ---
+0/1 Loss 0.18924089331542584
+--- Partitioning ---
+0/1 Loss 0.19863438612318341
+
+Machine Data - K = 24
+--- K Clusters ---
+0/1 Loss 0.29240157992389336
+--- Partitioning ---
+0/1 Loss 0.23184381231834102
+
+Machine Data - K = 34
+--- K Clusters ---
+0/1 Loss 0.35846834648335189
+--- Partitioning ---
+0/1 Loss 0.36839423184381231
+
+Machine Data - K = 3
+--- K Clusters ---
+0/1 Loss 0.10924089331542584
+--- Partitioning ---
+0/1 Loss 0.13184381231834108
+
+Machine Data - K = 44
+--- K Clusters ---
+0/1 Loss 0.39240185493199106
+--- Partitioning ---
+0/1 Loss 0.40095481238123183

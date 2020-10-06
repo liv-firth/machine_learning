@@ -1,0 +1,39 @@
+Machine Data - K = 14
+--- Original KNN ---
+0/1 Loss 0.03333333333333333
+--- Edited KNN ---
+0/1 Loss 0.03333333333333333
+--- Condensed KNN ---
+0/1 Loss 0.03333333333333333
+
+Machine Data - K = 24
+--- Original KNN ---
+0/1 Loss 0.02541822516845369
+--- Edited KNN ---
+0/1 Loss 0.02541415531886263
+--- Condensed KNN ---
+0/1 Loss 0.02255894382251684
+
+Machine Data - K = 34
+--- Original KNN ---
+0/1 Loss 0.02255894382251684
+--- Edited KNN ---
+0/1 Loss 0.02541415531886263
+--- Condensed KNN ---
+0/1 Loss 0.02255894382254186
+
+Machine Data - K = 3
+--- Original KNN ---
+0/1 Loss 0.02541415531886263
+--- Edited KNN ---
+0/1 Loss 0.02541822516845369
+--- Condensed KNN ---
+0/1 Loss 0.02541412525252525
+
+Machine Data - K = 44
+--- Original KNN ---
+0/1 Loss 0.03589124866213834
+--- Edited KNN ---
+0/1 Loss 0.03541822516845369
+--- Condensed KNN ---
+0/1 Loss 0.03589124866213834

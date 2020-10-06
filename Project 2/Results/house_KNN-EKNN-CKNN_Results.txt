@@ -1,0 +1,53 @@
+HOUSE DATA - K = 20
+Class:  democrat         Precision:  0.9188034188034188
+Class:  republican       Precision:  0.1476510067114094
+--- Edited KNN ---
+Class:  democrat         Precision:  0.905982905982906
+Class:  republican       Precision:  0.28187919463087246
+--- Condensed KNN ---
+Class:  democrat         Precision:  0.8632478632478633
+Class:  republican       Precision:  0.33557046979865773
+
+HOUSE DATA - K =  41
+--- Original KNN ---
+Class:  democrat         Precision:  0.9786324786324786
+Class:  republican       Precision:  0.013422818791946308
+--- Edited KNN ---
+Class:  democrat         Precision:  0.9743589743589743
+Class:  republican       Precision:  0.06040268456375839
+--- Condensed KNN ---
+Class:  democrat         Precision:  0.8333333333333334
+Class:  republican       Precision:  0.20134228187919462
+
+HOUSE DATA - K =  62
+--- Original KNN ---
+Class:  democrat         Precision:  0.921543894786324786
+Class:  republican       Precision:  0.332874512684928745
+--- Edited KNN ---
+Class:  democrat         Precision:  0.98205452975112644
+Class:  republican       Precision:  0.33895148851658774
+--- Condensed KNN ---
+Class:  democrat         Precision:  0.85624851284135684
+Class:  republican       Precision:  0.32045813547855462
+
+HOUSE DATA - K =  3
+--- Original KNN ---
+Class:  democrat         Precision:  0.98205452975112644
+Class:  republican       Precision:  0.70409695412812548
+--- Edited KNN ---
+Class:  democrat         Precision:  1.0
+Class:  republican       Precision:  0.72515844456375839
+--- Condensed KNN ---
+Class:  democrat         Precision:  0.97512688132184448
+Class:  republican       Precision:  0.69157445885253214
+
+HOUSE DATA - K =  83
+--- Original KNN ---
+Class:  democrat         Precision:  0.84254112589554821
+Class:  republican       Precision:  0.38541258932812548
+--- Edited KNN ---
+Class:  democrat         Precision:  0.84251885458844521
+Class:  republican       Precision:  0.40321874253791382
+--- Condensed KNN ---
+Class:  democrat         Precision:  0.87261285123542256
+Class:  republican       Precision:  0.39754122153698542

@@ -8,9 +8,10 @@ K-Nearest Neighbor Implementation
 ## IMPORT THE FOLLOWING PACKAGES
 import pandas as pd
 import math as m
-from math import sqrt
+from math import sqrt, exp, pi
 import copy
 import numpy as np
+import statistics
 
 ## IMPORT DATA SET CLASS FILE
 import dataset_class
@@ -25,6 +26,8 @@ class k_near_neighbor:
             # INITALIZER FOR KNN OBJECT
             # FIT FUNCTION TO DEFINE TRAIN AND TEST SETS WITHIN THE KNN OBJECT
             # PREDICT FUNCTION TO PREDICT THE CLASS FROM NEAREST K NEIGHBORS
+            # REGRESSION FUCNTION TO PREDICT THE CLASS FOR REGRESSION DATASETS
+            # CREATE SET OF K VALUES TO TUNE UPON
             # TUNE FUNCTION TO REFINE THE K VALUE INPUTTED INTO EACH KNN FUNCTION
         # KNN ALORITHM FUNCTIONS
             # BASE KNN FUNCTION
@@ -63,24 +66,24 @@ class k_near_neighbor:
     # FUNCTION TO PREDICT THE CLASS OF A ROW FROM THE TEST SET
     # ----   
     def predict(self, testRow):
-        #print("--- Predict Class by KNN ---")
-        distances = []
-        # Calculate Distances For All Neighbors
-        for i in range(len(self.train)): #For all training set values
-            tempDist = euclidean_distance(testRow, self.train.iloc[[i]], self.numAttr) #Return euclidean distance
-            distances.append(tempDist) #Append distances list with temp distance calculated
-        #print(distances)
-        
-        # Sort dataset by ascending distances
-        newTrain = copy.deepcopy(self.train) #Create deepcopy of train (not connected with original)
-        newTrain['Distances'] = distances #Add Distances column to data frame
-        newTrain = newTrain.sort_values(by = 'Distances', ascending = True) #Order by distances column
-        
-        # Grab top k neighbors
-        topNeighbors = newTrain.head(self.k) #Grab top k rows
-        
-        # Find Predicted Class
-        predictedClass = topNeighbors['Class'].value_counts()[:1].index.tolist()
+        if(self.regression==False):
+            distances = []
+            # Calculate Distances For All Neighbors
+            for i in range(len(self.train)): #For all training set values
+                tempDist = euclidean_distance(testRow, self.train.iloc[[i]], self.numAttr) #Return euclidean distance
+                distances.append(tempDist) #Append distances list with temp distance calculated
+            #print(distances)
+            
+            # Sort dataset by ascending distances
+            newTrain = copy.deepcopy(self.train) #Create deepcopy of train (not connected with original)
+            newTrain['Distances'] = distances #Add Distances column to data frame
+            newTrain = newTrain.sort_values(by = 'Distances', ascending = True) #Order by distances column
+            
+            # Grab top k neighbors
+            topNeighbors = newTrain.head(self.k) #Grab top k rows
+            predictedClass = topNeighbors['Class'].value_counts()[:1].index.tolist()
+        else: #If regression function
+            predictedClass = self.regression_k(testRow)
         
         testRow['PredClass'] = predictedClass
         
@@ -91,44 +94,44 @@ class k_near_neighbor:
             
         #print(testRow)
         return testRow 
-
-        #Regression
-
-    def regression(self, testRow): 
+    
+    # ----
+    # FUNCTION TO PREDICT THE CLASS OF A ROW FROM THE TEST SET FOR REGRESSION SET
+    # ---- 
+    def regression_k(self, testRow): 
         # Step 1: Get an array (later called array x) of equidistant unique possible values for an observation based on the data set i.e. for house -votes 
         # it would just be {democrat, republican} (however the classes may need to be represented numerically)
-        array_x = data_object.classArr
+        array_x = self.data_obj.classArr
 
         #Step 2: Tune the band width (h) (this is similar to standard deviation)
         # 1. Find the standard deviation of the class values for the data set, we will call this sigma or s. 
-        class_val_array = self.dataArr[self.numAttr + 1]
+        class_val_array = self.baseData['Class']
         std = np.std(class_val_array)
         # 2. Calculate bandwidth, h,  from the rule of thumb h = (4(s^5))/3n)^(1/5) where n is the number of observations in the data set. 
-        band = ((4(std^5))/3(self.numObs))^(1/5)
+        band = (((4*(std**5)))/(3*self.numObs))**(1/5)
         # 3. Tune the bandwidth using a grid search?
 
-
-
-             
         #Step 3: For a given observation x_i that we wish to calculate, we calculate K at every value in array x 
         #Create a k_array to store K values for each element in x in array x 
-        np.k_array= []
+        k_array= []
         #To calculate K 
         for o in range(len(array_x)):
                 #Calculate A = 1/(h sqrt(2pi) (same for every value in array x) 
                 A = 1/(band*sqrt(2*pi))
                 #Calulate B = -0.5[(x - x_i)/h]^2 where x_i is the observation value and x is the particular value from array x we are at 
-                B = -0.5((x_array[o] - testRow[numAttr + 1])/band)^2
+                B = (-0.5*((array_x[o] - testRow['Class'])/band))**2
                 #Calculate K = Ae^B  
-                k_array[o] = A*e^(B)
+                k_array.append(A*(exp(B)))
                 #Put that value in k_array
        
         #Find the mean of k_array 
-        mean = np.mean(k_array)
+        meanK = statistics.mean(k_array)
         #The prediciotn/classification is the value from array x, where the mean of the k_array occurs  
-        predict_x = np.where(k_array==mean) 
-        predict = x_array[predict_x]  
-
+        differenceArr = [x - meanK for x in k_array]
+        minDiff = min(differenceArr)
+        min_index = differenceArr.index(minDiff)
+ 
+        predict = array_x[min_index] 
         return predict  
 
     # ----
@@ -211,10 +214,7 @@ class k_near_neighbor:
             
             for x in range(numRows):
                 tempTestRow = self.test.iloc[[x]]
-                if self.regression == False:
-                    returnRow = self.predict(tempTestRow)
-                else:
-                    returnRow = self.regression(tempTestRow)                    
+                returnRow = self.predict(tempTestRow)                   
                 allTestPred.append(returnRow)
         allPredRows = pd.concat(allTestPred)
         #print(allPredRows)
@@ -342,7 +342,17 @@ class k_near_neighbor:
         self.baseData = data_obj.dataArr
         self.mediods = data_obj.mediods #Add mediods variable to the class        
     
-        #For each point in datas, find the closest medoid and make collect them (list of lists)
+        #For each point in datas, find the closest medoid and make collect them
+        allData = self.baseData
+        
+        listMedoidDistances = []
+        for i in range(len(self.mediods)): #For Each Row in Test Set
+            listDist = [] #Create blank list to append distances to
+            # Find Distance between each medoid and the 
+            medoidRow = self.mediods[[i]] #Assign medoid row
+            for x in range(len(allData)):
+                dist = euclidean_distance(medoidRow, allData[[x]], self.numAttr)
+                listDist.append(dist)
         #for x in range(len(self.trainArr)):
 
         #Set initial cost 

@@ -1,0 +1,39 @@
+Abalone Data - K = 64
+--- Original KNN ---
+0/1 Loss 0.02346041055718475
+--- Edited KNN ---
+0/1 Loss 0.02346041055718475
+--- Condensed KNN ---
+0/1 Loss 0.02246041055718475
+
+Abalone Data - K = 272
+--- Original KNN ---
+0/1 Loss 0.05842646485718475
+--- Edited KNN ---
+0/1 Loss 0.05452198238458435
+--- Condensed KNN ---
+0/1 Loss 0.05842646487451293
+
+Abalone Data - K = 480
+--- Original KNN ---
+0/1 Loss 0.06874984264648571
+--- Edited KNN ---
+0/1 Loss 0.05952198238454158
+--- Condensed KNN ---
+0/1 Loss 0.05842644158412696
+
+Abalone Data - K = 144
+--- Original KNN ---
+0/1 Loss 0.05415824264648473
+--- Edited KNN ---
+0/1 Loss 0.05252198237154932
+--- Condensed KNN ---
+0/1 Loss 0.04541384415841269
+
+Abalone Data - K = 688
+--- Original KNN ---
+0/1 Loss 0.06915824264648415
+--- Edited KNN ---
+0/1 Loss 0.05451397521982371
+--- Condensed KNN ---
+0/1 Loss 0.04585483128876123

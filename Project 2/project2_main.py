@@ -45,46 +45,51 @@ def main():
 #        precisionLoss(gla_knn.run_edited_knn())
 #        precisionLoss(gla_knn.run_condensed_knn())
      
-    hou_knn = k_near_neighbor(9, hou_data)
-    #hou_k = hou_knn.tune_k_set()
-    hou_k = [20, 41, 62, 1, 83]
-    for k in hou_k:
-        print("GLASS DATA - K = ",k)
-        hou_knn = k_near_neighbor(k, hou_data)
-        precisionLoss(hou_knn.run_knn())
-        precisionLoss(hou_knn.run_edited_knn())
-        precisionLoss(hou_knn.run_condensed_knn())  
+#    hou_knn = k_near_neighbor(9, hou_data)
+#    for k in hou_k:
+#        print("GLASS DATA - K = ",k)
+#        hou_knn = k_near_neighbor(k, hou_data)
+#        precisionLoss(hou_knn.run_knn())
+#        precisionLoss(hou_knn.run_edited_knn())
+#        precisionLoss(hou_knn.run_condensed_knn())  
 
+#    seg_knn = k_near_neighbor(9, seg_data)
+#    for k in hou_k:
+#        print("SEGMENTATION DATA - K = ",k)
+#        seg_knn = k_near_neighbor(k, seg_data)
+#        precisionLoss(seg_knn.run_knn())
+#        precisionLoss(seg_knn.run_edited_knn())
+#        precisionLoss(seg_knn.run_condensed_knn()) 
     
-#    print("SEGMENTATION DATA - K = 14")
-#    seg_knn = k_near_neighbor(14, seg_data)
-#    precisionLoss(seg_knn.run_knn())
-#    precisionLoss(seg_knn.run_edited_knn())
-#    precisionLoss(seg_knn.run_condensed_knn())
-#
-#    print("SEGMENTATION DATA - K = 24")
-#    seg_knn = k_near_neighbor(24, seg_data)
-#    precisionLoss(seg_knn.run_knn())
-#    precisionLoss(seg_knn.run_edited_knn())
-#    precisionLoss(seg_knn.run_condensed_knn())
-#
-#    print("SEGMENTATION DATA - K = 34")
-#    seg_knn = k_near_neighbor(34, seg_data)
-#    precisionLoss(seg_knn.run_knn())
-#    precisionLoss(seg_knn.run_edited_knn())
-#    precisionLoss(seg_knn.run_condensed_knn())
-#
-#    print("SEGMENTATION DATA - K = 3")
-#    seg_knn = k_near_neighbor(3, seg_data)
-#    precisionLoss(seg_knn.run_knn())
-#    precisionLoss(seg_knn.run_edited_knn())
-#    precisionLoss(seg_knn.run_condensed_knn())
-#
-#    print("SEGMENTATION DATA - K = 44")
-#    seg_knn = k_near_neighbor(44, seg_data)
-#    precisionLoss(seg_knn.run_knn())
-#    precisionLoss(seg_knn.run_edited_knn())
-#    precisionLoss(seg_knn.run_condensed_knn())
+#    aba_knn = k_near_neighbor(9, aba_data)
+#    aba_k = aba_knn.tune_k_set()
+#    print(aba_k)
+##    for k in aba_k:
+##        print("Abalone Data - K =,", k)
+##        aba_knn = k_near_neighbor(k, aba_data)
+##        zeroOneLoss(aba_knn.run_knn())
+##        zeroOneLoss(aba_knn.run_edited_knn())
+##        zeroOneLoss(aba_knn.run_condensed_knn())
+#    
+    mac_knn = k_near_neighbor(9, mac_data)
+    mac_k = mac_knn.tune_k_set()
+    print(mac_k)
+    for k in mac_k:
+        print("Machine Data - K =,", k)
+        mac_knn = k_near_neighbor(k, mac_data)
+        zeroOneLoss(mac_knn.run_knn())
+        zeroOneLoss(mac_knn.run_edited_knn())
+        zeroOneLoss(mac_knn.run_condensed_knn())
+#    
+#    for_knn = k_near_neighbor(9, for_data)
+#    for_k = for_knn.tune_k_set()
+#    print(for_k)
+##    for k in for_k:
+##        print("Forest Fire Data - K =,", k)
+##        for_knn = k_near_neighbor(k, for_data)
+##        zeroOneLoss(for_knn.run_knn())
+##        zeroOneLoss(for_knn.run_edited_knn())
+##        zeroOneLoss(for_knn.run_condensed_knn())
 
     
     

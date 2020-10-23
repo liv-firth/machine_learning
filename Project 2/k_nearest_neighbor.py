@@ -78,9 +78,11 @@ class k_near_neighbor:
             newTrain = copy.deepcopy(self.train) #Create deepcopy of train (not connected with original)
             newTrain['Distances'] = distances #Add Distances column to data frame
             newTrain = newTrain.sort_values(by = 'Distances', ascending = True) #Order by distances column
+            #print(testRow)
             
             # Grab top k neighbors
             topNeighbors = newTrain.head(self.k) #Grab top k rows
+            #print(topNeighbors)
             predictedClass = topNeighbors['Class'].value_counts()[:1].index.tolist()
         else: #If regression function
             predictedClass = self.regression_k(testRow)
@@ -114,6 +116,7 @@ class k_near_neighbor:
         #Step 3: For a given observation x_i that we wish to calculate, we calculate K at every value in array x 
         #Create a k_array to store K values for each element in x in array x 
         k_array= []
+        #print(testRow)
         #To calculate K 
         for o in range(len(array_x)):
                 #Calculate A = 1/(h sqrt(2pi) (same for every value in array x) 
@@ -125,6 +128,7 @@ class k_near_neighbor:
                 #Put that value in k_array
        
         #Find the mean of k_array 
+        #print(k_array)
         meanK = statistics.mean(k_array)
         #The prediciotn/classification is the value from array x, where the mean of the k_array occurs  
         differenceArr = [x - meanK for x in k_array]
@@ -177,6 +181,7 @@ class k_near_neighbor:
         kvalues.append(k4)
         k5 = int(k3 + (self.numObs*.05))
         kvalues.append(k5)
+        print("Calculated K Test Values: ", kvalues)
         loss_values = []
 
         #test on each k value 
@@ -242,7 +247,10 @@ class k_near_neighbor:
         i = 0 #Build iterator for indexing rows during search and removal, set at 0
         while i < len(referenceSet):
             if referenceSet.iloc[i]['Correct'] == False: #If classified incorrectly,
+                #print("Row Classified Incorrectly:")
+                #print(referenceSet.iloc[[i]])
                 referenceSet.drop(referenceSet.index[i])
+                #print("Row Dropped from Reference Set")
             #If not false, do nothing
             i += 1 #Iterate i by one
         
@@ -299,7 +307,10 @@ class k_near_neighbor:
                 
                 # Check if not correct
                 if returnRow.iloc[0]['Correct'] == False: #If classification was not correct
+                    #print("Classification Incorrect - Moving from Grab Bag to Storage")
+                    #print(returnRow)
                     storageArr.append(returnRow) #Add to the storage array
+                    #print(storageArr[-1])
                     del grabBagArr[x]
                     numIncorrect += 1 #Add one to num incorrect
                 # Do nothing if it was correct
@@ -329,57 +340,73 @@ class k_near_neighbor:
     # ----
     # FUNCTION TO RUN THE PARTITIONED K ALGORITHM
     # ----   
-#    def run_partitioned_knn(self):
-#        print("--- Partitioning K ---")
-#        allTestPred = [] #Blank List for Predicted Rows
-#        df = copy.deepcopy(self.baseData)
-#        #Select k random points out of the data points in datas to use as medoids
-#        self.data_obj.makeMediods(self.k) #Run MakeMediods for the data object
-#        self.data_obj.make10Fold() #Rebuild the Ten folds
-#        
-#        # Re assign several self objects
-#        self.trainArr = data_obj.trainArr
-#        self.testArr = data_obj.testArr  
-#        self.baseData = data_obj.dataArr
-#        self.mediods = data_obj.mediods #Add mediods variable to the class        
-#    
-#        #For each point in datas, find the closest medoid and make collect them
-#        allData = self.baseData
-#        
-#        listMedoidDistances = []
-#
-#        for x in range(len(allData)): #For all data points
-#            listDist = []
-#            tempRow = allData[[x]]
-#            for i in range(len(self.medoids)):
-#                medoidRow = self.mediods[[i]] #Assign medoid row
-#                dist = euclidean_distance(medoidRow, allData[[x]], self.numAttr)
-#                listDist.append(dist)
-#            minDistance = min(listDist)
-#            medoidAssign = listDist.index(minDistance)
-#            tempRow['Medoid'] = int(self.mediods[[i]].index)
-#        
-#        # Calculate Cost for each Medoid
-#        for i in range(len(self.medoids)): #For each medoid row
-            #Filter allData for pointst that match the medoid
+    def run_partitioned_knn(self):
+        print("--- Partitioning K ---")
+        allTestPred = [] #Blank List for Predicted Rows
+        df = copy.deepcopy(self.baseData)
+        #Select k random points out of the data points in datas to use as medoids
+        self.data_obj.makeMediods(self.k) #Run MakeMediods for the data object
+        self.data_obj.make10Fold() #Rebuild the Ten folds
+        
+        # Re assign several self objects
+        self.trainArr = data_obj.trainArr
+        self.testArr = data_obj.testArr  
+        self.baseData = data_obj.dataArr
+        self.mediods = data_obj.mediods #Add mediods variable to the class        
+    
+        #For each point in datas, find the closest medoid and make collect them
+        allData = self.baseData
+        
+        listMedoidDistances = []
+
+        for x in range(len(allData)): #For all data points
+            listDist = []
+            tempRow = allData[[x]]
+            for i in range(len(self.medoids)):
+                medoidRow = self.mediods[[i]] #Assign medoid row
+                dist = euclidean_distance(medoidRow, allData[[x]], self.numAttr)
+                listDist.append(dist)
+            minDistance = min(listDist)
+            medoidAssign = listDist.index(minDistance)
+            tempRow['Medoid'] = int(self.mediods[[i]].index)
+        
+        # Calculate Cost for each Medoid and Predict Row
+        for x in range(len(allData)): #For every row in the base data
+                #Find the closest centroid
+                indexArray = [] #Blank Array to Record Row / Centroid Indexes Into
+                distanceArray = [] #Blank Array to record Distances 
+                testRow = allData.iloc[[x]]
+                for y in range(len(self.mediods)): #Measure Distance for each centroid
+                    tempCentRow = self.medoids.iloc[[y]] #Move centroid row inot temporary variable for easy access
+                    indexCentRow = tempCentRow.iloc[[0]].index # record the index for easy reference
+                    indexArray.append(indexCentRow) #Append to list for later reference
+                    
+                    distCentroid = euclidean_distance(tempCentRow, allData.iloc[[x]], self.numAttr) #Calculate euclidean distance to Centroid
+                    distanceArray.append(distCentroid) #Append to list for easy reference
+                    
+                #Determine centroid with minimium distance to row
+                minDist = min(distanceArray)
+                minDistIndex = distanceArray.index(minDist)
+                minIndex = indexArray[minDistIndex] # Grab index of minimum value to assign as centroid
+                
+                medoidClass = self.centroids.loc[minIndex]['Class'] #Grab Centroid Class
+                testRow['Centroid'] = minIndex #Assign to Centroid
+                testRow['PredClass'] = medoidClass #Assign Same Class as Centroid
+                
+                #Determine if Centroid Class Assignment is Correct
+                print(centroidClass, testRow.iloc[0]['PredClass'])
+                if testRow.iloc[0]['PredClass'] == testRow.iloc[0]['Class']:
+                    testRow['Correct'] = True
+                else: 
+                    testRow['Correct'] = False
+                
+                allPredRows.append(testRow)
+        allPredRowsReturn = pd.concat(allPredRows)
+        return(allPredRowsReturn)
             
                 
                 
-        #for x in range(len(self.trainArr)):
 
-        #Set initial cost 
-    
-        #While current cost is less that 
-    
-        #Classify based on nearest medoid
-    
-     
-     #Function for calculating cost 
-        #For each medoid 
-                    #For each point in your set 
-                        #Calculate the absolute value of the difference (distance) (point - medoid)
-                    #Sum the differences over all the points 
-                #Sum the sums for each medoid  
     # ----
     # FUNCTION TO RUN THE K MEANS CLUSTERING
     # ---- 

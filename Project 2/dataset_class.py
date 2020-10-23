@@ -67,6 +67,7 @@ class data_set:
         test = [] #Blank List for Testing
         
         for x in range(10): #For all 10 datasets
+            print("Making Training and Testing Set -",x)
             tempList = copy.deepcopy(tenDFList) #Create a temporary copy of the tenDFList to reference
             test.append(tempList[x]) #Append Test Array with data frame at x in list
             del tempList[x] #Delete test data frame from list

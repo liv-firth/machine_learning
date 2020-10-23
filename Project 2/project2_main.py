@@ -34,11 +34,14 @@ def main():
 #    mac_data = create_data_set(filenames[4], True) #Import Computer Hardware / Machine Dataset
 #    for_data = create_data_set(filenames[1], True) #Import Forest Fire Dataset
     print("All Dataset Objects Created")
+ 
     
-#    seg_knn = k_near_neighbor(10, seg_data)
-#    zeroOneLoss(seg_knn.run_knn())
-#    zeroOneLoss(seg_knn.run_edited_knn())
-#    zeroOneLoss(seg_knn.run_condensed_knn())
+    seg_knn = k_near_neighbor(10, seg_data)
+#    seg_knn.run_knn()
+#
+    zeroOneLoss(seg_knn.run_knn())
+    zeroOneLoss(seg_knn.run_edited_knn())
+    zeroOneLoss(seg_knn.run_condensed_knn())
     
     aba_knn = k_near_neighbor(10, aba_data)
     zeroOneLoss(aba_knn.run_knn())

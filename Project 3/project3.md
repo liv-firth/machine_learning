@@ -3,6 +3,11 @@
     - A better approach is to sample according to the conditional probabilityof the values occurring, given the underlying class for that example. The choice of strategy is yours,but be sure to document your choice
 <<<<<<< HEAD:Project 3 /project3.md 
     - Normalization of data to be on (-1, 1) Z scores 
+	1. Data sets were transferred to CSV Files. Attribute Columns were named based off appropriate naming given in the .names file and class columns were renamed to 'Class' for easy access.
+	2. All missing attribute information were randomly assigned (insert statment about how few missing attributes and how it is nominal)
+	3. All Attribute values were transferred into Z-Scores
+		a) All values for an attribute are assessed; mean and standard deviation are found
+		b) using the mean, standard deviation and number of observations, the Z-score is calculated (insert traditional Z-score calc)
 =======
     - Normalization of data to be on (-1, 1) [Claire, Due 10/23]
 * Base Python File Set-Up []

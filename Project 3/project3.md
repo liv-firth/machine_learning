@@ -15,6 +15,7 @@
 * Pseudocode for MLP (multi layer feedforward network with backpropogation) [All, Discuss 10/23] 
     -  arbitrary number of inputs, an arbitrary number of hidden layers, an arbitrary numberof hidden nodes by layer, and an arbitrary number of outputs
     -  (OLIVIA) Be able to specify whether a node uses a linear activation function for regression or a sigmoidal activation function for classification (you may choose between logistic or hyperbolic tangent) 
+    So the main difference between using a hyper bolic tangent versus a logistic activation function is the range of the output. Hyperbolic tangent will fall between -1 and 1 and Logistic will fall between 0 and 1. I think that the logistic option will be easier to implement. It may be that we can try both pretty easily and see which one is more accurate. 
 * A hypothesis focusing on convergence rate and final performance
 * Test MLP Algorithm 
 * Paper (OLIVIA)

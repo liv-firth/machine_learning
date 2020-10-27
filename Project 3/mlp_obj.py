@@ -29,5 +29,15 @@ class mlp:
     # ----------------------------------------- #
     # ------ UNIVERSL INTERNAL FUNCTIONS ------ #  
     # ----------------------------------------- #
+    
+    # ----
+    # INITALIZER FUNCTION
+    # ----
     def __init__(self, data_object):
         self.isRegression = data_object.regression #Indicates if dataset being imported into
+        
+    # ----
+    # RUN FUNCTION
+    # ----
+    def run(self):
+        print("MLP: Run")

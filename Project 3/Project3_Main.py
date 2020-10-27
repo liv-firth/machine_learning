@@ -16,7 +16,7 @@ import pandas as pd
 #  BUILD MAIN FUNCTION
 # ----
 def main():
-    filenames = ["abalone.csv", "forestfires.csv", "glass.csv", "house-votes-84-fixed.csv", "machine.csv", "segmentation.csv"]
+    filenames = ["/breast-cancer-wisconsin.csv", "glass.csv", "glass.csv", "house-votes-84-fixed.csv", "machine.csv", "segmentation.csv"]
 
     ## IMPORT CLASSIFICATION DATA SETS: BREAST CANCER, GLASS, SOYBEAN
     

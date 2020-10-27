@@ -27,4 +27,6 @@ Machine:
 Segmentation:
 - No missing attribute values
 
+Soybean-Small:
+- No missing attribute valuse
 

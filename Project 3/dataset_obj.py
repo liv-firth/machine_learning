@@ -5,7 +5,7 @@ Project Three
 
 dataset object creation
 
-@author: Claire Richards, Olivia Firth, Hannah C
+@author: Claire Richards, Olivia Firth, Hannah Cebulla
 """
 
 # IMPORT THE FOLLOWING PACKAGES
@@ -20,6 +20,7 @@ class data_set:
     # ORDER OF FUNCTIONS WITHIN THE CLASS 
         # UNIVERSAL INTERNAL FUNCTIONS
             # INITALIZER FOR DATA OBJECT
+            # BUILDER FOR TRAINING AND TESTING OBJECTS
     # FUNCTIONS IN THE DOCUMENT, OUTSIDE THE CLASS
         # CREATE DATA OBJECT: BUILDS DATA SET OBJECT FROM A FILE NAME
     # -----------------------------------------
@@ -37,6 +38,10 @@ class data_set:
         self.numObsv = numObsv
         self.classArr = classArr
         self.regression = regression
+    
+    # ----
+    # MAKE TRAINING AND TESTING SET
+    # ----
         
 
 # ----------------------------------------- #

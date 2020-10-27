@@ -3,7 +3,7 @@
 CSCI 447 - Machine Learning
 Project Three
 
-@author: Claire Richards, Olivia Firth, Hannah C
+@author: Claire Richards, Olivia Firth, Hannah Cebulla
 """
 # ----
 # IMPORT FILES AND PACKAGES

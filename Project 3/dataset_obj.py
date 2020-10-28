@@ -11,6 +11,7 @@ dataset object creation
 # IMPORT THE FOLLOWING PACKAGES
 import copy
 import pandas as pd 
+import numpy as np
 
 # ----
 # Dataset class and creation function
@@ -40,8 +41,10 @@ class data_set:
         self.regression = regression
     
     # ----
-    # MAKE TRAINING AND TESTING SET
+    # MAKE TRAINING AND TESTING SET (10 Fold)
     # ----
+    def makeTrainTest(self):
+        print("Making Training and Test Sets: 10 Fold")
         
 
 # ----------------------------------------- #
@@ -52,10 +55,14 @@ class data_set:
 # DEFINE FUNCTION TO READ CSV AND CREATE A DATA SET OBJECT (WITH TEST AND TRAINING 10 FOLD CREATED)
 # ----  
 def create_data_set(filename, regression):
-    dataArr = pd.read_csv(filename) #Read CSV File into pandas data frame
-    numObsv = len(dataArr) # Grab Length of data frame
-    numAttr = len(dataArr.columns) - 1 #
-    classArr = pd.unique(dataArr.iloc[:, numAttr])
+    ## Basic Data Reading
+    dataArr = np.genfromtxt(filename, delimiter=',') #Read CSV File into Numpy Array
+    numObsv, numAttr = dataArr.shape #Grab number of rows and number of columns
+    numAttr = numAttr - 1 # Subtract Class Column
+    classArr = np.unique(dataArr[:,numAttr]) #Pull Unique Values from Class Column
 
     temp_test_set = data_set(dataArr, numAttr, numObsv, classArr, regression) #Create test set object
+    
+    ## Build Additional data set variables
+    temp_test_set.makeTrainTest() #Build Training and Test Objects, Build 10-cross folds
     return(temp_test_set)

@@ -31,6 +31,14 @@
 
     output of the ith node = c(weighted sum of the input connections) where c is some coefficient we have to determine 
 
+    Pulled from a source : The choice of activation function in he output layer is strongly constrained by the type of problem that you are modeling. For example:
+
+A regression problem may have a single output neuron and the neuron may have no activation function.
+
+A binary classification problem may have a single output neuron and use a sigmoid activation function to output a value between 0 and 1 to represent the probability of predicting a value for the class 1. This can be turned into a crisp class value by using a threshold of 0.5 and snap values less than the threshold to 0 otherwise to 1.
+
+A multi-class classification problem may have multiple neurons in the output layer, one for each class (e.g. three neurons for the three classes in the famous iris flowers classification problem). In this case a softmax activation function may be used to output a probability of the network predicting each of the class values. Selecting the output with the highest probability can be used to produce a crisp class classification value.
+
 * A hypothesis focusing on convergence rate and final performance
 * Test MLP Algorithm 
 * Paper (OLIVIA)

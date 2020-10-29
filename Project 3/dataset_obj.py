@@ -21,7 +21,7 @@ class data_set:
     # ORDER OF FUNCTIONS WITHIN THE CLASS 
         # UNIVERSAL INTERNAL FUNCTIONS
             # INITALIZER FOR DATA OBJECT
-            # BUILDER FOR TRAINING AND TESTING OBJECTS
+            # BUILDER FOR TRAINING AND TESTING OBJECTS (Ten Folds)
     # FUNCTIONS IN THE DOCUMENT, OUTSIDE THE CLASS
         # CREATE DATA OBJECT: BUILDS DATA SET OBJECT FROM A FILE NAME
     # -----------------------------------------
@@ -44,8 +44,36 @@ class data_set:
     # MAKE TRAINING AND TESTING SET (10 Fold)
     # ----
     def makeTrainTest(self):
-        print("Making Training and Test Sets: 10 Fold")
+        #print("Making Training and Test Sets: 10 Fold")
+        tenPer = int(self.numObsv) #Find value for 10% of dataset
         
+        df = self.dataArr #define data frame as data array
+        
+        ## Create 10 segments of data array
+        n = 0 #Define / Initalize a Row iterative
+        tenDFList = [] #Create empty list to append each data frame into
+        for i in range (9): #Run nine times
+            #print("Fold Number: ",i+1)
+            m = n + tenPer #find final row to grab into data frame
+            tempdf = df[n:m,:] #Grab Rows within n-m range
+            n = m + 1 #update n to equal end row plus one
+            tenDFList.append(tempdf) #Append list with new temp df
+        tenDFList.append(df[n:self.numObsv-1,:]) #Append data frame list with final dataframe
+        
+        ## Create Train and Test Folds
+        train = [] #Blank List for Training
+        test = [] #Blank List for Testing
+        
+        for x in range(10): #For all 10 datasets
+            #print("Making Training and Testing Set -",x)
+            tempList = copy.deepcopy(tenDFList) #Create a temporary copy of the tenDFList to reference
+            test.append(tempList[x]) #Append Test Array with data frame at x in list
+            del tempList[x] #Delete test data frame from list
+            train.append(np.concatenate(tempList)) #Append train list with the remaining dataframes in the list
+        
+        self.tenTrainArr = train
+        self.tenTestArr = test
+        #print("--- 10 FOLD TEST AND TRAIN SETS CREATED ---")        
 
 # ----------------------------------------- #
 # ------ FUNCTIONS OUTSIDE THE CLASS ------ #  

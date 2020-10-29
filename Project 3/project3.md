@@ -16,11 +16,26 @@
     -  arbitrary number of inputs, an arbitrary number of hidden layers, an arbitrary numberof hidden nodes by layer, and an arbitrary number of outputs
     -  (OLIVIA) Be able to specify whether a node uses a linear activation function for regression or a sigmoidal activation function for classification (you may choose between logistic or hyperbolic tangent) 
     So the main difference between using a hyper bolic tangent versus a logistic activation function is the range of the output. Hyperbolic tangent will fall between -1 and 1 and Logistic will fall between 0 and 1. I think that the logistic option will be easier to implement. It may be that we can try both pretty easily and see which one is more accurate. 
+
+    Sigmoidal Activation Function (Logistic) : 
+
+    output of the ith node = (1)/(1 + e ^ (- weighted sum of the input connections))
+
+    Sigmoidal Activation Function (Hyperbolic Tangent) : 
+
+    output of the ith node = tanh( weighted sum of the input connections )
+
+    Linear Regression Function: 
+
+    The tricky part of this one is that we need to figure out what the constant should be based on some sort of tuning . . . 
+
+    output of the ith node = c(weighted sum of the input connections) where c is some coefficient we have to determine 
+
 * A hypothesis focusing on convergence rate and final performance
 * Test MLP Algorithm 
 * Paper (OLIVIA)
 * Define Regression and Clasification Functions 
-    -  (OLIVIA) Be able to specify whether a node uses a linear activation function for regression or a sigmoidal activationfunction for classification (you may choose between logistic or hyperbolic tangent) 
+    -  (OLIVIA)  
 * Develop hypothesis focusing on convergence rate and final performance [All, Discuss 10/23]
 * Implement MLP Algorithm 
 * Paper 

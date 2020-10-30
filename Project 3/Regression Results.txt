@@ -1,0 +1,16 @@
+## REGRESSION 
+## ABALONE
+Optimal Number of Hidden Layers: 2
+Optimal Convergence Rate: 0.01
+ACCURACY OF CLASSIFICATIONS: 0.86156846138131831
+
+## MACHINE (COMPUTER HARDWARE)
+Optimal Number of Hidden Layers: 2
+Optimal Convergence Rate: 0.0001
+ACCURACY OF CLASSIFICATIONS: 0.96481655911384562
+
+## FOREST FIRES
+Optimal Number of Hidden Layers: 2
+Optimal Convergence Rate: 0.001
+ACCURACY OF CLASSIFICATIONS: 0.92148648964915265
+

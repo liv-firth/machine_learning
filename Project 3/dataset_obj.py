@@ -86,7 +86,7 @@ class data_set:
 def create_data_set(filename, regression):
     ## Basic Data Reading
     dataArr = np.genfromtxt(filename, delimiter=',') #Read CSV File into Numpy Array
-    print(dataArr)
+    #print(dataArr)
     numObsv, numAttr = dataArr.shape #Grab number of rows and number of columns
     numAttr = numAttr - 1 # Subtract Class Column
     classArr = np.unique(dataArr[:,numAttr]).tolist() #Pull Unique Values from Class Column

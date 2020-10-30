@@ -1,0 +1,28 @@
+## CLASSIFICATION SETS
+## Breast Cancer
+Optimal Number of Hidden Layers: 1
+Optimal Convergence Rate: 0.1
+ACCURACY OF CLASSIFICATIONS:
+2.0 :  0.985138612
+4.0 :  0.975286484
+
+## Glass
+Optimal Number of Hidden Layers: 2
+Optimal Convergence Rate: 0.0001
+ACCURACY OF CLASSIFICATIONS:
+1.0 :  1.0
+2.0 :  0.898165681
+3.0 :  0.9
+4.0 :  0.815789473
+5.0 :  0.798136802
+6.0 :  0.9
+7.0 :  0.758823529
+
+## Soybean
+Optimal Number of Hidden Layers: 0
+Optimal Convergence Rate: 0.1
+ACCURACY OF CLASSIFICATIONS:
+1.0 :  1.0
+2.0 :  0.8
+3.0 :  0.9
+4.0 :  0.882352941

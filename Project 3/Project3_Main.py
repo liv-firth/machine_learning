@@ -10,13 +10,14 @@ Project Three
 # ----
 import dataset_obj #Interal File, Data Set Object Class File
 from dataset_obj import create_data_set
+import mlp_obj
 
 
 # ----
 #  BUILD MAIN FUNCTION
 # ----
 def main():
-    filenames = ["Datasets/breast-cancer-wisconsin.csv", "Datasets/glass.csv", "Datasets/soybean-small.csv", "Datasets/abalone.csv", "Datasets/machine.csv", "Datasets/forestfires.csv"]
+    filenames = ["Datasets/breast-cancer-wisconsin.csv", "Datasets/glass.csv", "Datasets/soybean-small - Copy.csv", "Datasets/abalone.csv", "Datasets/machine.csv", "Datasets/forestfires.csv"]
 
     ## IMPORT CLASSIFICATION DATA SETS: BREAST CANCER, GLASS, SOYBEAN
     brc_data = create_data_set(filenames[0], False)
@@ -27,6 +28,12 @@ def main():
     aba_data = create_data_set(filenames[3], True)
     mac_data = create_data_set(filenames[4], True)
     fof_data = create_data_set(filenames[5], True)
+    
+    mlp_obj.run_mlp(brc_data, 0, 1, 200)
+    mlp_obj.run_mlp(brc_data, 1, 1, 200)
+    mlp_obj.run_mlp(brc_data, 2, 1, 200)
+
+    
     
 # ----
 #  RUN MAIN FUNCTION

@@ -33,12 +33,13 @@ class data_set:
     # ----
     # INITALIZER FUNCTION
     # ----
-    def __init__(self, dataArr, numAttr, numObsv, classArr, regression):
+    def __init__(self, dataArr, numAttr, numObsv, classArr, regression, numClass):
         self.dataArr = dataArr
         self.numAttr = numAttr
         self.numObsv = numObsv
         self.classArr = classArr
         self.regression = regression
+        self.numClass = numClass
     
     # ----
     # MAKE TRAINING AND TESTING SET (10 Fold)
@@ -85,11 +86,13 @@ class data_set:
 def create_data_set(filename, regression):
     ## Basic Data Reading
     dataArr = np.genfromtxt(filename, delimiter=',') #Read CSV File into Numpy Array
+    print(dataArr)
     numObsv, numAttr = dataArr.shape #Grab number of rows and number of columns
     numAttr = numAttr - 1 # Subtract Class Column
-    classArr = np.unique(dataArr[:,numAttr]) #Pull Unique Values from Class Column
-
-    temp_test_set = data_set(dataArr, numAttr, numObsv, classArr, regression) #Create test set object
+    classArr = np.unique(dataArr[:,numAttr]).tolist() #Pull Unique Values from Class Column
+    numClass = len(classArr)
+    
+    temp_test_set = data_set(dataArr, numAttr, numObsv, classArr, regression, numClass) #Create test set object
     
     ## Build Additional data set variables
     temp_test_set.makeTrainTest() #Build Training and Test Objects, Build 10-cross folds

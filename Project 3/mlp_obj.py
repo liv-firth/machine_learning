@@ -13,6 +13,7 @@ import copy
 import pandas as pd 
 from random import seed
 from random import random
+from math import exp
 
 import dataset_obj
 
@@ -24,7 +25,15 @@ class mlp:
     # ORDER OF FUNCTIONS WITHIN THE CLASS 
         # UNIVERSAL INTERNAL FUNCTIONS
             # INITALIZER FOR MLP OBJECT
-            # INITALIZE / BUILD BASE NETWORK
+            # BUILD BASE NETWORK AND ACTIVATION FUNCTIONS
+                # INITALIZE NETWORK
+                # ACTIVATION
+                # TRANSFER ACTIVATION TO OUTPUT
+            # FORWARD PROPOGATION 
+            # BACK PROPOGATION AND FUNCTIONS
+                # TRANSFER DERIVATIVE
+                # BACK PROPOGATE ERROR
+            # TRAIN NETWORK
             # FUNCTION TO RUN THE MLP
     # FUNCTIONS IN THE DOCUMENT, OUTSIDE THE CLASS
         # ##
@@ -37,16 +46,24 @@ class mlp:
     # ----
     # INITALIZER FUNCTION
     # ----
-    def __init__(self, data_object):
+    def __init__(self, data_object, l_rate, n_epoch):
         self.dataset = data_object
         self.isRegression = data_object.regression #Indicates if dataset being imported into
+        self.l_rate = l_rate #Learning Rate is given
+        self.n_epoch = n_epoch #Specify Number of Epochs for Training
     
+        # ----------------------------------------- #
+        # --- BUILD BASE NETWORK AND ACTIVATION --- #  
+        # ----------------------------------------- #
     # ----
     # BUILD BASE NETWORK
     # ----   
-    def initalizeNetwork(self, n_hidden, n_outputs):
+    def initalizeNetwork(self, n_hidden):
         print("Initalize Network")
-        n_inputs = self.dataset.numAttr
+        n_inputs = self.dataset.numAttr #Number of inputs is equal to the number of attributes
+        if(self.dataset.regression): n_outputs = 1
+        else: n_outputs = self.dataset.numClass
+        
         network = list()
         hidden_layer = [{'weights':[random() for i in range(n_inputs + 1)]} for i in range(n_hidden)]
         network.append(hidden_layer) #Append Hidden Layer to the Network
@@ -65,28 +82,40 @@ class mlp:
         return(activation)
     
     # ----
-    # TRANSFER NUERON ACTIVATION FOR OUTPUT NURONS
+    # TRANSFER NUERON ACTIVATION FOR OUTPUT NURONS (Activation)
     # ----
-    def transfer(activation):
-        return(1.0 / (1.0 + exp(-activation)))
+    def transfer(self, activation):
+        if(self.dataset.regression): #If Regressive
+            print("Oh shit its regressive")
+        else: #If not regressive
+            return(1.0 / (1.0 + exp(-activation))) #Sigmodal For Classifcation Functions
     
     # ----
     # FORWARD PROPOGATE INPUT TO A NETWORK OUTPUT
     # ----
-    def forwardPropogate(self, row):
+    def forward_propagate(self, row):
         inputs = row #assign inputs as a copy of row
-        for layer in self.network:
+        for layer in self.network: #For each layer in the network 
             new_inputs = [] #Blank list of imputs to append to
-                for neuron in layer:
-                    activation = activate(neuron['weights'], inputs)
-                    neuron['output'] = transfer(activation)
-                    new_inputs.append(neuron['output'])
-                inputs = new_inputs
+            for neuron in layer:
+                activation = self.activate(neuron['weights'], inputs)
+                neuron['output'] = self.transfer(activation)
+                new_inputs.append(neuron['output'])
+            inputs = new_inputs
         return(inputs)
     
+        # ----------------------------------------- #
+        # -- BACK PROPOGATION OF ERROR FUNCTION --- #  
+        # ----------------------------------------- # 
+    # ----
+    # BACK PROPOGATE ERROR: TRANSFER DERIVATIVE (REVERSE TRANSFER ACTIVATION)
+    # ----
     def transfer_derivative(self, output):
         return(output*(1.0-output))
     
+    # ----
+    # BACK PROPOGATE ERROR
+    # ----
     def backward_propogate_error(self, network, expected):
         for i in reversed(range(len(network))):
             layer = network[i]
@@ -103,36 +132,96 @@ class mlp:
                     errors.append(expected[j] - neuron['output'])
             for j in range(len(layer)):
                 neuron = layer[j]
-                neuron['delta'] = errors[j] * transfer_derivative(neuron['output'])
-    # Update network weights with error
+                neuron['delta'] = errors[j] * self.transfer_derivative(neuron['output'])
+        
+        # ----------------------------------------- #
+        # ------ TRAIN THE NETWORK FUNCTIONS ------ #  
+        # ----------------------------------------- # 
+    
+    # ----
+    # TRAIN THE NETWORK: UPDATE WEIGHTS
+    # ----
     def update_weights(self, network, row, l_rate):
-    	for i in range(len(network)):
-    		inputs = row[:-1]
-    		if i != 0:
-    			inputs = [neuron['output'] for neuron in network[i - 1]]
-    		for neuron in network[i]:
-    			for j in range(len(inputs)):
-    				neuron['weights'][j] += l_rate * neuron['delta'] * inputs[j]
-    			neuron['weights'][-1] += l_rate * neuron['delta']
+        for i in range(len(network)):
+            inputs = row[:-1]
+            if i != 0:
+                inputs = [neuron['output'] for neuron in network[i - 1]]
+            for neuron in network[i]:
+                for j in range(len(inputs)):
+                    neuron['weights'][j] += l_rate * neuron['delta'] * inputs[j]
+                neuron['weights'][-1] += l_rate * neuron['delta']
      
-    # Train a network for a fixed number of epochs
+    # ----
+    # TRAIN THE NETWORK
+    # ----
     def train_network(self, network, train, l_rate, n_epoch, n_outputs):
-    	for epoch in range(n_epoch):
-    		sum_error = 0
-    		for row in train:
-    			outputs = forward_propagate(network, row)
-    			expected = [0 for i in range(n_outputs)]
-    			expected[row[-1]] = 1
-    			sum_error += sum([(expected[i]-outputs[i])**2 for i in range(len(expected))])
-    			backward_propagate_error(network, expected)
-    			update_weights(network, row, l_rate)
-    		print('>epoch=%d, lrate=%.3f, error=%.3f' % (epoch, l_rate, sum_error))
-            
+        for epoch in range(n_epoch):
+            sum_error = 0
+            for row in train:
+                outputs = self.forward_propagate(row)
+                expected = [0 for i in range(n_outputs)]
+                expected[self.dataset.classArr.index(row[-1])] = 1
+                sum_error += sum([(expected[i]-outputs[i])**2 for i in range(len(expected))])
+                self.backward_propogate_error(network, expected)
+                self.update_weights(network, row, l_rate)
+            #print('>epoch=%d, lrate=%.3f, error=%.3f' % (epoch, l_rate, sum_error))
+    
+        
+        # ----------------------------------------- #
+        # ------ TRAIN THE NETWORK FUNCTIONS ------ #  
+        # ----------------------------------------- # 
+    # ----
+    # PREDICT FUNCTION
+    # ----
+    def predict(self, row):
+        outputs = self.forward_propagate(row)
+        print(outputs)
+        return(self.dataset.classArr[outputs.index(max(outputs))]) #Returns top class option
+    
     # ----
     # RUN FUNCTION
     # ----
-    def run(self):
+    def evaluate(self):
         print("MLP: Run")
+        
+        cList = list() #Blank list to collect correct class
+        pList = list() #Blank list to collect predicted class
+        correct = list() #Blank list to collect T/F
+        for i in range(10): #For Each Fold
+            train = self.dataset.tenTrainArr[i] #Grab ith training set
+            test = self.dataset.tenTestArr[i] #Grab ith testing set
+            
+            print("Train Network: ", i)
+            self.train_network(self.network, train, self.l_rate, self.n_epoch, self.dataset.numClass)
+            
+            numRow, numCol = test.shape #Grab Shape for reference
+            for k in range(numRow):
+                predicted = self.predict(test[k])
+                
+                cList.append(test[k,numCol-1])
+                pList.append(predicted)
+                
+                #print(predicted)
+                #print(test[k, numCol-1])
+                if(predicted == test[k, numCol-1]): 
+                    #print("MATCHES")
+                    correct.append(True)
+                else:
+                    #print("NOT CORRECT")
+                    correct.append(False)
+
+        print("ACCURACY OF CLASSIFICATIONS:")
+        for c in self.dataset.classArr:
+            countTrue = 0
+            outOf = 0
+            for x in range(len(correct)):
+                if cList[x] == c:
+                    outOf += 1
+                    if correct[x] == True:
+                        countTrue += 1
+            print(c,": ",countTrue/outOf)
+            
+                
 
 # ----------------------------------------- #
 # ------ FUNCTIONS OUTSIDE THE CLASS ------ #  
@@ -141,7 +230,8 @@ class mlp:
 # ----
 # DEFINE TO CREATE, TRAIN, AND RUN THE MLP
 # ---- 
-def run_mlp(data_object, n_inputs, n_hidden, n_outputs):
-    temp_mlp = mlp(data_object) #Initalize MLP
-    temp_mlp.initalizeNetwork(n_hidden, n_outputs) #Initalize the Base Network
+def run_mlp(data_object, n_hidden, l_rate, n_epoch):
+    temp_mlp = mlp(data_object, l_rate, n_epoch) #Initalize MLP
+    temp_mlp.initalizeNetwork(n_hidden) #Initalize the Base Network
+    temp_mlp.evaluate() #Run The Algorithm
     

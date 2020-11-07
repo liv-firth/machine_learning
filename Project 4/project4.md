@@ -11,19 +11,19 @@ Pseudocode by Wednesday
 
   3. cycle through each individual in the population
   
-    perform mutation
+      perform mutation
     
-    perform crossover
+      perform crossover
     
-    perform selection
+      perform selection
     
   if stopping criteria has been met:
   
-    return the best individual
+   return the best individual
     
   else:
   
-    return to step 3
+   return to step 3
 
 
 3. Partical Swarm Optimization (Olivia)

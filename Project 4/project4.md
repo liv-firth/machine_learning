@@ -27,3 +27,14 @@ Pseudocode by Wednesday
 
 
 3. Partical Swarm Optimization (Olivia)
+   Train to 0, 1, and 2 Hidden Layers 
+    Will need to demonstrate:
+        * pbest calculation
+        * gbest calculation 
+        * velocity update 
+        * position update. 
+        Pseudocode: https://www.researchgate.net/figure/Pseudocode-of-standard-particle-swarm-optimization_fig1_323281605
+
+        More on Particle Swarm: 
+        https://www.sciencedirect.com/topics/computer-science/particle-swarm-optimization
+        Also see figure in folder. 

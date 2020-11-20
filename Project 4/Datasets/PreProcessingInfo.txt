@@ -1,0 +1,32 @@
+######################
+CHANGES TO DATASET FOR PRE-PROCESSING
+######################
+
+Abalone:
+- No missing attribute values
+- Rings is number to predict
+- Sex class has been codified to: M = 1, W = 2, I = 3
+
+Breast Cancer:
+- Removed sample code number, not a predictive attribute
+- 16 missing attribute values: randomly assigned a value from 1-10 (range given in names document for each attribute)
+
+Forest Fires: 
+- No Missing Attribute Values
+- Month is coded (Jan = 1, Feb = 2, etc.)
+- Day is coded (sun = 1, mon = 2, etc.)
+
+Glass:
+- No Missing Attribute Values
+- ID Number removed, not a predictive attribute
+
+Machine:
+- No missing attribute values
+- Removed Vendor name and Model name, non predictive attributes
+
+Segmentation:
+- No missing attribute values
+
+Soybean-Small:
+- No missing attribute valuse
+

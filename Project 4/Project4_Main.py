@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 CSCI 447 - Machine Learning
-Project Three
+Project Four
 
 @author: Claire Richards, Olivia Firth, Hannah Cebulla
 """
@@ -29,13 +29,7 @@ def main():
     mac_data = create_data_set(filenames[4], True)
     fof_data = create_data_set(filenames[5], True)
     
-    mlp_obj.run_mlp(brc_data, [0,1,2], [0.1, 0.01, 0.001, 0.0001, 0.00001], 200)
-    # mlp_obj.run_mlp(gla_data, [0,1,2], [0.1, 0.01, 0.001, 0.0001, 0.00001], 200)
-    # mlp_obj.run_mlp(soy_data, [0,1,2], [0.1, 0.01, 0.001, 0.0001, 0.00001], 200)
-    
-    #mlp_obj.run_mlp(aba_data, [0,1,2], [0.1, 0.01, 0.001, 0.0001, 0.00001], 200)
-    # mlp_obj.run_mlp(mac_data, [0,1,2], [0.1, 0.01, 0.001, 0.0001, 0.00001], 200)
-    # mlp_obj.run_mlp(fof_data, [0,1,2], [0.1, 0.01, 0.001, 0.0001, 0.00001], 200)
+
     
 # ----
 #  RUN MAIN FUNCTION

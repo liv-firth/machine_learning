@@ -46,7 +46,7 @@ class data_set:
     # ----
     def makeTrainTest(self):
         #print("Making Training and Test Sets: 10 Fold")
-        tenPer = int(self.numObsv) #Find value for 10% of dataset
+        tenPer = int(self.numObsv/10) #Find value for 10% of dataset
         
         df = self.dataArr #define data frame as data array
         
@@ -66,11 +66,15 @@ class data_set:
         test = [] #Blank List for Testing
         
         for x in range(10): #For all 10 datasets
-            #print("Making Training and Testing Set -",x)
+            print("Making Training and Testing Set -",x)
             tempList = copy.deepcopy(tenDFList) #Create a temporary copy of the tenDFList to reference
             test.append(tempList[x]) #Append Test Array with data frame at x in list
             del tempList[x] #Delete test data frame from list
+            print(np.concatenate(tempList))
             train.append(np.concatenate(tempList)) #Append train list with the remaining dataframes in the list
+            
+        print(train[0])
+        print(test[1])
         
         self.tenTrainArr = train
         self.tenTestArr = test

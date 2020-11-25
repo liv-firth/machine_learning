@@ -3,7 +3,7 @@
 CSCI 447 - Machine Learning
 Project Three
 
-Genetic Algorithm Class
+Particle Swarm Optimization
 
 @author: Claire Richards, Olivia Firth, Hannah Cebulla
 """
@@ -18,9 +18,9 @@ from math import exp
 import dataset_obj
 
 # ----
-# MLP OBJECT CLASS
+# Particle Swarm Optimization Class
 # ----
-class ga:
+class pso:
     # -----------------------------------------
     # ORDER OF FUNCTIONS WITHIN THE CLASS 
         # UNIVERSAL INTERNAL FUNCTIONS

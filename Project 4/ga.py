@@ -10,12 +10,15 @@ Genetic Algorithm Class
 
 # IMPORT THE FOLLOWING PACKAGES AND FILES
 import copy
+import numpy as np
 import pandas as pd 
 from random import seed
 from random import random
 from math import exp
 
 import dataset_obj
+from misc import logRessObj
+from mlp_obj import mlp
 
 # ----
 # MLP OBJECT CLASS
@@ -38,12 +41,17 @@ class ga:
     # ----
     # INITALIZER FUNCTION
     # ----
-    def __init__(self, data_object, l_rate, n_epoch):
-        self.dataset = data_object #Pulls dataset object for easy reference
-        self.isRegression = data_object.regression #Indicates if dataset being imported into
-        self.l_rate = l_rate #Learning Rate is given
-        self.n_epoch = n_epoch #Specify Number of Epochs for Training
-        self.c = 1 #For regression Activations
+    def __init__(self, mlp_object, size, n_parents):
+        self.dataset = mlp_object.dataset #Grab dataset from MLP object
+        self.regression = mlp_object.isRegression #Grab regression boolean from MLP object
+        self.mutation_rate = mlp_object.l_rate #Grab learning rate from mlp 
+        self.n_gen = mlp_object.n_epoch
+        self.network = mlp_object.network
+        self.size = int(mlp_object.dataset.numObsv/10)
+        self.n_parents = n_parents
+        self.n_feat = mlp_object.dataset.numClass
+        self.logmodel = logRessObj(self.dataset).logRess
+
     
         # ----------------------------------------- #
         # --- BUILD BASE NETWORK AND ACTIVATION --- #  
@@ -51,7 +59,7 @@ class ga:
     # ----
     # INITALIZE POPULATION
     # ----
-    def initalization_of_pop(size, n_feat):
+    def init_pop(self, size, n_feat):
         population = []
         for i in range(size):
             chromosome = np.ones(n_feat, dtype=np.bool)
@@ -63,23 +71,23 @@ class ga:
     # ----
     # GET FITNESS SCORE OF POPULATION
     # ----
-    def fitness_score(population):
+    def fitness_score(self,population, X_train, X_test, y_train, y_test):
         scores = []
-        for chromosome in population:
-            logmodel.fit(X_train.iloc[:,chromosome],y_train)
-            predictions = logmodel.predict(X_test.iloc[:,chromosome])
-            scores.append(accuracy_score(y_test,predictions))
+        for chromosome in range(self.dataset.numAttr):
+            self.logmodel.fit(X_train[:,chromosome], y_train)
+            predictions = self.logmodel.predict(X_test[:,chromosome])
+            scores.append(self.accuracy_score(y_test,predictions))
         scores, population = np.array(scores), np.array(population) 
         inds = np.argsort(scores)
         return list(scores[inds][::-1]), list(population[inds,:][::-1])
     
-    def selection(pop_after_fit, n_parents):
+    def selection(self, pop_after_fit, n_parents):
         population_nextgen = []
         for i in range(n_parents):
             population_nextgen.append(pop_after_fit[i])
         return population_nextgen
     
-    def crossover(pop_after_sel):
+    def crossover(self, pop_after_sel):
         population_nextgen=pop_after_sel
         for i in range(len(pop_after_sel)):
             child=pop_after_sel[i]
@@ -87,7 +95,7 @@ class ga:
             population_nextgen.append(child)
         return population_nextgen
     
-    def mutation(pop_after_cross,mutation_rate):
+    def mutation(self, pop_after_cross,mutation_rate):
         population_nextgen = []
         for i in range(0,len(pop_after_cross)):
             chromosome = pop_after_cross[i]
@@ -97,18 +105,18 @@ class ga:
             population_nextgen.append(chromosome)
         #print(population_nextgen)
         return population_nextgen
+
     
-    def generations(size,n_feat,n_parents,mutation_rate,n_gen,X_train,
-                                       X_test, y_train, y_test):
+    def generations(self, X_train, X_test, y_train, y_test):
         best_chromo= []
         best_score= []
-        population_nextgen=initilization_of_population(size,n_feat)
-        for i in range(n_gen):
-            scores, pop_after_fit = fitness_score(population_nextgen)
+        population_nextgen = self.init_pop(self.size,self.n_feat)
+        for i in range(self.n_gen):
+            scores, pop_after_fit = self.fitness_score(population_nextgen, X_train, X_test, y_train, y_test)
             print(scores[:2])
-            pop_after_sel = selection(pop_after_fit,n_parents)
-            pop_after_cross = crossover(pop_after_sel)
-            population_nextgen = mutation(pop_after_cross,mutation_rate)
+            pop_after_sel = self.selection(pop_after_fit,self.n_parents)
+            pop_after_cross = self.crossover(pop_after_sel)
+            population_nextgen = self.mutation(pop_after_cross,self.mutation_rate)
             best_chromo.append(pop_after_fit[0])
             best_score.append(scores[0])
         return best_chromo,best_score    
@@ -120,47 +128,41 @@ class ga:
 # ------ FUNCTIONS OUTSIDE THE CLASS ------ #  
 # ----------------------------------------- #   
         
-# ----
-# DEFINE TO CREATE, TRAIN, AND RUN THE MLP
-# ---- 
-def run_ga(data_object, n_hiddenList, l_rate, n_epoch):   
-    
-    #Tune the Hidden Layers Using Learning Rate of 0.1
-    hiddenLayerAccuracy = list() #Blank List to Append To
-    for i in n_hiddenList:
-        temp_mlp = mlp(data_object, 0.1, n_epoch) #Initalize MLP
-        temp_mlp.initalizeNetwork(i) #Initalize the Base Network
-        temp_mlp.evaluate()
-        hiddenLayerAccuracy.append(temp_mlp.accuracy)
-    
-    #Find best hidden layer
-    n_hidden = n_hiddenList[hiddenLayerAccuracy.index(max(hiddenLayerAccuracy))]
-    
-    #Tune the Learning Rate
-    l_Accuracy = list()
-    for i in l_rate:
-        temp_mlp = mlp(data_object, i, n_epoch) #Initalize MLP
-        temp_mlp.initalizeNetwork(n_hidden) #Initalize the Base Network
-        temp_mlp.evaluate()
-        l_Accuracy.append(temp_mlp.accuracy)
-    #Find the best l_rate
-    convergence = l_rate[l_Accuracy.index(max(l_Accuracy))]    
-    
-        
-    # #Run with best settings
-    temp_mlp = mlp(data_object, convergence, n_epoch) #Initalize MLP
-    temp_mlp.initalizeNetwork(n_hidden) #Initalize the Base Network
-    print("FINAL EVALUATION WITH BEST SETTINGS")
-    print("Convergence Rate: ", convergence)
-    print("Number of Hidden Layers: ", n_hidden)
-    temp_mlp.evaluate() #Run The Algorithm
-
-
-# ----
-# SIMPLE RUN OF MLP
-# ---- 
-def run_mlp_simple(data_object, n_hidden, l_rate, n_epoch): 
-    temp_mlp = mlp(data_object, l_rate, n_epoch) #Initalize MLP
+def run_ga(data_object, n_hidden, l_rate, n_epoch, size, n_parents): 
+    print("--- RUN GENETIC ALGORITHM ---")
+    temp_mlp = mlp(data_object, l_rate, n_epoch) #Initalize MLP object
     temp_mlp.initalizeNetwork(n_hidden)
-    temp_mlp.evaluate()
+    #temp_mlp.evaluate()
+    
+    temp_ga = ga(temp_mlp, size, n_parents)
+    numCorr = 0
+    
+    for i in range(10):
+        temp_train = temp_ga.dataset.tenTrainArr[i]
+        print("Temp Training Set")
+        print(temp_train)
+        print("Temp Testing Set")
+        temp_test = temp_ga.dataset.tenTestArr[i]
+        print(temp_test)
+        
+        X_train = temp_train[:,:-1] #Separate predictors and class, train
+        print(X_train)
+        y_train = temp_train[:,:-1] #Separate predictors and class, train
+        
+        X_test = temp_test[:, -1] #Separate predictors and class, test
+        y_test = temp_test[:, -1] #Separate predictors and class, test
+        
+        
+        chromo,score= temp_ga.generations(X_train,X_test,y_train,y_test)
+        temp_ga.logmodel.fit(X_train[:,chromo[-1]],y_train)
+        predictions = temp_ga.logmodel.predict(X_test[:,chromo[-1]])
+        for k in range(len(predictions)):
+            if predictions[k] == y_test[k]:
+                numCorr += 1
+    
+    accuracy = numCorr / temp_ga.dataset.numObsv
+    print("0/1 Loss Score: "+str(accuracy))
+        
+        
+
     

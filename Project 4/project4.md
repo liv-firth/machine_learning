@@ -3,6 +3,7 @@
 Pseudocode by Wednesday 
 
 1. Genetic Algorithm 
+
 2. Differential Evolution (Hannah)
 
         1. initialize a random set of individuals throughout the search space
